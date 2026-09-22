@@ -5,22 +5,36 @@ export async function GET() {
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
 
   try {
-    const resposta = await fetch(`${url}/auth/v1/settings`, {
-      headers: {
-        apikey: key,
-        Authorization: `Bearer ${key}`,
-      },
-      cache: "no-store",
-    });
+    const host = url ? new URL(url).hostname : "SEM URL";
+
+    const resposta = await fetch(
+      `${url}/auth/v1/settings`,
+      {
+        headers: {
+          apikey: key,
+          Authorization: `Bearer ${key}`,
+        },
+        cache: "no-store",
+      }
+    );
+
+    const tipo =
+      resposta.headers.get("content-type") || "";
+
+    const texto = await resposta.text();
 
     return NextResponse.json({
+      host,
       status: resposta.status,
-      conexao: resposta.ok ? "OK" : "ERRO",
+      contentType: tipo,
+      inicioResposta: texto.slice(0, 80),
     });
   } catch (error) {
     return NextResponse.json({
-      conexao: "FALHOU",
-      erro: error instanceof Error ? error.message : "Erro desconhecido",
+      erro:
+        error instanceof Error
+          ? error.message
+          : "Erro desconhecido",
     });
   }
 }
