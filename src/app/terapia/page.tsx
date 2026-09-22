@@ -36,9 +36,7 @@ export default function TerapiaInicioPage() {
         });
 
       if (error) {
-        throw new Error(
-          "E-mail ou senha incorretos."
-        );
+        throw error;
       }
 
       router.push("/terapia/entrar");
@@ -72,11 +70,11 @@ export default function TerapiaInicioPage() {
             </p>
 
             <h1 className="mt-2 text-3xl font-bold">
-              com Ãdria Freitas
+              com &Aacute;dria Freitas
             </h1>
 
             <p className="mt-4 text-sm leading-7 text-[#6C8465]">
-              Acesse seu espa\u00e7o terap\u00eautico com seu e-mail e senha cadastrados.
+              Acesse seu espa&ccedil;o terap&ecirc;utico com seu e-mail e senha cadastrados.
             </p>
           </div>
 
@@ -157,6 +155,7 @@ export default function TerapiaInicioPage() {
     </main>
   );
 }
+
 
 
 
