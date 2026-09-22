@@ -9,6 +9,7 @@ import {
   useEffect,
   useState,
 } from "react";
+import Image from "next/image";
 
 const itens = [
   [
@@ -206,7 +207,27 @@ export default function TerapiaAdminShell({
       >
         <div>
           <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#5E7357] font-black text-[#F8F4EC] shadow">
-            TE
+           <div className="flex items-center gap-3">
+  <Image
+    src="/terapia-icon-512-v2.png"
+    alt="Terapia em Dia"
+    width={64}
+    height={64}
+    className="rounded-full"
+  />
+
+  <div>
+    <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#8AA27A]">
+      Terapia em Dia
+    </p>
+    <p className="text-2xl font-bold text-[#5E7357]">
+      Ádria
+    </p>
+    <p className="text-sm text-[#7E8D73]">
+      Administração Terapêutica
+    </p>
+  </div>
+</div>
           </div>
 
           <p className="mt-4 text-xs font-bold uppercase tracking-[0.2em] text-[#8AA27A]">
