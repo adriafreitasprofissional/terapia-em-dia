@@ -46,7 +46,7 @@ export default function TerapiaInicioPage() {
       setErro(
         error instanceof Error
           ? error.message
-          : "NÃ£o foi possÃ­vel entrar."
+          : "Nao foi possivel entrar."
       );
     } finally {
       setCarregando(false);
@@ -76,7 +76,7 @@ export default function TerapiaInicioPage() {
             </h1>
 
             <p className="mt-4 text-sm leading-7 text-[#6C8465]">
-              Acesse seu espaÃ§o terapÃªutico com seu e-mail e senha cadastrados.
+              Acesse seu espa\u00e7o terap\u00eautico com seu e-mail e senha cadastrados.
             </p>
           </div>
 
@@ -157,5 +157,6 @@ export default function TerapiaInicioPage() {
     </main>
   );
 }
+
 
 
