@@ -9,7 +9,6 @@ import {
   useEffect,
   useState,
 } from "react";
-import { supabase } from "@/lib/supabase";
 
 const itens = [
   [
@@ -92,51 +91,38 @@ export default function TerapiaAdminShell({
     }
 
     async function validar() {
-      const {
-        data: {
-          session,
-        },
-      } =
-        await supabase.auth.getSession();
-
-      if (
-        !session?.access_token
-      ) {
-        router.replace(
-          "/terapia/admin/login"
+      const token =
+        window.localStorage.getItem(
+          "terapia_auth_access_token"
         );
+
+      if (!token) {
+        router.replace("/terapia");
         return;
       }
 
-      const response =
-        await fetch(
-          "/api/terapia/admin/me",
-          {
-            cache:
-              "no-store",
-            headers: {
-              Authorization:
-                `Bearer ${session.access_token}`,
-            },
-          }
-        );
-
-      if (!response.ok) {
-        await supabase.auth.signOut();
-
-        router.replace(
-          "/terapia/admin/login"
-        );
-        return;
-      }
-
-      const data =
-        await response.json();
-
-      setPerfil(
-        data.admin || null
+      const response = await fetch(
+        "/api/terapia/admin/me",
+        {
+          cache: "no-store",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
+      if (!response.ok) {
+        window.localStorage.removeItem(
+          "terapia_auth_access_token"
+        );
+
+        router.replace("/terapia");
+        return;
+      }
+
+      const data = await response.json();
+
+      setPerfil(data.admin || null);
       setCarregando(false);
     }
 
@@ -144,11 +130,19 @@ export default function TerapiaAdminShell({
   }, [login, router]);
 
   async function sair() {
-    await supabase.auth.signOut();
-
-    router.replace(
-      "/terapia/admin/login"
+    window.localStorage.removeItem(
+      "terapia_auth_access_token"
     );
+
+    window.localStorage.removeItem(
+      "terapia_auth_refresh_token"
+    );
+
+    window.localStorage.removeItem(
+      "terapia_em_dia_access_token"
+    );
+
+    router.replace("/terapia");
   }
 
   if (login) {

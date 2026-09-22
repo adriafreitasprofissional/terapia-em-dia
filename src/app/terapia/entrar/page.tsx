@@ -1,54 +1,44 @@
-"use client";
+﻿"use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { supabase } from "@/lib/supabase";
 
 function esperar(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function fetchComTimeout(
-  url: string,
-  init: RequestInit,
-  timeoutMs = 10000
-) {
-  const controller = new AbortController();
-
-  const timer = window.setTimeout(() => {
-    controller.abort();
-  }, timeoutMs);
-
-  try {
-    return await fetch(url, {
-      ...init,
-      signal: controller.signal,
-      cache: "no-store",
-    });
-  } finally {
-    window.clearTimeout(timer);
-  }
-}
-
 export default function TerapiaEntrarPage() {
   const iniciou = useRef(false);
 
-  const [erro, setErro] =
-    useState<string | null>(null);
-
-  const [status, setStatus] =
-    useState("Abrindo seu espaço...");
+  const [erro, setErro] = useState<string | null>(null);
+  const [status, setStatus] = useState("Abrindo seu espaço...");
 
   const abrirPortal = useCallback(async () => {
     setErro(null);
     setStatus("Abrindo seu espaço...");
 
     try {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
+      const accessToken =
+        window.localStorage.getItem(
+          "terapia_auth_access_token"
+        );
 
-      if (!session?.access_token) {
+      if (!accessToken) {
         window.location.replace("/terapia");
+        return;
+      }
+
+      const profissional = await fetch(
+        "/api/terapia/admin/me",
+        {
+          cache: "no-store",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+
+      if (profissional.ok) {
+        window.location.replace("/terapia/admin");
         return;
       }
 
@@ -62,15 +52,14 @@ export default function TerapiaEntrarPage() {
               : "Tentando conectar novamente..."
           );
 
-          const response = await fetchComTimeout(
+          const response = await fetch(
             "/api/terapia/acesso-logado",
             {
+              cache: "no-store",
               headers: {
-                Authorization:
-                  `Bearer ${session.access_token}`,
+                Authorization: `Bearer ${accessToken}`,
               },
-            },
-            10000
+            }
           );
 
           const data = await response.json();
@@ -80,11 +69,6 @@ export default function TerapiaEntrarPage() {
               data?.error ||
                 "Não foi possível abrir seu espaço."
             );
-          }
-
-          if (data.tipo === "admin") {
-            window.location.replace("/admin/terapia");
-            return;
           }
 
           if (!data.access_token) {
@@ -98,8 +82,6 @@ export default function TerapiaEntrarPage() {
             data.access_token
           );
 
-          // No aplicativo instalado usamos navegação completa.
-          // É mais confiável que router.replace em alguns Android/Samsung.
           window.location.replace(
             `/terapia/acesso/${data.access_token}`
           );
@@ -109,31 +91,17 @@ export default function TerapiaEntrarPage() {
           ultimoErro = error;
 
           if (tentativa < 3) {
-            await esperar(tentativa === 1 ? 800 : 1500);
+            await esperar(800);
           }
         }
       }
 
       throw ultimoErro;
     } catch (error) {
-      const mensagem =
+      setErro(
         error instanceof Error
           ? error.message
-          : "";
-
-      const normalizada =
-        mensagem.toLowerCase();
-
-      const rede =
-        normalizada.includes("network") ||
-        normalizada.includes("fetch") ||
-        normalizada.includes("abort");
-
-      setErro(
-        rede
-          ? "Não conseguimos abrir seu espaço agora. Verifique sua internet e toque em “Tentar novamente”."
-          : mensagem ||
-              "Não foi possível abrir seu espaço."
+          : "Não foi possível abrir seu espaço."
       );
 
       setStatus("");
@@ -166,16 +134,6 @@ export default function TerapiaEntrarPage() {
           >
             Tentar novamente
           </button>
-
-          <button
-            type="button"
-            onClick={() =>
-              window.location.replace("/terapia")
-            }
-            className="mt-3 w-full rounded-xl border border-[#C8B8A8] px-5 py-3 font-bold text-[#5E7357]"
-          >
-            Voltar ao login
-          </button>
         </div>
       </main>
     );
@@ -188,10 +146,6 @@ export default function TerapiaEntrarPage() {
 
         <p className="mt-4 font-bold">
           {status}
-        </p>
-
-        <p className="mt-2 text-sm text-[#7A8D73]">
-          Isso deve levar apenas alguns segundos.
         </p>
       </div>
     </main>

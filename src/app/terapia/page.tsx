@@ -3,25 +3,19 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabase";
 
 export default function TerapiaInicioPage() {
   const router = useRouter();
 
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  const [mostrarSenha, setMostrarSenha] =
-    useState(false);
-  const [carregando, setCarregando] =
-    useState(false);
-  const [erro, setErro] =
-    useState<string | null>(null);
+  const [mostrarSenha, setMostrarSenha] = useState(false);
+  const [carregando, setCarregando] = useState(false);
+  const [erro, setErro] = useState<string | null>(null);
 
   async function entrar() {
     if (!email || !senha) {
-      setErro(
-        "Preencha seu e-mail e sua senha."
-      );
+      setErro("Preencha seu e-mail e sua senha.");
       return;
     }
 
@@ -29,15 +23,34 @@ export default function TerapiaInicioPage() {
     setErro(null);
 
     try {
-      const { error } =
-        await supabase.auth.signInWithPassword({
+      const response = await fetch("/api/terapia/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
           email,
           password: senha,
-        });
+        }),
+      });
 
-      if (error) {
-        throw error;
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data?.error || "Nao foi possivel entrar."
+        );
       }
+
+      window.localStorage.setItem(
+        "terapia_auth_access_token",
+        data.access_token
+      );
+
+      window.localStorage.setItem(
+        "terapia_auth_refresh_token",
+        data.refresh_token
+      );
 
       router.push("/terapia/entrar");
     } catch (error) {
@@ -87,9 +100,7 @@ export default function TerapiaInicioPage() {
               <input
                 type="email"
                 value={email}
-                onChange={(e) =>
-                  setEmail(e.target.value)
-                }
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="seuemail@exemplo.com"
                 autoComplete="username"
                 className="mt-2 w-full rounded-xl border border-[#C8B8A8] bg-white px-4 py-3 text-[#4F5E4A] outline-none focus:border-[#5E7357]"
@@ -103,15 +114,9 @@ export default function TerapiaInicioPage() {
 
               <div className="relative mt-2">
                 <input
-                  type={
-                    mostrarSenha
-                      ? "text"
-                      : "password"
-                  }
+                  type={mostrarSenha ? "text" : "password"}
                   value={senha}
-                  onChange={(e) =>
-                    setSenha(e.target.value)
-                  }
+                  onChange={(e) => setSenha(e.target.value)}
                   placeholder="Sua senha"
                   autoComplete="current-password"
                   className="w-full rounded-xl border border-[#C8B8A8] bg-white px-4 py-3 pr-16 text-[#4F5E4A] outline-none focus:border-[#5E7357]"
@@ -119,16 +124,10 @@ export default function TerapiaInicioPage() {
 
                 <button
                   type="button"
-                  onClick={() =>
-                    setMostrarSenha(
-                      !mostrarSenha
-                    )
-                  }
+                  onClick={() => setMostrarSenha(!mostrarSenha)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-[#5E7357]"
                 >
-                  {mostrarSenha
-                    ? "Ocultar"
-                    : "Ver"}
+                  {mostrarSenha ? "Ocultar" : "Ver"}
                 </button>
               </div>
             </div>
@@ -145,9 +144,7 @@ export default function TerapiaInicioPage() {
               disabled={carregando}
               className="w-full rounded-xl bg-[#5E7357] px-5 py-3 font-bold text-white transition hover:bg-[#769566] disabled:opacity-60"
             >
-              {carregando
-                ? "Entrando..."
-                : "Entrar"}
+              {carregando ? "Entrando..." : "Entrar"}
             </button>
           </div>
         </div>
@@ -155,7 +152,3 @@ export default function TerapiaInicioPage() {
     </main>
   );
 }
-
-
-
-

@@ -1,25 +1,23 @@
-import { supabase } from "@/lib/supabase";
-
-export async function adminFetch(
+﻿export async function adminFetch(
   input: string,
   init: RequestInit = {}
 ) {
-  const { data: { session } } =
-    await supabase.auth.getSession();
+  const token =
+    window.localStorage.getItem(
+      "terapia_auth_access_token"
+    );
 
-  if (!session?.access_token) {
+  if (!token) {
     throw new Error(
-      "Sessão administrativa expirada."
+      "Sessao administrativa expirada."
     );
   }
 
-  const headers = new Headers(
-    init.headers
-  );
+  const headers = new Headers(init.headers);
 
   headers.set(
     "Authorization",
-    `Bearer ${session.access_token}`
+    `Bearer ${token}`
   );
 
   return fetch(input, {
