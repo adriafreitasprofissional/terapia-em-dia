@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import Image from "next/image";
@@ -46,7 +46,7 @@ export default function TerapiaInicioPage() {
       setErro(
         error instanceof Error
           ? error.message
-          : "Não foi possível entrar."
+          : "NÃ£o foi possÃ­vel entrar."
       );
     } finally {
       setCarregando(false);
@@ -72,11 +72,11 @@ export default function TerapiaInicioPage() {
             </p>
 
             <h1 className="mt-2 text-3xl font-bold">
-              com Ádria Freitas
+              com Ãdria Freitas
             </h1>
 
             <p className="mt-4 text-sm leading-7 text-[#6C8465]">
-              Acesse seu espaço terapêutico com seu e-mail e senha cadastrados.
+              Acesse seu espaÃ§o terapÃªutico com seu e-mail e senha cadastrados.
             </p>
           </div>
 
@@ -157,3 +157,5 @@ export default function TerapiaInicioPage() {
     </main>
   );
 }
+
+
