@@ -1,4 +1,5 @@
 ﻿import { NextRequest, NextResponse } from "next/server";
+import { createClient } from "@supabase/supabase-js";
 
 export async function POST(request: NextRequest) {
   try {
@@ -12,49 +13,59 @@ export async function POST(request: NextRequest) {
     }
 
     const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    const anonKey =
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
     if (!url || !anonKey) {
       return NextResponse.json(
-        { error: "Configuracao do Supabase nao encontrada." },
+        {
+          error:
+            "Configuracao do Supabase nao encontrada.",
+        },
         { status: 500 }
       );
     }
 
-    const response = await fetch(
-      `${url}/auth/v1/token?grant_type=password`,
+    const supabase = createClient(
+      url,
+      anonKey,
       {
-        method: "POST",
-        headers: {
-          apikey: anonKey,
-          "Content-Type": "application/json",
+        auth: {
+          persistSession: false,
+          autoRefreshToken: false,
+          detectSessionInUrl: false,
         },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-        cache: "no-store",
       }
     );
 
-    const data = await response.json();
+    const {
+      data,
+      error,
+    } =
+      await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
 
-    if (!response.ok) {
+    if (
+      error ||
+      !data.session?.access_token
+    ) {
       return NextResponse.json(
         {
           error:
-            data?.error_description ||
-            data?.msg ||
-            data?.message ||
+            error?.message ||
             "E-mail ou senha incorretos.",
         },
-        { status: response.status }
+        { status: 401 }
       );
     }
 
     return NextResponse.json({
-      access_token: data.access_token,
-      refresh_token: data.refresh_token,
+      access_token:
+        data.session.access_token,
+      refresh_token:
+        data.session.refresh_token,
       user: data.user,
     });
   } catch (error) {
