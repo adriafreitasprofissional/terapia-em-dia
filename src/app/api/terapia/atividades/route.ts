@@ -311,19 +311,37 @@ export async function GET(
             null
           : undefined,
     });
-  } catch (
-    error: unknown
-  ) {
-    return NextResponse.json(
-      {
-        error:
-          error instanceof Error
-            ? error.message
-            : "Erro ao carregar atividades.",
-      },
-      { status: 500 }
-    );
-  }
+ 
+} catch (
+  error: unknown
+) {
+  const mensagem =
+    error instanceof Error
+      ? error.message
+      : error &&
+          typeof error === "object" &&
+          "message" in error
+        ? String(
+            (error as { message?: unknown }).message ||
+              "Erro ao salvar atividade."
+          )
+        : "Erro ao salvar atividade.";
+
+  console.error(
+    "ERRO AO SALVAR QUIZ:",
+    error
+  );
+
+  return NextResponse.json(
+    {
+      error: mensagem,
+    },
+    { status: 500 }
+  );
+}
+
+
+
 }
 
 export async function POST(
