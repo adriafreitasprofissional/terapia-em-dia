@@ -118,7 +118,7 @@ export default function ResponderAtividadePage() {
   const concluida =
     quiz?.resposta
       ?.status ===
-    "submitted";
+    "completed";
 
   useEffect(() => {
     async function carregar() {

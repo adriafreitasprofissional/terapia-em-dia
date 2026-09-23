@@ -484,7 +484,7 @@ export async function POST(
 
     if (
       atual?.status ===
-      "submitted"
+      "completed"
     ) {
       return NextResponse.json(
         {
@@ -511,8 +511,8 @@ export async function POST(
       answers,
       status:
         finalizar
-          ? "submitted"
-          : "in_progress",
+          ? "completed"
+          : "started",
       started_at:
         atual?.started_at ||
         agora,
