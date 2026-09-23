@@ -163,6 +163,19 @@ export default function TerapiaAdminShell({
     perfil?.nome ||
     "Profissional";
 
+  const ehLilian =
+    String(
+      perfil?.nome_completo ||
+      perfil?.nome ||
+      ""
+    )
+      .toLowerCase()
+      .includes("lilian");
+
+  const logoProfissional = ehLilian
+    ? "/imagens/lilian-logo.png"
+    : "/terapia-icon-512-v2.png";
+
   return (
     <div className="min-h-screen bg-[#F8F4EC] text-[#4F5E4A]">
       <header className="sticky top-0 z-40 flex items-center justify-between border-b border-[#DCCFB8] bg-[#F7F1E4]/95 px-4 py-4 backdrop-blur md:hidden">
@@ -205,43 +218,28 @@ export default function TerapiaAdminShell({
             : "-translate-x-full"
         }`}
       >
-        <div>
-          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#5E7357] font-black text-[#F8F4EC] shadow">
-           <div className="flex items-center gap-3">
-  <Image
-    src="/terapia-icon-512-v2.png"
-    alt="Terapia em Dia"
-    width={64}
-    height={64}
-    className="rounded-full"
-  />
+        <div className="flex items-center gap-4">
+          <Image
+            src={logoProfissional}
+            alt={nomeProfissional}
+            width={72}
+            height={72}
+            className="h-[72px] w-[72px] shrink-0 object-contain"
+          />
 
-  <div>
-    <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#8AA27A]">
-      Terapia em Dia
-    </p>
-    <p className="text-2xl font-bold text-[#5E7357]">
-      Ádria
-    </p>
-    <p className="text-sm text-[#7E8D73]">
-      Administração Terapêutica
-    </p>
-  </div>
-</div>
+          <div className="min-w-0">
+            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#8AA27A]">
+              Terapia em Dia
+            </p>
+
+            <h1 className="mt-1 text-xl font-extrabold text-[#5E7357]">
+              {nomeProfissional}
+            </h1>
+
+            <p className="mt-1 text-xs text-[#7A8D73]">
+              Administra??o Terap?utica
+            </p>
           </div>
-
-          <p className="mt-4 text-xs font-bold uppercase tracking-[0.2em] text-[#8AA27A]">
-            Terapia em Dia
-          </p>
-
-          <h1 className="mt-1 text-xl font-extrabold text-[#5E7357]">
-            {nomeProfissional}
-          </h1>
-
-          <p className="mt-1 text-xs text-[#7A8D73]">
-            Administração
-            Terapêutica
-          </p>
         </div>
 
         <nav className="mt-8 grid flex-1 content-start gap-1 overflow-y-auto pb-4">
