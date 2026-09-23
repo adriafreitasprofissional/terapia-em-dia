@@ -25,8 +25,8 @@ export async function generateMetadata(): Promise<Metadata> {
     .toLowerCase();
 
   const dominioTerapia =
-    host === "adriafreitasterapeuta.com.br" ||
-    host === "www.adriafreitasterapeuta.com.br";
+    host === "adriafreitasterapias.com.br" ||
+host === "www.adriafreitasterapias.com.br";
 
   if (dominioTerapia) {
     return {
