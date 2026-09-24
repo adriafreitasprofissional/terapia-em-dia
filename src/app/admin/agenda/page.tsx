@@ -287,6 +287,7 @@ export default function AgendaPage() {
             setNovoAtendimentoAberto(true)
           }
           onEditar={abrirEditar}
+          onExcluir={excluir}
         />
 
        

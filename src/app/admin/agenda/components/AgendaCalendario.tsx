@@ -10,6 +10,7 @@ type Props = {
   atendimentos: AgendaAtendimento[];
   carregando?: boolean;
   onEditar: (item: AgendaAtendimento) => void;
+  onExcluir: (item: AgendaAtendimento) => void;
 };
 
 const DIAS = [
