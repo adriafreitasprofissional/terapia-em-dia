@@ -1,4 +1,4 @@
-﻿export async function adminFetch(
+export async function adminFetch(
   input: string,
   init: RequestInit = {}
 ) {
@@ -9,16 +9,41 @@
 
   if (!token) {
     throw new Error(
-      "Sessao administrativa expirada."
+      "Sessão administrativa expirada."
     );
   }
 
-  const headers = new Headers(init.headers);
+  const previewId =
+    window.localStorage.getItem(
+      "terapia_preview_professional_id"
+    );
+
+  const metodo =
+    String(init.method || "GET").toUpperCase();
+
+  if (
+    previewId &&
+    !["GET", "HEAD", "OPTIONS"].includes(metodo)
+  ) {
+    throw new Error(
+      "Você está apenas visualizando o aplicativo da Lilian. Nenhuma alteração pode ser feita neste modo."
+    );
+  }
+
+  const headers =
+    new Headers(init.headers);
 
   headers.set(
     "Authorization",
     `Bearer ${token}`
   );
+
+  if (previewId) {
+    headers.set(
+      "x-therapy-preview-professional-id",
+      previewId
+    );
+  }
 
   return fetch(input, {
     ...init,

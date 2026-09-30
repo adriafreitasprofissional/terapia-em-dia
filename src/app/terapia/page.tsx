@@ -68,15 +68,16 @@ export default function TerapiaInicioPage() {
     <main className="min-h-screen bg-[#F8F4EC] px-5 py-10 text-[#5E7357]">
       <div className="mx-auto max-w-md">
         <div className="rounded-[32px] border border-[#DCCFB8] bg-[#F7F1E4] p-7 shadow-xl sm:p-8">
-          <div className="text-center">
-            <Image
-              src="/terapia-icon-512-v2.png"
-              alt="Terapia em Dia"
-              width={150}
-              height={150}
-              priority
-              className="mx-auto rounded-full"
-            />
+          <div className="overflow-hidden rounded-[32px] border border-[#DCCFB8] bg-white shadow-xl">
+  <Image
+    src="/imagens/adria-hero-terapia.png"
+    alt="Ádria Freitas"
+    width={900}
+    height={1200}
+    priority
+    className="h-full w-full object-cover object-center rounded-[32px]"
+  />
+</div>
 
             <p className="mt-5 text-xs font-bold uppercase tracking-[0.24em] text-[#8AA27A]">
               Terapia em Dia
@@ -148,7 +149,6 @@ export default function TerapiaInicioPage() {
             </button>
           </div>
         </div>
-      </div>
-    </main>
+         </main>
   );
 }

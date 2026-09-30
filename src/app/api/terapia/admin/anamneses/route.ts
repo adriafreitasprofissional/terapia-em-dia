@@ -24,26 +24,33 @@ export async function GET(
     );
   }
 
+  let acessosQuery =
+    supabaseAdmin
+      .from("therapy_client_access")
+      .select(`
+        client_id,
+        club_clients (
+          id,
+          nome,
+          nome_referencia,
+          email,
+          slug
+        )
+      `)
+      .eq("active", true);
+
+  if (!admin.central_access) {
+    acessosQuery =
+      acessosQuery.eq(
+        "professional",
+        admin.professional
+      );
+  }
+
   const {
     data: acessos,
     error,
-  } = await supabaseAdmin
-    .from("therapy_client_access")
-    .select(`
-      client_id,
-      club_clients (
-        id,
-        nome,
-        nome_referencia,
-        email,
-        slug
-      )
-    `)
-    .eq("active", true)
-    .eq(
-      "professional",
-      admin.professional
-    );
+  } = await acessosQuery;
 
   if (error) {
     return NextResponse.json(

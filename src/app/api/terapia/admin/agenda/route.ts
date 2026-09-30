@@ -182,22 +182,7 @@ export async function GET(
     );
   }
 
-  const {
-    data,
-    error,
-  } = await supabaseAdmin
-    .from("appointments")
-    .select(CAMPOS)
-    .eq(
-      "professional",
-      admin.professional
-    )
-    .order(
-      "scheduled_at",
-      {
-        ascending: true,
-      }
-    );
+  let consulta = supabaseAdmin.from("appointments").select(CAMPOS); if (!admin.central_access) { consulta = consulta.eq("professional", admin.professional); } const { data, error } = await consulta.order("scheduled_at", { ascending: true });
 
   if (error) {
     return NextResponse.json(

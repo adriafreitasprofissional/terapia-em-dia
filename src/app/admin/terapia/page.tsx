@@ -213,6 +213,23 @@ export default function TerapiaAdminPage() {
         >
           🌿 Ambiente Terapia
         </div>
+          <Link
+            href="/admin/terapia/ver-lilian"
+            style={{
+              display: "block",
+              marginTop: "10px",
+              padding: "11px 16px",
+              borderRadius: "12px",
+              background: "#cbd69d",
+              color: "#25301c",
+              fontSize: "12px",
+              fontWeight: 800,
+              textAlign: "center",
+              textDecoration: "none",
+            }}
+          >
+            Ver como Lilian →
+          </Link>
       </div>
 
       {/* RESUMO */}

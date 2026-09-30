@@ -29,12 +29,10 @@ export async function GET(
     );
   }
 
-  const {
-    data,
-    error,
-  } = await supabaseAdmin
-    .from("appointments")
-    .select(`
+  let consulta =
+    supabaseAdmin
+      .from("appointments")
+      .select(`
       id,
       client_id,
       service_type,
@@ -46,17 +44,25 @@ export async function GET(
         nome,
         nome_referencia
       )
-    `)
-    .eq(
-      "professional",
-      admin.professional
-    )
-    .order(
-      "scheduled_at",
-      {
-        ascending: false,
-      }
-    );
+    `);
+
+  if (!admin.central_access) {
+    consulta =
+      consulta.eq(
+        "professional",
+        admin.professional
+      );
+  }
+
+  const {
+    data,
+    error,
+  } = await consulta.order(
+    "scheduled_at",
+    {
+      ascending: false,
+    }
+  );
 
   if (error) {
     return NextResponse.json(

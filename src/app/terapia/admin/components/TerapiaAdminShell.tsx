@@ -102,13 +102,26 @@ export default function TerapiaAdminShell({
         return;
       }
 
+      const previewId =
+        window.localStorage.getItem(
+          "terapia_preview_professional_id"
+        );
+
+      const headers: Record<string, string> = {
+        Authorization: `Bearer ${token}`,
+      };
+
+      if (previewId) {
+        headers[
+          "x-therapy-preview-professional-id"
+        ] = previewId;
+      }
+
       const response = await fetch(
         "/api/terapia/admin/me",
         {
           cache: "no-store",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers,
         }
       );
 
@@ -130,7 +143,20 @@ export default function TerapiaAdminShell({
     validar();
   }, [login, router]);
 
+  function sairVisualizacao() {
+    window.localStorage.removeItem(
+      "terapia_preview_professional_id"
+    );
+
+    window.location.replace(
+      "/admin/terapia"
+    );
+  }
+
   async function sair() {
+    window.localStorage.removeItem(
+      "terapia_preview_professional_id"
+    );
     window.localStorage.removeItem(
       "terapia_auth_access_token"
     );
@@ -175,6 +201,9 @@ export default function TerapiaAdminShell({
   const logoProfissional = ehLilian
     ? "/imagens/lilian-logo.png"
     : "/terapia-icon-512-v2.png";
+
+  const visualizandoProfissional =
+    perfil?.preview_mode === true;
 
   return (
     <div className="min-h-screen bg-[#F8F4EC] text-[#4F5E4A]">
@@ -333,6 +362,28 @@ export default function TerapiaAdminShell({
       </aside>
 
       <main className="min-h-screen px-4 py-7 md:ml-[286px] md:px-8 md:py-9 xl:px-10">
+        {visualizandoProfissional && (
+          <div className="mb-6 flex flex-col gap-3 rounded-2xl border border-[#C9A84C] bg-[#FFF6D8] p-4 text-[#66521F] sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="text-sm font-extrabold">
+                Visualizando como Lilian
+              </p>
+
+              <p className="mt-1 text-xs">
+                Modo de conferência. Alterações estão bloqueadas.
+              </p>
+            </div>
+
+            <button
+              type="button"
+              onClick={sairVisualizacao}
+              className="rounded-xl bg-[#5E7357] px-4 py-2 text-sm font-bold text-white"
+            >
+              Sair da visualização
+            </button>
+          </div>
+        )}
+
         {children}
       </main>
     </div>

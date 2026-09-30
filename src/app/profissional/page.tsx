@@ -717,55 +717,54 @@ function Store() {
 
 const plans = [
   {
-    name: "Gratuito",
-    price: "R$ 0",
-    period: "PARA COMEÇAR",
-    features: [
-      "Conheça a plataforma",
-      "Estrutura inicial do Clube",
-      "Acesso aos recursos básicos",
-    ],
-  },
-  {
-    name: "Essencial",
-    price: "R$ 59,90",
-    period: "ASSINATURA MENSAL",
-    features: [
-      "Portal para seus clientes",
-      "Gestão de clientes",
-      "Agenda integrada",
-      "Assinaturas e recorrência",
-      "Recados e direcionamentos",
-    ],
-  },
-  {
-    name: "Pro",
-    price: "R$ 99,90",
-    period: "ASSINATURA MENSAL",
+    name: "Fundador",
+    price: "R$ 47,00",
+    period: "POR MÊS",
     popular: true,
     features: [
-      "Tudo do Essencial",
-      "Loja integrada",
-      "Cursos e conteúdos",
-      "Biblioteca digital",
-      "Financeiro",
-      "Agentes inteligentes",
+      "15 dias de cortesia",
+      "Painel profissional completo",
+      "Cadastro e gestão de pacientes",
+      "Agenda de atendimentos",
+      "Portal individual para cada paciente",
+      "Anamnese digital",
+      "Atividades e conteúdos para pacientes",
+      "Relatórios e acompanhamento das sessões",
+      "Financeiro básico",
+      "Usuários finais sem mensalidade",
     ],
   },
   {
-    name: "Premium",
-    price: "R$ 169,90",
-    period: "ASSINATURA MENSAL",
+    name: "Empreendedor",
+    price: "R$ 167,00",
+    period: "POR MÊS",
     features: [
-      "Tudo do Pro",
-      "Ecossistema completo",
-      "Mais recursos e capacidade",
-      "Página de vendas",
-      "Acompanhamento diferenciado",
-      "Suporte prioritário",
+      "15 dias de cortesia",
+      "Tudo do Plano Fundador",
+      "Loja integrada",
+      "Venda de produtos e serviços",
+      "Gestão comercial de clientes",
+      "Recursos para aumentar suas vendas",
+      "Usuários finais sem mensalidade",
+    ],
+  },
+  {
+    name: "Construtor",
+    price: "R$ 230,00",
+    period: "POR MÊS",
+    features: [
+      "15 dias de cortesia",
+      "Tudo do Plano Empreendedor",
+      "Área de cursos",
+      "Criação de aulas e módulos",
+      "Conteúdos exclusivos para alunos",
+      "Biblioteca digital",
+      "Gestão de acessos aos cursos",
+      "Usuários finais sem mensalidade",
     ],
   },
 ];
+
 
 function Plans() {
   return (
@@ -781,12 +780,12 @@ function Plans() {
         </Title>
 
         <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-          Escolha a estrutura ideal para criar seu Clube e transformar seus
-          atendimentos em uma experiência contínua para seus clientes.
-        </p>
+  Comece com 15 dias de cortesia. Escolha o plano ideal para organizar
+  seus atendimentos, cuidar dos seus pacientes e expandir seu negócio.
+</p>
       </div>
 
-      <div className="mt-16 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+      <div className="mt-16 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
         {plans.map((plan) => (
           <article
             key={plan.name}

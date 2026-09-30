@@ -47,6 +47,75 @@ export async function getTherapyAdmin(
     .toLowerCase()
     .trim();
 
+  if (role === "admin") {
+    const previewId =
+      request.headers.get(
+        "x-therapy-preview-professional-id"
+      );
+
+    if (previewId) {
+      if (
+        !["GET", "HEAD", "OPTIONS"].includes(
+          request.method.toUpperCase()
+        )
+      ) {
+        return null;
+      }
+
+      const {
+        data: profissional,
+        error: profissionalError,
+      } = await supabaseAdmin
+        .from("therapy_professionals")
+        .select("id, name, slug, email, active")
+        .eq("id", previewId)
+        .eq("active", true)
+        .maybeSingle();
+
+      if (
+        profissionalError ||
+        !profissional
+      ) {
+        return null;
+      }
+
+      const {
+        data: cadastroProfissional,
+      } = await supabaseAdmin
+        .from("club_clients")
+        .select(
+          "id, nome, nome_referencia, email"
+        )
+        .eq("id", profissional.id)
+        .maybeSingle();
+
+      const nomeProfissional =
+        profissional.name ||
+        cadastroProfissional?.nome ||
+        cadastroProfissional?.nome_referencia ||
+        "Profissional";
+
+      return {
+        id: profissional.id,
+        nome:
+          cadastroProfissional?.nome_referencia ||
+          cadastroProfissional?.nome ||
+          nomeProfissional,
+        nome_completo:
+          nomeProfissional,
+        email:
+          profissional.email ||
+          cadastroProfissional?.email ||
+          "",
+        role: "profissional",
+        professional:
+          nomeProfissional,
+        central_access: false,
+        preview_mode: true,
+      };
+    }
+  }
+
   if (ROLES_PERMITIDAS.has(role)) {
     const nomeCompleto =
       cliente.nome ||
@@ -59,13 +128,17 @@ export async function getTherapyAdmin(
         cliente.nome_referencia ||
         cliente.nome ||
         "Profissional",
-      nome_completo: nomeCompleto,
+      nome_completo:
+        nomeCompleto,
       email:
         cliente.email ||
         user.email,
       role,
-      professional: nomeCompleto,
-      central_access: role === "admin",
+      professional:
+        nomeCompleto,
+      central_access:
+        role === "admin",
+      preview_mode: false,
     };
   }
 
@@ -74,7 +147,9 @@ export async function getTherapyAdmin(
     error: profissionalTerapiaError,
   } = await supabaseAdmin
     .from("therapy_professionals")
-    .select("id, name, slug, email, active")
+    .select(
+      "id, name, slug, email, active"
+    )
     .eq("id", cliente.id)
     .eq("active", true)
     .maybeSingle();
@@ -98,13 +173,16 @@ export async function getTherapyAdmin(
       cliente.nome_referencia ||
       cliente.nome ||
       nomeProfissional,
-    nome_completo: nomeProfissional,
+    nome_completo:
+      nomeProfissional,
     email:
       profissionalTerapia.email ||
       cliente.email ||
       user.email,
     role: "profissional",
-    professional: nomeProfissional,
+    professional:
+      nomeProfissional,
     central_access: false,
+    preview_mode: false,
   };
 }

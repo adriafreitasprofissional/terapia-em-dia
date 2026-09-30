@@ -11,24 +11,28 @@ export default function TerapiaAdminPage() {
   const [
     dados,
     setDados,
-  ] = useState<any>(
-    null
-  );
+  ] = useState<any>(null);
 
   const [
     erro,
     setErro,
-  ] = useState<
-    string | null
-  >(null);
+  ] = useState<string | null>(null);
+
+  const [
+    proximosAbertos,
+    setProximosAbertos,
+  ] = useState(false);
+
+  const [
+    anamnesesAbertas,
+    setAnamnesesAbertas,
+  ] = useState(false);
 
   useEffect(() => {
     adminFetch(
       "/api/terapia/admin/dashboard"
     )
-      .then(async (
-        response
-      ) => {
+      .then(async (response) => {
         const data =
           await response.json();
 
@@ -43,8 +47,7 @@ export default function TerapiaAdminPage() {
       })
       .catch((error) =>
         setErro(
-          error instanceof
-            Error
+          error instanceof Error
             ? error.message
             : "Erro ao carregar painel."
         )
@@ -70,23 +73,19 @@ export default function TerapiaAdminPage() {
   const cards = [
     [
       "Pacientes ativas",
-      dados.resumo
-        .clientes_ativas,
+      dados.resumo.clientes_ativas,
     ],
     [
       "Sessões hoje",
-      dados.resumo
-        .sessoes_hoje,
+      dados.resumo.sessoes_hoje,
     ],
     [
       "Anamneses recebidas",
-      dados.resumo
-        .anamneses_recebidas,
+      dados.resumo.anamneses_recebidas,
     ],
     [
       "Anamneses pendentes",
-      dados.resumo
-        .anamneses_pendentes,
+      dados.resumo.anamneses_pendentes,
     ],
   ];
 
@@ -103,10 +102,7 @@ export default function TerapiaAdminPage() {
           </h1>
 
           <p className="mt-2 text-sm leading-6 text-[#6C8465]">
-            Pacientes,
-            agenda, sessões e
-            acompanhamento em
-            um só lugar.
+            Pacientes, agenda, sessões e acompanhamento em um só lugar.
           </p>
         </div>
 
@@ -128,40 +124,44 @@ export default function TerapiaAdminPage() {
       </div>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {cards.map(
-          ([
-            titulo,
-            valor,
-          ]) => (
-            <div
-              key={
-                titulo
-              }
-              className="rounded-3xl border border-[#DCCFB8] bg-[#F7F1E4] p-5 shadow-sm"
-            >
-              <p className="text-xs font-bold uppercase tracking-wide text-[#7A8D73]">
-                {
-                  titulo
-                }
-              </p>
+        {cards.map(([titulo, valor]) => (
+          <div
+            key={titulo}
+            className="rounded-3xl border border-[#DCCFB8] bg-[#F7F1E4] p-5 shadow-sm"
+          >
+            <p className="text-xs font-bold uppercase tracking-wide text-[#7A8D73]">
+              {titulo}
+            </p>
 
-              <p className="mt-3 text-4xl font-black text-[#5E7357]">
-                {
-                  valor
-                }
-              </p>
-            </div>
-          )
-        )}
+            <p className="mt-3 text-4xl font-black text-[#5E7357]">
+              {valor}
+            </p>
+          </div>
+        ))}
       </div>
 
       <div className="mt-8 grid gap-6 xl:grid-cols-[1.15fr_.85fr]">
         <section className="rounded-3xl border border-[#DCCFB8] bg-[#F7F1E4] p-6">
           <div className="flex items-center justify-between gap-3">
-            <h2 className="text-xl font-extrabold text-[#5E7357]">
-              Próximos
-              atendimentos
-            </h2>
+            <button
+              type="button"
+              onClick={() =>
+                setProximosAbertos(
+                  !proximosAbertos
+                )
+              }
+              className="flex items-center gap-3 text-left"
+            >
+              <span className="text-2xl font-bold text-[#5E7357]">
+                {proximosAbertos
+                  ? "⌄"
+                  : "›"}
+              </span>
+
+              <h2 className="text-xl font-extrabold text-[#5E7357]">
+                Próximos atendimentos
+              </h2>
+            </button>
 
             <Link
               href="/terapia/admin/agenda"
@@ -171,34 +171,21 @@ export default function TerapiaAdminPage() {
             </Link>
           </div>
 
-          <div className="mt-5 grid gap-3">
-            {dados
-              .proximos_atendimentos
-              .slice(
-                0,
-                5
-              )
-              .map(
-                (
-                  item: any
-                ) => (
+          {proximosAbertos && (
+            <div className="mt-5 grid gap-3">
+              {dados.proximos_atendimentos
+                .slice(0, 5)
+                .map((item: any) => (
                   <div
-                    key={
-                      item.id
-                    }
+                    key={item.id}
                     className="rounded-2xl border border-[#E1D6C5] bg-white/70 p-4"
                   >
                     <p className="font-extrabold text-[#5E7357]">
-                      {
-                        item.client_name
-                      }
+                      {item.client_name}
                     </p>
 
                     <p className="mt-1 text-sm text-[#6C8465]">
-                      {
-                        item.service_type
-                      }{" "}
-                      ·{" "}
+                      {item.service_type} ·{" "}
                       {new Date(
                         item.scheduled_at
                       ).toLocaleString(
@@ -206,26 +193,40 @@ export default function TerapiaAdminPage() {
                       )}
                     </p>
                   </div>
-                )
-              )}
+                ))}
 
-            {dados
-              .proximos_atendimentos
-              .length ===
-              0 && (
-              <p className="text-sm text-[#6C8465]">
-                Nenhum atendimento
-                futuro.
-              </p>
-            )}
-          </div>
+              {dados
+                .proximos_atendimentos
+                .length === 0 && (
+                <p className="text-sm text-[#6C8465]">
+                  Nenhum atendimento futuro.
+                </p>
+              )}
+            </div>
+          )}
         </section>
 
         <section className="rounded-3xl border border-[#DCCFB8] bg-[#F7F1E4] p-6">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xl font-extrabold text-[#5E7357]">
-              Anamneses
-            </h2>
+          <div className="flex items-center justify-between gap-3">
+            <button
+              type="button"
+              onClick={() =>
+                setAnamnesesAbertas(
+                  !anamnesesAbertas
+                )
+              }
+              className="flex items-center gap-3 text-left"
+            >
+              <span className="text-2xl font-bold text-[#5E7357]">
+                {anamnesesAbertas
+                  ? "⌄"
+                  : "›"}
+              </span>
+
+              <h2 className="text-xl font-extrabold text-[#5E7357]">
+                Anamneses
+              </h2>
+            </button>
 
             <Link
               href="/terapia/admin/anamneses"
@@ -235,58 +236,52 @@ export default function TerapiaAdminPage() {
             </Link>
           </div>
 
-          <div className="mt-5 grid gap-3">
-            {dados.clientes.map(
-              (
-                cliente: any
-              ) => {
-                const recebida =
-                  cliente
-                    .anamnese
-                    ?.status ===
-                    "enviada" ||
-                  cliente
-                    .anamnese
-                    ?.status ===
-                    "revisada";
+          {anamnesesAbertas && (
+            <div className="mt-5 grid gap-3">
+              {dados.clientes.map(
+                (cliente: any) => {
+                  const recebida =
+                    cliente.anamnese
+                      ?.status ===
+                      "enviada" ||
+                    cliente.anamnese
+                      ?.status ===
+                      "revisada";
 
-                return (
-                  <div
-                    key={
-                      cliente.id
-                    }
-                    className="flex items-center justify-between rounded-2xl border border-[#E1D6C5] bg-white/70 p-4"
-                  >
-                    <div>
-                      <p className="font-bold text-[#5E7357]">
-                        {
-                          cliente.nome
-                        }
-                      </p>
-
-                      <p className="mt-1 text-xs text-[#7A8D73]">
-                        {recebida
-                          ? "Anamnese recebida"
-                          : "Aguardando envio"}
-                      </p>
-                    </div>
-
-                    <span
-                      className={`rounded-full px-3 py-1 text-xs font-bold ${
-                        recebida
-                          ? "bg-[#DCE8D6] text-[#4F6548]"
-                          : "bg-[#EFE5D3] text-[#806A55]"
-                      }`}
+                  return (
+                    <div
+                      key={cliente.id}
+                      className="flex items-center justify-between rounded-2xl border border-[#E1D6C5] bg-white/70 p-4"
                     >
-                      {recebida
-                        ? "Recebida"
-                        : "Pendente"}
-                    </span>
-                  </div>
-                );
-              }
-            )}
-          </div>
+                      <div>
+                        <p className="font-bold text-[#5E7357]">
+                          {cliente.nome}
+                        </p>
+
+                        <p className="mt-1 text-xs text-[#7A8D73]">
+                          {recebida
+                            ? "Anamnese recebida"
+                            : "Aguardando envio"}
+                        </p>
+                      </div>
+
+                      <span
+                        className={`rounded-full px-3 py-1 text-xs font-bold ${
+                          recebida
+                            ? "bg-[#DCE8D6] text-[#4F6548]"
+                            : "bg-[#EFE5D3] text-[#806A55]"
+                        }`}
+                      >
+                        {recebida
+                          ? "Recebida"
+                          : "Pendente"}
+                      </span>
+                    </div>
+                  );
+                }
+              )}
+            </div>
+          )}
         </section>
       </div>
     </div>
