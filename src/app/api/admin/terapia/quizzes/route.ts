@@ -268,13 +268,14 @@ function normalizarTipoQuiz(
     ).trim();
 
   if (
-    tipo === "therapeutic" ||
-    tipo === "feedback" ||
-    tipo === "reflection" ||
-    tipo === "checkin"
-  ) {
-    return tipo;
-  }
+  tipo === "therapeutic" ||
+  tipo === "feedback" ||
+  tipo === "reflection" ||
+  tipo === "checkin" ||
+  tipo === "challenge"
+) {
+  return tipo;
+}
 
   return "therapeutic";
 }
@@ -307,10 +308,10 @@ export async function GET(
       .get("id")
       ?.trim();
 
-  const clientId =
-    request.nextUrl.searchParams
-      .get("client_id")
-      ?.trim();
+ const clientId =
+  request.nextUrl.searchParams
+    .get("client_id")
+    ?.trim();
 
   const appointmentId =
     request.nextUrl.searchParams
@@ -414,25 +415,33 @@ export async function POST(
     const body =
       await request.json();
 
-    const clientId =
-      String(
-        body.client_id || ""
-      ).trim();
+    const clientIds = Array.from(
+  new Set(
+    (
+      Array.isArray(body.client_ids)
+        ? body.client_ids
+        : [body.client_id]
+    )
+      .map((id: unknown) => String(id || "").trim())
+      .filter(Boolean)
+  )
+);
+
 
     const title =
       String(
         body.title || ""
       ).trim();
 
-    if (!clientId) {
-      return NextResponse.json(
-        {
-          error:
-            "Paciente não informado.",
-        },
-        { status: 400 }
-      );
-    }
+    if (clientIds.length === 0) {
+  return NextResponse.json(
+    {
+      error:
+        "Selecione pelo menos um paciente.",
+    },
+    { status: 400 }
+  );
+}
 
     if (!title) {
       return NextResponse.json(
@@ -474,48 +483,51 @@ Em qualquer pergunta, você pode escolher não responder, pular ou parar por aqu
     const { data, error } =
       await supabaseAdmin
         .from("therapy_quizzes")
-        .insert({
-          professional_id:
-            profissional.id,
+        .insert(
+  clientIds.map((clientId) => ({
+    professional_id:
+      profissional.id,
 
-          client_id:
-            clientId,
+    client_id:
+      clientId,
 
-          appointment_id:
+    appointment_id:
+      body.appointment_id
+        ? String(
             body.appointment_id
-              ? String(
-                  body.appointment_id
-                ).trim()
-              : null,
+          ).trim()
+        : null,
 
-          title,
+    title,
 
-          subtitle:
-            String(
-              body.subtitle || ""
-            ).trim() || null,
+    subtitle:
+      String(
+        body.subtitle || ""
+      ).trim() || null,
 
-          source_notes:
-            String(
-              body.source_notes || ""
-            ).trim() || null,
+    source_notes:
+      String(
+        body.source_notes || ""
+      ).trim() || null,
 
-          instructions,
+    instructions,
 
-          questions,
+    questions,
 
-          status,
+    status,
 
-          quiz_type:
-            normalizarTipoQuiz(
-              body.quiz_type
-            ),
+    quiz_type:
+      normalizarTipoQuiz(
+        body.quiz_type
+      ),
 
-          published_at:
-            status === "published"
-              ? new Date().toISOString()
-              : null,
-        })
+    published_at:
+      status === "published"
+        ? new Date().toISOString()
+        : null,
+  }))
+)
+
         .select(`
           id,
           professional_id,
@@ -532,7 +544,7 @@ Em qualquer pergunta, você pode escolher não responder, pular ou parar por aqu
           created_at,
           updated_at
         `)
-        .single();
+     
 
     if (error) {
       return NextResponse.json(
@@ -544,11 +556,15 @@ Em qualquer pergunta, você pode escolher não responder, pular ou parar por aqu
     }
 
     return NextResponse.json(
-      {
-        quiz: data,
-      },
-      { status: 201 }
-    );
+  {
+    quizzes: data,
+    quiz:
+      Array.isArray(data) && data.length > 0
+        ? data[0]
+        : null,
+  },
+  { status: 201 }
+);
   } catch (error: unknown) {
     return NextResponse.json(
       {
@@ -585,7 +601,17 @@ export async function PATCH(
   try {
     const body =
       await request.json();
-
+const clientIds = Array.from(
+  new Set(
+    (
+      Array.isArray(body.client_ids)
+        ? body.client_ids
+        : [body.client_id]
+    )
+      .map((id: unknown) => String(id || "").trim())
+      .filter(Boolean)
+  )
+);
     const id =
       String(
         body.id || ""
@@ -819,14 +845,10 @@ export async function DELETE(
   }
 
   const { error } =
-    await supabaseAdmin
-      .from("therapy_quizzes")
-      .update({
-        status: "archived",
-        updated_at:
-          new Date().toISOString(),
-      })
-      .eq("id", id);
+  await supabaseAdmin
+    .from("therapy_quizzes")
+    .delete()
+    .eq("id", id);
 
   if (error) {
     return NextResponse.json(

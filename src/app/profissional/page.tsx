@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Manrope } from "next/font/google";
+
 import {
   ArrowRight,
   BookOpen,
@@ -38,17 +38,6 @@ import {
 import { cn } from "@/lib/utils";
 import "./profissional.css";
 
-const cormorant = Cormorant_Garamond({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-cormorant",
-});
-
-const manrope = Manrope({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-manrope",
-});
 
 export const metadata: Metadata = {
   title: "Clube do Tarô para Profissionais | Recorrência para tarólogos",
@@ -144,10 +133,8 @@ function Section({
 
 export default function ProfissionalPage() {
   return (
-    <main
-      className={`${cormorant.variable} ${manrope.variable} professional-page`}
-    >
-      <Atmosphere />
+   <main className="professional-page">
+  <Atmosphere />
 
       <Hero />
       <Ecosystem />

@@ -11,6 +11,26 @@ import {
 } from "react";
 import Image from "next/image";
 
+type PerfilTerapia = {
+  id: string;
+  nome?: string;
+  nome_completo?: string;
+  email?: string;
+  role?: string;
+  professional?: string;
+  central_access?: boolean;
+  preview_mode?: boolean;
+  plan?: "fundador" | "empreendedor" | "construtor";
+  subscription_status?:
+    | "trial"
+    | "active"
+    | "past_due"
+    | "cancelled"
+    | "suspended";
+  trial_started_at?: string | null;
+  trial_ends_at?: string | null;
+};
+
 const itens = [
   [
     "/terapia/admin",
@@ -83,7 +103,7 @@ export default function TerapiaAdminShell({
   const [
     perfil,
     setPerfil,
-  ] = useState<any>(null);
+  ] = useState<PerfilTerapia | null>(null);
 
   useEffect(() => {
     if (login) {
@@ -188,6 +208,60 @@ export default function TerapiaAdminShell({
   const nomeProfissional =
     perfil?.nome ||
     "Profissional";
+const agora = new Date();
+
+const trialEndsAt =
+  perfil?.trial_ends_at
+    ? new Date(perfil.trial_ends_at)
+    : null;
+
+const trialValido =
+  perfil?.subscription_status === "trial" &&
+  trialEndsAt &&
+  trialEndsAt.getTime() > agora.getTime();
+
+const acessoLiberado =
+  perfil?.central_access === true ||
+  perfil?.preview_mode === true ||
+  perfil?.subscription_status === "active" ||
+  trialValido;
+
+  if (!acessoLiberado) {
+  return (
+    <main className="min-h-screen bg-[#F8F4EC] px-5 py-10 text-[#5E7357]">
+      <div className="mx-auto max-w-xl rounded-[28px] border border-[#DCCFB8] bg-white p-8 text-center shadow-xl">
+        <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#8AA27A]">
+          Terapia em Dia
+        </p>
+
+        <h1 className="mt-3 text-3xl font-bold">
+          Seu período de cortesia terminou
+        </h1>
+
+        <p className="mt-4 text-sm leading-7 text-[#6C8465]">
+          Escolha um plano para continuar usando seu painel profissional.
+        </p>
+
+        <div className="mt-7 space-y-3">
+          <Link
+            href="/profissional"
+            className="block rounded-xl bg-[#5E7357] px-5 py-3 font-bold text-white"
+          >
+            Ver planos
+          </Link>
+
+          <button
+            type="button"
+            onClick={sair}
+            className="w-full rounded-xl border border-[#C8B8A8] px-5 py-3 font-semibold"
+          >
+            Sair
+          </button>
+        </div>
+      </div>
+    </main>
+  );
+}
 
   const ehLilian =
     String(

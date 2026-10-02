@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
@@ -210,12 +209,10 @@ export default function TerapiaVitrinePage() {
           <div className="absolute inset-0 rounded-[40px] bg-[#8AA27A]/10 blur-[90px]" />
 
           <div className="relative w-full max-w-[520px] overflow-hidden rounded-[28px] border border-[#D8D2C4] bg-white p-3 shadow-2xl sm:rounded-[40px] sm:p-4">
-            <Image
+            <img
   src="/imagens/adria-hero-terapia.png"
   alt="Ádria Freitas"
-  width={520}
-  height={700}
-  className="rounded-[30px] object-cover"
+  className="h-auto w-full rounded-[30px] object-cover"
 />
           </div>
         </motion.div>

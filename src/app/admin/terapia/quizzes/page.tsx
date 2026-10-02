@@ -77,6 +77,7 @@ function tipoQuizTexto(tipo: string) {
   if (tipo === "feedback") return "Feedback";
   if (tipo === "reflection") return "Reflexão";
   if (tipo === "checkin") return "Check-in";
+  if (tipo === "challenge") return "Desafio";
   return "Terapêutico";
 }
 
@@ -102,13 +103,22 @@ export default function QuizzesPage() {
   const [mensagem, setMensagem] = useState<string | null>(null);
 
   const [editandoId, setEditandoId] = useState<string | null>(null);
+const [quizParaReenviar, setQuizParaReenviar] =
+  useState<Quiz | null>(null);
 
-  const [clientId, setClientId] = useState("");
+const [pacientesReenvio, setPacientesReenvio] =
+  useState<string[]>([]);
+
+const [reenviando, setReenviando] =
+  useState(false);
+  
+  const [clientIds, setClientIds] = useState<string[]>([]);
   const [title, setTitle] = useState("");
   const [subtitle, setSubtitle] = useState("");
   const [sourceNotes, setSourceNotes] = useState("");
   const [instructions, setInstructions] = useState("");
   const [quizType, setQuizType] = useState("therapeutic");
+  const [challengeDays, setChallengeDays] = useState(7);
   const [questions, setQuestions] = useState<Pergunta[]>([
     novaPergunta(),
   ]);
@@ -203,7 +213,7 @@ export default function QuizzesPage() {
 
   function limparFormulario() {
     setEditandoId(null);
-    setClientId("");
+    setClientIds([]);
     setTitle("");
     setSubtitle("");
     setSourceNotes("");
@@ -473,10 +483,10 @@ export default function QuizzesPage() {
     setErro(null);
     setMensagem(null);
 
-    if (!clientId) {
-      setErro("Escolha uma paciente.");
-      return;
-    }
+    if (clientIds.length === 0) {
+  setErro("Escolha pelo menos uma paciente.");
+  return;
+}
 
     if (!title.trim()) {
       setErro("Informe o título do quiz.");
@@ -495,41 +505,119 @@ export default function QuizzesPage() {
     try {
       const token = await tokenAdmin();
 
-      const corpo = {
-        ...(editandoId ? { id: editandoId } : {}),
-        client_id: clientId,
-        title: title.trim(),
-        subtitle: subtitle.trim() || null,
-        source_notes: sourceNotes.trim() || null,
-        instructions: instructions.trim() || undefined,
-        quiz_type: quizType,
-        questions: perguntasValidas,
-        status,
-      };
+      if (editandoId) {
+  const corpo = {
+    id: editandoId,
+    client_id: clientIds[0] || null,
+    title: title.trim(),
+    subtitle: subtitle.trim() || null,
+    source_notes: sourceNotes.trim() || null,
+    instructions: instructions.trim() || undefined,
+    quiz_type: quizType,
+    questions: perguntasValidas,
+    status,
+  };
 
-      const response = await fetch("/api/admin/terapia/quizzes", {
-        method: editandoId ? "PATCH" : "POST",
+  const response = await fetch(
+    "/api/admin/terapia/quizzes",
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(corpo),
+    }
+  );
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(
+      data?.error ||
+        "Não foi possível atualizar a atividade."
+    );
+  }
+} else if (quizType === "challenge") {
+  const dias = Math.max(
+    1,
+    Math.min(30, Number(challengeDays) || 1)
+  );
+
+  for (let dia = 1; dia <= dias; dia++) {
+    const response = await fetch(
+      "/api/admin/terapia/quizzes",
+      {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(corpo),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(
-          data?.error || "Não foi possível salvar o quiz."
-        );
+        body: JSON.stringify({
+          client_ids: clientIds,
+          title: `${title.trim()} — Dia ${dia}`,
+          subtitle: subtitle.trim() || null,
+          source_notes: sourceNotes.trim() || null,
+          instructions:
+            instructions.trim() || undefined,
+          quiz_type: "challenge",
+          questions: perguntasValidas,
+          status,
+        }),
       }
+    );
 
-      setMensagem(
-        status === "published"
-          ? "Quiz publicado com sucesso."
-          : "Rascunho salvo com sucesso."
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        data?.error ||
+          `Não foi possível criar o Dia ${dia} do desafio.`
       );
+    }
+  }
+} else {
+  const response = await fetch(
+    "/api/admin/terapia/quizzes",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        client_ids: clientIds,
+        title: title.trim(),
+        subtitle: subtitle.trim() || null,
+        source_notes: sourceNotes.trim() || null,
+        instructions:
+          instructions.trim() || undefined,
+        quiz_type: quizType,
+        questions: perguntasValidas,
+        status,
+      }),
+    }
+  );
 
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(
+      data?.error ||
+        "Não foi possível salvar a atividade."
+    );
+  }
+}
+setMensagem(
+  quizType === "challenge"
+    ? status === "published"
+      ? `Desafio de ${challengeDays} dias publicado com sucesso.`
+      : `Desafio de ${challengeDays} dias salvo como rascunho.`
+    : status === "published"
+      ? "Atividade publicada com sucesso."
+      : "Rascunho salvo com sucesso."
+);
+      
       limparFormulario();
       await carregar();
     } catch (error) {
@@ -544,8 +632,10 @@ export default function QuizzesPage() {
   }
 
   function editarQuiz(quiz: Quiz) {
-    setEditandoId(quiz.id);
-    setClientId(quiz.client_id || "");
+  setEditandoId(quiz.id);
+setClientIds(
+  quiz.client_id ? [quiz.client_id] : []
+);
     setTitle(quiz.title || "");
     setSubtitle(quiz.subtitle || "");
     setSourceNotes(quiz.source_notes || "");
@@ -586,7 +676,51 @@ export default function QuizzesPage() {
       behavior: "smooth",
     });
   }
+async function excluirQuiz(id: string) {
+  const confirmar = window.confirm(
+    "Deseja realmente excluir esta atividade? Esta ação não poderá ser desfeita."
+  );
 
+  if (!confirmar) {
+    return;
+  }
+
+  setErro(null);
+  setMensagem(null);
+
+  try {
+    const token = await tokenAdmin();
+
+    const response = await fetch(
+      `/api/admin/terapia/quizzes?id=${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        data?.error ||
+          "Não foi possível excluir a atividade."
+      );
+    }
+
+    setMensagem("Atividade excluída com sucesso.");
+
+    await carregar();
+  } catch (error) {
+    setErro(
+      error instanceof Error
+        ? error.message
+        : "Erro ao excluir atividade."
+    );
+  }
+  }
   async function alterarStatus(
     id: string,
     status: "published" | "archived"
@@ -639,7 +773,76 @@ export default function QuizzesPage() {
       );
     }
   }
+async function reenviarQuiz() {
+  if (!quizParaReenviar) {
+    return;
+  }
 
+  if (pacientesReenvio.length === 0) {
+    setErro("Escolha pelo menos um paciente.");
+    return;
+  }
+
+  setErro(null);
+  setMensagem(null);
+  setReenviando(true);
+
+  try {
+    const token = await tokenAdmin();
+
+    const response = await fetch(
+      "/api/admin/terapia/quizzes",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          client_ids: pacientesReenvio,
+          title: quizParaReenviar.title,
+          subtitle:
+            quizParaReenviar.subtitle || null,
+          source_notes:
+            quizParaReenviar.source_notes || null,
+          instructions:
+            quizParaReenviar.instructions || null,
+          quiz_type:
+            quizParaReenviar.quiz_type,
+          questions:
+            quizParaReenviar.questions || [],
+          status: "published",
+        }),
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        data?.error ||
+          "Não foi possível reenviar a atividade."
+      );
+    }
+
+    setMensagem(
+      "Atividade enviada novamente com sucesso."
+    );
+
+    setQuizParaReenviar(null);
+    setPacientesReenvio([]);
+
+    await carregar();
+  } catch (error) {
+    setErro(
+      error instanceof Error
+        ? error.message
+        : "Erro ao reenviar atividade."
+    );
+  } finally {
+    setReenviando(false);
+  }
+}
   return (
     <div className="mx-auto max-w-7xl">
       {/* NAVEGAÇÃO */}
@@ -715,21 +918,45 @@ export default function QuizzesPage() {
         </div>
 
         <div className="mt-6 grid gap-5 md:grid-cols-2">
-          <Campo label="Paciente">
-            <select
-              value={clientId}
-              onChange={(e) => setClientId(e.target.value)}
-              className={inputClass}
-            >
-              <option value="">Selecione a paciente</option>
+          <Campo label="Pacientes">
+  <div className="space-y-2 rounded-xl border border-[#b7c28b]/20 bg-[#13170f]/80 p-3">
+    {pacientes.map((paciente) => {
+      const selecionado =
+        clientIds.includes(paciente.id);
 
-              {pacientes.map((paciente) => (
-                <option key={paciente.id} value={paciente.id}>
-                  {paciente.nome}
-                </option>
-              ))}
-            </select>
-          </Campo>
+      return (
+        <label
+          key={paciente.id}
+          className="flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2 hover:bg-white/5"
+        >
+          <input
+            type="checkbox"
+            checked={selecionado}
+            onChange={() => {
+              setClientIds((atual) =>
+                selecionado
+                  ? atual.filter(
+                      (id) => id !== paciente.id
+                    )
+                  : [...atual, paciente.id]
+              );
+            }}
+          />
+
+          <span className="text-sm text-white">
+            {paciente.nome}
+          </span>
+        </label>
+      );
+    })}
+  </div>
+
+  {clientIds.length > 0 && (
+    <p className="mt-2 text-xs text-[#cbd69d]">
+      {clientIds.length} paciente(s) selecionado(s)
+    </p>
+  )}
+</Campo>
 
           <Campo label="Tipo de atividade">
             <select
@@ -749,7 +976,40 @@ export default function QuizzesPage() {
               <option value="feedback">
                 Feedback da sessão
               </option>
+
+              <option value="challenge">
+  Desafio
+</option>
+
+{quizType === "challenge" && (
+  <Campo label="Quantos dias?">
+    <input
+      type="number"
+      min={1}
+      max={30}
+      value={challengeDays}
+      onChange={(e) =>
+        setChallengeDays(Number(e.target.value))
+      }
+      className={inputClass}
+    />
+  </Campo>
+)}
             </select>
+            {quizType === "challenge" && (
+  <Campo label="Quantos dias?">
+    <input
+      type="number"
+      min={1}
+      max={30}
+      value={challengeDays}
+      onChange={(e) =>
+        setChallengeDays(Number(e.target.value))
+      }
+      className={inputClass}
+    />
+  </Campo>
+)}
           </Campo>
 
           <Campo label="Título">
@@ -1187,6 +1447,15 @@ export default function QuizzesPage() {
                     >
                       Arquivar
                     </button>
+
+<button
+  type="button"
+  onClick={() => excluirQuiz(quiz.id)}
+  className="rounded-xl border border-red-400/25 px-4 py-2 text-xs font-bold text-red-300"
+>
+  Excluir
+</button>
+
                   </div>
                 </div>
               </article>
