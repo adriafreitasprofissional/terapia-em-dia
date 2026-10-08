@@ -219,6 +219,7 @@ const [reenviando, setReenviando] =
     setSourceNotes("");
     setInstructions("");
     setQuizType("therapeutic");
+    setChallengeDays(7);
     setQuestions([novaPergunta()]);
     setErro(null);
     setMensagem(null);

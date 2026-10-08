@@ -163,14 +163,14 @@ export default function TerapiaVitrinePage() {
 
           <div className="mt-10 flex flex-col gap-4 sm:flex-row">
             <Link
-              href="/terapia"
+              href="/terapia/entrar"
               className="inline-flex items-center justify-center rounded-full bg-[#5E7357] px-8 py-4 text-sm font-bold text-white shadow-lg transition hover:bg-[#4F5E4A]"
             >
               Sou paciente
             </Link>
 
             <Link
-              href="/profissional"
+              href="/terapia/admin/login"
               className="inline-flex items-center justify-center rounded-full border border-[#C8CFBF] bg-white px-8 py-4 text-sm font-bold text-[#5E7357] shadow-sm transition hover:bg-[#EEF1E8]"
             >
               Sou terapeuta
@@ -223,7 +223,7 @@ export default function TerapiaVitrinePage() {
           <AcessoCard
             title="Área do Paciente"
             subtitle="Acesse seu espaço terapêutico, sua anamnese, orientações, mini palestras, relatórios, gravações e sua jornada de acompanhamento."
-            href="/terapia"
+            href="/terapia/entrar"
             icon={<UserRound size={26} />}
             destaque
           />
@@ -231,7 +231,7 @@ export default function TerapiaVitrinePage() {
           <AcessoCard
             title="Área do Terapeuta"
             subtitle="Organize seus atendimentos, pacientes, atividades, conteúdos e acompanhamento com praticidade, leveza e visão profissional."
-            href="/profissional"
+            href="/terapia/admin/login"
             icon={<Stethoscope size={26} />}
           />
         </div>
@@ -405,7 +405,7 @@ export default function TerapiaVitrinePage() {
               </p>
 
               <a
-                href="/profissional"
+                href="/terapia/admin/login"
                 className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-[#5E7357]"
               >
                 Quero saber mais
