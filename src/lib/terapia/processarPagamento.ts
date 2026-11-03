@@ -72,7 +72,9 @@ async function provisionar(pedido: Pedido): Promise<string> {
     if (novoErro) throw novoErro;
   }
   const inicio = new Date();
-  const fim = new Date(inicio.getTime() + plano.dias * 24 * 60 * 60 * 1000);
+  const fim = new Date(inicio);
+  if (pedido.treatment_id === "teste") fim.setUTCDate(fim.getUTCDate() + 7);
+  else fim.setUTCMonth(fim.getUTCMonth() + (pedido.treatment_id === "social" ? 1 : pedido.treatment_id === "profundo" ? 3 : 6));
   const { error: contratoError } = await supabaseAdmin.from("therapy_treatment_contracts").upsert({
     order_id: pedido.id, patient_id: patientId, treatment_id: pedido.treatment_id,
     sessions_total: plano.sessoes, starts_at: inicio.toISOString(), ends_at: fim.toISOString(),
@@ -88,7 +90,7 @@ async function provisionar(pedido: Pedido): Promise<string> {
     const atualExpiry = acessoAtual.expires_at ? new Date(acessoAtual.expires_at).getTime() : 0;
     const novoExpiry = new Date(fim).getTime();
     const { error } = await supabaseAdmin.from("therapy_client_access").update({
-      active: true, expires_at: new Date(Math.max(atualExpiry, novoExpiry)).toISOString(),
+      active: true, expires_at: acessoAtual.expires_at === null ? null : new Date(Math.max(atualExpiry, novoExpiry)).toISOString(),
     }).eq("id", acessoAtual.id);
     if (error) throw error;
   } else {
