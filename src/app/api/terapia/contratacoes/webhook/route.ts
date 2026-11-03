@@ -11,7 +11,8 @@ function autenticado(req: NextRequest, paymentId: string) {
   const ts = signature.match(/(?:^|,)\s*ts=([^,]+)/)?.[1] || "";
   const v1 = signature.match(/(?:^|,)\s*v1=([a-fA-F0-9]+)/)?.[1] || "";
   if (!secret || !ts || !v1 || !requestId || !/^\d+$/.test(ts)) return false;
-  if (Math.abs(Date.now() - Number(ts)) > 10 * 60 * 1000) return false;
+  const timestampMs = ts.length <= 10 ? Number(ts) * 1000 : Number(ts);
+  if (Math.abs(Date.now() - timestampMs) > 10 * 60 * 1000) return false;
   const manifest = "id:" + paymentId + ";request-id:" + requestId + ";ts:" + ts + ";";
   const expected = createHmac("sha256", secret).update(manifest).digest();
   if (!/^[a-fA-F0-9]{64}$/.test(v1)) return false;
