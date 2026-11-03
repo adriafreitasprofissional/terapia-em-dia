@@ -22,7 +22,7 @@ async function enviarAcesso(pedido: Pedido) {
   // ou recuperar a senha sem sobrescrever o acesso ao Clube do Tarô.
   const link = await supabaseAdmin.auth.admin.generateLink({
     type: "recovery", email: pedido.patient_email,
-    options: { redirectTo: SITE_URL + "/auth/callback" },
+    options: { redirectTo: SITE_URL + "/terapia/auth/callback" },
   });
   if (link.error || !link.data?.properties?.action_link) throw new Error("Falha ao gerar link de acesso.");
   const nome = escapeHtml(pedido.patient_name);
