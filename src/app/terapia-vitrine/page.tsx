@@ -349,56 +349,29 @@ export default function TerapiaVitrinePage() {
           </h2>
 
           <p className="mx-auto mt-6 max-w-3xl text-base leading-8 text-[#6C8465]">
-            Você não precisa entender de tecnologia para usar o Terapia em Dia.
-            O sistema foi pensado para ser simples, eficaz e humano.
+            Comece com 7 dias de teste por R$ 27,00 em pagamento único e um atendimento de apresentação. Depois, escolha o plano adequado à sua rotina.
           </p>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-5">
           {[
-            {
-              title: "Gratuito",
-              text: "Até 3 clientes com pagamentos. Ideal para começar.",
-            },
-            {
-              title: "Essencial",
-              text: "Agenda, pacientes, anamnese e portal básico.",
-            },
-            {
-              title: "Pro",
-              text: "Mais recursos terapêuticos, conteúdos e automações.",
-            },
-            {
-              title: "Premium",
-              text: "Experiência mais completa para profissional e paciente.",
-            },
-            {
-              title: "Personalizado",
-              text: "Para quem deseja uma estrutura ainda mais exclusiva.",
-            },
+            { title: "Plano de Teste", price: "R$ 27,00", period: "taxa única", text: "7 dias de acesso ao sistema e 1 atendimento de apresentação para conhecer os recursos. Sem assinatura automática.", features: ["Vitrine profissional", "Pacientes e agenda", "Anamnese e atividades", "Apresentação individual do sistema"] },
+            { title: "Fundador", price: "R$ 47,00", period: "/mês", text: "O essencial para organizar seus atendimentos e acolher cada paciente.", features: ["Painel profissional e pacientes", "Agenda e registros das sessões", "Portal e diário do paciente", "Financeiro de sessões e pacotes"] },
+            { title: "Profissional", price: "R$ 67,00", period: "/mês", text: "Acompanhamento e apoio ao paciente também entre as sessões.", features: ["Tudo do Fundador", "Evolução e gráficos dos registros", "Mini palestras por links", "Direcionamentos por links"] },
+            { title: "Empreendedor", price: "R$ 167,00", period: "/mês", text: "Mais possibilidades para desenvolver seu negócio.", features: ["Recursos dos planos anteriores", "Loja e vendas", "Gestão comercial"] },
+            { title: "Construtor", price: "R$ 230,00", period: "/mês", text: "Uma estrutura para compartilhar conhecimento e ampliar seu trabalho.", features: ["Recursos dos planos anteriores", "Estrutura de conteúdos e ensino"] },
           ].map((plano) => (
-            <motion.div
-              key={plano.title}
-              initial={{ opacity: 0, y: 22 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="min-w-0 rounded-[24px] border border-[#D8D2C4] bg-white p-5 shadow-sm sm:rounded-[28px] sm:p-6"
-            >
-              <p className="text-lg font-extrabold text-[#4F5E4A]">
-                {plano.title}
-              </p>
-
-              <p className="mt-3 text-sm leading-7 text-[#6C8465]">
-                {plano.text}
-              </p>
-
-              <a
-                href="/terapia/admin/login"
-                className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-[#5E7357]"
-              >
-                Quero saber mais
-                <ArrowRight size={16} />
+            <motion.div key={plano.title} initial={{ opacity: 0, y: 22 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }} transition={{ duration: 0.6 }}
+              className="flex min-w-0 flex-col rounded-[24px] border border-[#D8D2C4] bg-white p-5 shadow-sm sm:rounded-[28px] sm:p-6">
+              <p className="text-lg font-extrabold text-[#4F5E4A]">{plano.title}</p>
+              <p className="mt-3 min-h-20 text-sm leading-7 text-[#6C8465]">{plano.text}</p>
+              <p className="mt-4 text-2xl font-extrabold text-[#4F5E4A]">{plano.price} <span className="text-xs font-normal">{plano.period}</span></p>
+              <ul className="mt-5 flex-1 space-y-3 border-t border-[#D8D2C4] pt-4 text-sm text-[#52694F]">
+                {plano.features.map(feature => <li key={feature} className="flex gap-2"><span aria-hidden="true">✓</span>{feature}</li>)}
+              </ul>
+              <a href="/terapia/admin/login" className="mt-7 inline-flex items-center justify-center gap-2 rounded-xl bg-[#D8C399] px-4 py-3 text-sm font-bold text-[#243321]">
+                Conhecer o acesso <ArrowRight size={16} />
               </a>
             </motion.div>
           ))}
