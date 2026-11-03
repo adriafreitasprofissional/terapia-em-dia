@@ -1,5 +1,5 @@
 ﻿import { redirect } from "next/navigation";
 
 export default function Home() {
-  redirect("/terapia");
+  redirect("/terapia-vitrine");
 }
