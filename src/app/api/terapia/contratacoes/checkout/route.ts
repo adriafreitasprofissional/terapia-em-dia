@@ -47,7 +47,8 @@ export async function POST(req: NextRequest) {
       excluded_payment_types: [{ id: "credit_card" }, { id: "debit_card" }, { id: "ticket" }, { id: "atm" }, { id: "prepaid_card" }],
       installments: 1,
     } : {
-      excluded_payment_types: [{ id: "bank_transfer" }, { id: "ticket" }, { id: "atm" }],
+      excluded_payment_types: [{ id: "bank_transfer" }, { id: "ticket" }, { id: "atm" }, { id: "debit_card" }],
+      installments: 12,
     };
     const preference = await new Preference(mpClient).create({
       body: {
