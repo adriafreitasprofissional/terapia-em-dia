@@ -161,27 +161,16 @@ export default function TerapiaVitrinePage() {
             terapeutas encontram tecnologia com leveza, cuidado e propósito.
           </p>
 
-          <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-            <Link
-              href="/terapia/entrar"
-              className="inline-flex items-center justify-center rounded-full bg-[#5E7357] px-8 py-4 text-sm font-bold text-white shadow-lg transition hover:bg-[#4F5E4A]"
-            >
-              Sou paciente
+          <div className="mt-10 flex flex-col gap-3">
+            <Link href="/terapia" className="inline-flex items-center justify-center rounded-full bg-[#5E7357] px-7 py-4 text-center text-sm font-bold text-white shadow-lg transition hover:bg-[#4F5E4A]">
+              Entrar no meu espaço
             </Link>
-
-            <Link
-              href="/terapia/admin/login"
-              className="inline-flex items-center justify-center rounded-full border border-[#C8CFBF] bg-white px-8 py-4 text-sm font-bold text-[#5E7357] shadow-sm transition hover:bg-[#EEF1E8]"
-            >
-              Sou terapeuta
-            </Link>
-
-            <a
-              href="#planos"
-              className="inline-flex items-center justify-center rounded-full border border-[#D8D2C4] bg-[#F2EEE5] px-8 py-4 text-sm font-bold text-[#5E7357] transition hover:bg-[#EAE4D8]"
-            >
-              Conhecer o sistema
+            <a href="#planos" className="inline-flex items-center justify-center rounded-full border border-[#C8CFBF] bg-white px-7 py-4 text-center text-sm font-bold text-[#5E7357] transition hover:bg-[#EEF1E8]">
+              Conhecer o Terapia em Dia como Profissional
             </a>
+            <Link href="/tratamentos" className="inline-flex items-center justify-center rounded-full border border-[#D6BD85] bg-[#E8D5AA] px-7 py-4 text-center text-sm font-bold text-[#293728] transition hover:bg-[#F1DDB8]">
+              Conhecer o Terapia em Dia como Paciente
+            </Link>
           </div>
 
           <div className="mt-10 flex flex-wrap gap-3 text-sm text-[#6C8465]">
@@ -223,7 +212,7 @@ export default function TerapiaVitrinePage() {
           <AcessoCard
             title="Área do Paciente"
             subtitle="Acesse seu espaço terapêutico, sua anamnese, orientações, mini palestras, relatórios, gravações e sua jornada de acompanhamento."
-            href="/terapia/entrar"
+            href="/terapia"
             icon={<UserRound size={26} />}
             destaque
           />
