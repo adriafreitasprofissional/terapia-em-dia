@@ -71,3 +71,39 @@
   outline: 2px solid var(--terapia-dourado);
   outline-offset: 3px;
 }
+
+
+/* Li Stilus: identidade própria, restrita ao painel de Lilian. */
+.terapia-admin-theme.li-stilus {
+  --terapia-fundo: #392B2A;
+  --terapia-superficie: #47332F;
+  --terapia-campo: #533B35;
+  --terapia-dourado: #F3B99D;
+  --terapia-texto: #FFF4E9;
+  --terapia-suave: #E9D5C8;
+  background: var(--terapia-fundo) !important;
+  color: var(--terapia-texto) !important;
+}
+.li-stilus > aside,
+.li-stilus > header,
+.li-stilus > main { background-color: #392B2A !important; color: #FFF4E9 !important; }
+.li-stilus > aside { background-color: #322625 !important; border-color: #996E60 !important; }
+.li-stilus [class*="bg-[#1B271A]"],
+.li-stilus [class*="bg-[#293A27]"],
+.li-stilus [class*="bg-[#F7F1E4]"],
+.li-stilus [class*="bg-white"] { background-color: #47332F !important; }
+.li-stilus [class*="bg-[#506A48]"],
+.li-stilus [class*="bg-[#5E7357]"] { background-color: #86594B !important; }
+.li-stilus [class*="hover:bg-[#31402D]"]:hover { background-color: #61453E !important; }
+.li-stilus [class*="text-[#D7C18C]"],
+.li-stilus [class*="text-[#8AA27A]"] { color: #F3B99D !important; }
+.li-stilus [class*="text-[#F5F0E6]"],
+.li-stilus [class*="text-[#5E7357]"],
+.li-stilus [class*="text-[#4F5E4A]"] { color: #FFF4E9 !important; }
+.li-stilus [class*="text-[#D4DCCE]"],
+.li-stilus [class*="text-[#6C8465]"] { color: #E9D5C8 !important; }
+.li-stilus [class*="border-[#D7C18C]"],
+.li-stilus [class*="border-[#DCCFB8]"] { border-color: #996E60 !important; }
+.li-stilus input,
+.li-stilus textarea,
+.li-stilus select { background-color: #533B35 !important; color: #FFF4E9 !important; border-color: #996E60 !important; }
