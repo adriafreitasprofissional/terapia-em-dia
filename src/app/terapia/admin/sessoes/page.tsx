@@ -5,6 +5,7 @@ import {
   useState,
 } from "react";
 import { adminFetch } from "../components/adminFetch";
+import ListaPorAnoMes from "../components/ListaPorAnoMes";
 
 export default function SessoesPage() {
   const [
@@ -130,101 +131,37 @@ export default function SessoesPage() {
         </div>
       )}
 
-      <div className="mt-7 grid gap-3">
-        {atendimentos.map(
-          (item) => (
-            <div
-              key={
-                item.id
-              }
-              className="rounded-2xl border border-[#DCCFB8] bg-[#F7F1E4] p-5"
-            >
+      <div className="mt-7">
+        <p className="mb-4 text-sm text-[#D4DCCE]">Selecione o ano e o mês para consultar as sessões ({atendimentos.length}).</p>
+        <ListaPorAnoMes
+          itens={atendimentos}
+          vazio="Nenhuma sessão registrada."
+          renderItem={(item) => (
+            <div className="rounded-2xl border border-[#D7C18C]/35 bg-[#1B271A] p-5">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                  <p className="font-extrabold text-[#5E7357]">
-                    {
-                      item.client_name
-                    }
-                  </p>
-
-                  <p className="mt-1 text-sm text-[#6C8465]">
-                    {
-                      item.service_type
-                    }{" "}
-                    ·{" "}
-                    {new Date(
-                      item.scheduled_at
-                    ).toLocaleString(
-                      "pt-BR"
-                    )}
-                  </p>
-
-                  <p className="mt-2 text-xs font-bold uppercase tracking-wide text-[#7A8D73]">
-                    {
-                      item.status
-                    }
-                  </p>
+                  <p className="font-bold text-[#F5F0E6]">{item.client_name}</p>
+                  <p className="mt-1 text-sm text-[#D4DCCE]">{item.service_type} · {new Date(item.scheduled_at).toLocaleString("pt-BR")}</p>
+                  <p className="mt-2 text-xs font-semibold uppercase tracking-wide text-[#D7C18C]">{item.status}</p>
                 </div>
-
                 <div className="flex flex-wrap gap-2">
-                  {item.meet_url &&
-                    item.status !==
-                      "cancelado" && (
-                      <a
-                        href={
-                          item.meet_url
-                        }
-                        target="_blank"
-                        rel="noreferrer"
-                        className="rounded-xl bg-[#5E7357] px-3 py-2 text-xs font-bold text-white"
-                      >
-                        Entrar
-                      </a>
-                    )}
-
-                  {item.status ===
-                    "agendado" && (
+                  {item.meet_url && item.status !== "cancelado" && (
+                    <a href={item.meet_url} target="_blank" rel="noreferrer"
+                      className="rounded-xl bg-[#506A48] px-3 py-2 text-xs font-bold text-white">Entrar</a>
+                  )}
+                  {item.status === "agendado" && (
                     <>
-                      <button
-                        type="button"
-                        onClick={() =>
-                          alterarStatus(
-                            item.id,
-                            "realizado"
-                          )
-                        }
-                        className="rounded-xl border border-[#8AA27A] px-3 py-2 text-xs font-bold text-[#5E7357]"
-                      >
-                        Marcar realizada
-                      </button>
-
-                      <button
-                        type="button"
-                        onClick={() =>
-                          alterarStatus(
-                            item.id,
-                            "cancelado"
-                          )
-                        }
-                        className="rounded-xl border border-[#C8B8A8] px-3 py-2 text-xs font-bold text-[#7A6A60]"
-                      >
-                        Cancelar
-                      </button>
+                      <button type="button" onClick={() => alterarStatus(item.id, "realizado")}
+                        className="rounded-xl border border-[#D7C18C]/60 px-3 py-2 text-xs font-bold text-[#F5F0E6]">Marcar realizada</button>
+                      <button type="button" onClick={() => alterarStatus(item.id, "cancelado")}
+                        className="rounded-xl border border-[#D7C18C]/35 px-3 py-2 text-xs font-bold text-[#C8D3C3]">Cancelar</button>
                     </>
                   )}
                 </div>
               </div>
             </div>
-          )
-        )}
-
-        {atendimentos.length ===
-          0 && (
-          <p className="text-sm text-[#6C8465]">
-            Nenhuma sessão
-            registrada.
-          </p>
-        )}
+          )}
+        />
       </div>
     </div>
   );
