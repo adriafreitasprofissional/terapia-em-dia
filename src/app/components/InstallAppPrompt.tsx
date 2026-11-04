@@ -21,6 +21,7 @@ const UM_DIA = 24 * 60 * 60 * 1000;
 export default function InstallAppPrompt() {
   const [mostrar, setMostrar] = useState(false);
   const [ehIOS, setEhIOS] = useState(false);
+  const [ehDesktop, setEhDesktop] = useState(false);
   const [eventoInstalacao, setEventoInstalacao] =
     useState<BeforeInstallPromptEvent | null>(null);
   const [marca, setMarca] =
@@ -77,6 +78,7 @@ export default function InstallAppPrompt() {
       /iphone|ipad|ipod/.test(userAgent);
 
     setEhIOS(ios);
+    setEhDesktop(!/android|iphone|ipad|ipod/.test(userAgent));
 
     const chaveAdiar =
       marcaAtual === "terapia"
@@ -176,56 +178,34 @@ export default function InstallAppPrompt() {
 
   if (terapia) {
     return (
-      <div className="fixed inset-0 z-[99999] flex items-end justify-center bg-black/45 p-4 backdrop-blur-sm sm:items-center">
-        <div className="w-full max-w-md overflow-hidden rounded-[30px] border border-[#C9D5C1] bg-[#F7F1E4] p-6 text-[#4F5E4A] shadow-[0_30px_100px_rgba(0,0,0,.35)]">
-          <img
-            src="/terapia-icon-192-v2.png"
-            alt="Terapia em Dia"
-            className="mx-auto h-20 w-20 rounded-full"
-          />
-
-          <p className="mt-5 text-center text-[11px] font-bold uppercase tracking-[0.25em] text-[#8AA27A]">
-            Terapia em Dia
+      <div className="fixed inset-0 z-[99999] flex items-end justify-center bg-black/60 p-4 backdrop-blur-sm sm:items-center">
+        <div className="w-full max-w-md rounded-[24px] border border-[#D7C18C]/40 bg-[#1B271A] p-6 text-[#F5F0E6] shadow-[0_30px_100px_rgba(0,0,0,.4)]">
+          <img src="/terapia-icon-192-v2.png" alt="Terapia em Dia" width="80" height="80" className="mx-auto h-20 w-20 rounded-full border border-[#D7C18C]/50 p-1" />
+          <p className="mt-5 text-center text-[11px] font-semibold uppercase tracking-[0.25em] text-[#D7C18C]">Terapia em Dia</p>
+          <h2 className="mt-3 text-center font-serif text-2xl">Instalar o aplicativo</h2>
+          <p className="mx-auto mt-3 max-w-sm text-center text-sm leading-6 text-[#D4DCCE]">
+            Adicione o Terapia em Dia ao seu computador ou celular, com ícone próprio e acesso direto.
           </p>
-
-          <h2 className="mt-2 text-center text-2xl font-extrabold text-[#5E7357]">
-            Instale o aplicativo
-          </h2>
-
-          <p className="mx-auto mt-3 max-w-sm text-center text-sm leading-6 text-[#6C8465]">
-            Tenha seu espaço terapêutico direto na tela do celular.
-          </p>
-
-          <button
-            type="button"
-            onClick={instalar}
-            className="mt-6 w-full rounded-xl bg-[#5E7357] px-5 py-4 text-sm font-extrabold text-white shadow transition hover:bg-[#4F6548]"
-          >
-            INSTALAR APLICATIVO
-          </button>
-
-          {mostrarAjuda && !eventoInstalacao && (
-            <div className="mt-4 rounded-2xl border border-[#DCCFB8] bg-white p-4 text-sm leading-6 text-[#5E7357]">
+          {eventoInstalacao ? (
+            <button type="button" onClick={instalar} className="mt-6 w-full rounded-lg bg-[#D8C399] px-5 py-4 text-sm font-bold text-[#222F20] transition hover:bg-[#E8D5AD]">
+              INSTALAR APLICATIVO
+            </button>
+          ) : (
+            <div className="mt-6 rounded-xl border border-[#D7C18C]/30 bg-[#293A27] p-4 text-sm leading-7 text-[#F1E6D0]">
               {ehIOS ? (
-                <p>
-                  Toque em <strong>Compartilhar</strong> e depois em{" "}
-                  <strong>Adicionar à Tela de Início</strong>.
-                </p>
+                <p>No iPhone, abra o site no Safari, toque em <strong>Compartilhar</strong> e escolha <strong>Adicionar à Tela de Início</strong>.</p>
+              ) : ehDesktop ? (
+                <p>No Chrome do computador, clique nos <strong>três pontos (⋮)</strong> no canto superior direito. Procure <strong>Transmitir, salvar e compartilhar → Instalar página como app</strong> (ou <strong>Instalar Terapia em Dia</strong>). Se o navegador oferecer um ícone de instalação na barra de endereços, você também pode clicar nele.</p>
               ) : (
-                <p>
-                  Abra o menu <strong>⋮</strong> deste navegador e toque em{" "}
-                  <strong>Instalar aplicativo</strong> ou{" "}
-                  <strong>Adicionar à tela inicial</strong>.
-                </p>
+                <p>No navegador do celular, toque no menu <strong>⋮</strong> e escolha <strong>Instalar aplicativo</strong> ou <strong>Adicionar à tela inicial</strong>.</p>
               )}
+              <p className="mt-3 text-xs text-[#C5CEBF]">A instalação depende das opções disponibilizadas pelo navegador. Você pode continuar a usar o site normalmente.</p>
             </div>
           )}
-
-          <button
-            type="button"
-            onClick={agoraNao}
-            className="mt-4 w-full rounded-xl border border-[#C8B8A8] px-5 py-3 text-sm font-semibold text-[#6C8465] transition hover:bg-[#E9E4D7]"
-          >
+          {mostrarAjuda && eventoInstalacao && (
+            <p className="mt-3 text-center text-sm text-[#F1E6D0]">Confira a solicitação de instalação que apareceu no navegador.</p>
+          )}
+          <button type="button" onClick={agoraNao} className="mt-4 w-full rounded-lg border border-[#D7C18C]/40 px-5 py-3 text-sm font-semibold text-[#E8D5AD] transition hover:bg-white/10">
             Agora não
           </button>
         </div>
