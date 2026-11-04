@@ -24,6 +24,13 @@ const negocios: Negocio[] = [
     destaque: true,
   },
   {
+    nome: "Li Stilus | Terapia em Dia",
+    descricao: "Central de suporte: confira a página de vendas, serviços e painel da Lilian em modo de leitura.",
+    icone: "🌸",
+    href: "/admin/terapia/li-stilus",
+    status: "EM CONFIGURAÇÃO",
+  },
+  {
     nome: "Clube do Tarô",
     descricao:
       "Assinantes, direcionamentos, atendimentos, mentorias, conteúdos e gestão do Clube.",
