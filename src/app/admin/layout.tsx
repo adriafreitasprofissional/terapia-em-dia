@@ -125,6 +125,7 @@ export default function AdminLayout({
   const paginaCentral =
   pathname === "/admin" ||
   pathname.startsWith("/admin/terapia") ||
+  pathname.startsWith("/admin/tarologas") ||
   pathname.startsWith("/admin/gestao-cursos");
 
   async function sair() {

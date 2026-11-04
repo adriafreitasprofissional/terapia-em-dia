@@ -24,6 +24,20 @@ const negocios: Negocio[] = [
     destaque: true,
   },
   {
+    nome: "Minhas terapeutas",
+    descricao: "Todas as profissionais clientes do Terapia em Dia: acompanhe cada aplicativo e entre em modo de suporte.",
+    icone: "🌸",
+    href: "/admin/terapia/profissionais",
+    status: "SUPORTE",
+  },
+  {
+    nome: "Minhas Tarólogas",
+    descricao: "Profissionais clientes da plataforma de Tarô: aplicativos próprios, vitrines e suporte individual.",
+    icone: "✦",
+    href: "/admin/tarologas",
+    status: "EM CONFIGURAÇÃO",
+  },
+  {
     nome: "Clube do Tarô",
     descricao:
       "Assinantes, direcionamentos, atendimentos, mentorias, conteúdos e gestão do Clube.",

@@ -170,7 +170,7 @@ export default function TerapiaAdminShell({
     );
 
     window.location.replace(
-      "/admin/terapia"
+      "/admin/terapia/profissionais"
     );
   }
 
@@ -281,7 +281,7 @@ const acessoLiberado =
     perfil?.preview_mode === true;
 
   return (
-    <div className="terapia-admin-theme min-h-screen bg-[#222F20] text-[#F5F0E6]">
+    <div className={`terapia-admin-theme min-h-screen bg-[#222F20] text-[#F5F0E6] ${ehLilian ? "li-stilus" : ""}`}>
       <header className="sticky top-0 z-40 flex items-center justify-between border-b border-[#D7C18C]/30 bg-[#1B271A]/95 px-4 py-4 backdrop-blur md:hidden">
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#D7C18C]">
@@ -337,7 +337,7 @@ const acessoLiberado =
             </p>
 
             <h1 className="mt-1 text-xl font-extrabold text-[#F5F0E6]">
-              {nomeProfissional}
+              {ehLilian ? "Li Stilus" : nomeProfissional}
             </h1>
 
             <p className="mt-1 text-xs text-[#C5CEBF]">
@@ -389,6 +389,12 @@ const acessoLiberado =
             }
           )}
 
+          {ehLilian && (
+            <Link href="/terapia/admin/servicos" onClick={() => setMenuAberto(false)}
+              className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold transition ${pathname.startsWith("/terapia/admin/servicos") ? "bg-[#506A48] text-[#F5F0E6]" : "text-[#F5F0E6] hover:bg-[#31402D]"}`}>
+              <span className="w-5 text-center">✦</span><span>Meus serviços</span>
+            </Link>
+          )}
           <div className="my-3 border-t border-[#D7C18C]/25" />
 
           {futuros.map(
@@ -441,7 +447,7 @@ const acessoLiberado =
           <div className="mb-6 flex flex-col gap-3 rounded-2xl border border-[#C9A84C] bg-[#FFF6D8] p-4 text-[#66521F] sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p className="text-sm font-extrabold">
-                Visualizando como Lilian
+                {"Visualizando como " + (perfil?.nome_completo || perfil?.nome || "profissional")}
               </p>
 
               <p className="mt-1 text-xs">
