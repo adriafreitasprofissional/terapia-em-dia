@@ -17,19 +17,24 @@ const planos: { id: PlanoId; nome: string; periodo: string; consultas: number; v
 ];
 
 const moeda = (valor: number) => valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
-const contato = "adriafreitasprofissional@gmail.com";
-
-function linkContato(nome: string, periodo: string, consultas: number, valor: number) {
-  const assunto = "Quero contratar o tratamento " + nome + " | Terapia em Dia";
-  const mensagem = [
-    "Olá, Ádria! Tenho interesse no tratamento " + nome + ".",
-    "Duração: " + periodo,
-    "Consultas incluídas: " + consultas,
-    "Valor total: " + moeda(valor),
-    "Gostaria de receber as orientações para contratar e agendar os atendimentos.",
-  ].join("\n");
-  return "mailto:" + contato + "?subject=" + encodeURIComponent(assunto) + "&body=" + encodeURIComponent(mensagem);
-}
+const pagamentos: Record<PlanoId, { cartao: string; pix: string }> = {
+  "teste": {
+    "cartao": "https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=17739565-441fdf8a-10b6-44af-9fe2-452f516fa77b",
+    "pix": "https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=17739565-fd15366c-98ab-4980-9e32-f2c2ec5badfb"
+  },
+  "social": {
+    "cartao": "https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=17739565-3c7953b5-8ec7-45e7-8f47-342445dd4687",
+    "pix": "https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=17739565-4ba13e70-6a65-4d14-a19c-1fb056b85f0f"
+  },
+  "profundo": {
+    "cartao": "https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=17739565-64046de5-b685-4778-963a-f715c211e829",
+    "pix": "https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=17739565-3a3b40e3-51c5-4cc5-8b50-8bab1d7a4eff"
+  },
+  "avancado": {
+    "cartao": "https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=17739565-20e43460-d40e-4f24-8e41-9d80f16ba4fa",
+    "pix": "https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=17739565-83709f83-3620-4e16-a5be-d733bf2c67d2"
+  }
+};
 
 export default function TratamentosPage() {
   return (
@@ -63,7 +68,7 @@ export default function TratamentosPage() {
         <div className="mb-8 text-center">
           <p className="text-xs uppercase tracking-[0.25em] text-[#D7C18C]">Seu investimento</p>
           <h2 className="mt-3 font-serif text-3xl sm:text-4xl">Tratamentos disponíveis</h2>
-          <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-[#D6DCCF]">Valores totais por tratamento. Desconto de 5% para pagamento à vista por Pix. Parcelamento sujeito às condições do Mercado Pago.</p>
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-[#D6DCCF]">Valores totais por tratamento. Desconto de 5% para pagamento à vista por Pix ou saldo Mercado Pago. Parcelamento no cartão sujeito às condições do Mercado Pago.</p>
         </div>
         <div className="grid gap-5 md:grid-cols-2">
           {planos.map(plano => (
@@ -88,13 +93,17 @@ export default function TratamentosPage() {
               <div className="mt-5 border-t border-[#D7C18C]/20 pt-5">
                 <p className="text-xs uppercase tracking-[0.18em] text-[#D7C18C]">Valor total</p>
                 <p className="mt-2 font-serif text-3xl sm:text-4xl">{moeda(plano.valor)}</p>
-                <p className="mt-3 text-sm text-[#E3C993]">Pix à vista (5% de desconto): {moeda(Math.round(plano.valor * 95) / 100)}</p>
+                <p className="mt-3 text-sm text-[#E3C993]">À vista (5% de desconto): {moeda(Math.round(plano.valor * 95) / 100)}</p>
               </div>
-              <a href={linkContato(plano.nome, plano.periodo, plano.consultas, plano.valor)}
+              <a href={pagamentos[plano.id].cartao} aria-label={"Pagar " + plano.nome + " com cartão no Mercado Pago"}
                 className="mt-8 flex min-h-14 items-center justify-center gap-2 rounded-md bg-[#D8C399] px-5 py-4 text-center text-sm font-semibold text-[#222F20] transition hover:bg-[#E8D5AD]">
-                Solicitar este tratamento <ArrowUpRight size={16} />
+                Pagar com cartão <ArrowUpRight size={16} />
               </a>
-              <p className="mt-3 text-center text-xs leading-5 text-[#C9D2C3]">Abre um e-mail com o pacote escolhido. Pagamento online ainda não habilitado.</p>
+              <a href={pagamentos[plano.id].pix} aria-label={"Pagar " + plano.nome + " à vista com 5% de desconto no Mercado Pago"}
+                className="mt-3 flex min-h-14 items-center justify-center gap-2 rounded-md border border-[#D7C18C]/70 px-5 py-4 text-center text-sm font-semibold text-[#E3C993] transition hover:bg-white/10">
+                Pagar à vista · 5% de desconto <ArrowUpRight size={16} />
+              </a>
+              <p className="mt-3 text-center text-xs leading-5 text-[#C9D2C3]">Pagamento seguro no Mercado Pago. À vista por Pix ou saldo da conta.</p>
             </article>
           ))}
         </div>
@@ -109,7 +118,7 @@ export default function TratamentosPage() {
           <div className="mt-7 grid gap-6 sm:grid-cols-3">
             {[
               { icon: HeartHandshake, titulo: "Escolha", texto: "Compare os pacotes e escolha o acompanhamento que deseja." },
-              { icon: CalendarDays, titulo: "Contratação", texto: "Envie sua solicitação e receba as orientações para o pagamento e agendamento." },
+              { icon: CalendarDays, titulo: "Contratação", texto: "Pague pelo Mercado Pago. Após a confirmação, receba as orientações para agendar seus atendimentos." },
               { icon: ShieldCheck, titulo: "Seu espaço", texto: "Após a confirmação, você receberá as instruções para acessar seu portal." },
             ].map(({ icon: Icon, titulo, texto }) => (
               <div key={titulo} className="border-t border-[#D7C18C]/40 pt-5">
@@ -129,3 +138,5 @@ export default function TratamentosPage() {
     </main>
   );
 }
+
+
