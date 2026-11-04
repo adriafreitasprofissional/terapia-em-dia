@@ -170,7 +170,7 @@ export default function TerapiaAdminShell({
     );
 
     window.location.replace(
-      "/admin/terapia/li-stilus"
+      "/admin/terapia/profissionais"
     );
   }
 
@@ -447,7 +447,7 @@ const acessoLiberado =
           <div className="mb-6 flex flex-col gap-3 rounded-2xl border border-[#C9A84C] bg-[#FFF6D8] p-4 text-[#66521F] sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p className="text-sm font-extrabold">
-                Visualizando como Lilian
+                {"Visualizando como " + (perfil?.nome_completo || perfil?.nome || "profissional")}
               </p>
 
               <p className="mt-1 text-xs">
