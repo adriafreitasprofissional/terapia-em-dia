@@ -87,7 +87,7 @@ export default function TerapiaVitrinePage() {
             <article key={plano.id} className={"flex flex-col rounded-[24px] border bg-[#1B271A] p-6 sm:p-8 " + ("destaque" in plano && plano.destaque ? "border-[#D7C18C]" : "border-[#D7C18C]/30")}>
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <h3 className="font-serif text-2xl sm:text-3xl">{plano.nome}</h3>
-                {"destaque" in plano && plano.destaque && <span className="rounded-full border border-[#D7C18C]/50 px-3 py-1 text-xs text-[#D7C18C]">Mais procurado</span>}
+                {"destaque" in plano && plano.destaque && <span className="rounded-full border border-[#D7C18C]/50 px-3 py-1 text-xs text-[#D7C18C]">Para sua rotina</span>}
               </div>
               <div className="mt-6 rounded-xl border border-[#D7C18C]/40 bg-[#2A3927] px-5 py-6">
                 <p className="font-serif text-4xl text-[#E3C993] sm:text-5xl">{moeda(plano.valor)}</p>
