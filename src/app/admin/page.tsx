@@ -31,6 +31,13 @@ const negocios: Negocio[] = [
     status: "SUPORTE",
   },
   {
+    nome: "Minhas Tarólogas",
+    descricao: "Profissionais clientes da plataforma de Tarô: aplicativos próprios, vitrines e suporte individual.",
+    icone: "✦",
+    href: "/admin/tarologas",
+    status: "EM CONFIGURAÇÃO",
+  },
+  {
     nome: "Clube do Tarô",
     descricao:
       "Assinantes, direcionamentos, atendimentos, mentorias, conteúdos e gestão do Clube.",
