@@ -10,6 +10,7 @@ import {
   useState,
 } from "react";
 import Image from "next/image";
+import "../admin-theme.css";
 
 type PerfilTerapia = {
   id: string;
@@ -198,7 +199,7 @@ export default function TerapiaAdminShell({
 
   if (carregando) {
     return (
-      <main className="min-h-screen bg-[#F8F4EC] p-8 text-center text-[#5E7357]">
+      <main className="min-h-screen bg-[#222F20] p-8 text-center text-[#F5F0E6]">
         Abrindo Terapia em
         Dia...
       </main>
@@ -228,9 +229,9 @@ const acessoLiberado =
 
   if (!acessoLiberado) {
   return (
-    <main className="min-h-screen bg-[#F8F4EC] px-5 py-10 text-[#5E7357]">
-      <div className="mx-auto max-w-xl rounded-[28px] border border-[#DCCFB8] bg-white p-8 text-center shadow-xl">
-        <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#8AA27A]">
+    <main className="min-h-screen bg-[#222F20] px-5 py-10 text-[#F5F0E6]">
+      <div className="mx-auto max-w-xl rounded-[28px] border border-[#D7C18C]/30 bg-white p-8 text-center shadow-xl">
+        <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#D7C18C]">
           Terapia em Dia
         </p>
 
@@ -238,14 +239,14 @@ const acessoLiberado =
           Seu período de cortesia terminou
         </h1>
 
-        <p className="mt-4 text-sm leading-7 text-[#6C8465]">
+        <p className="mt-4 text-sm leading-7 text-[#D4DCCE]">
           Escolha um plano para continuar usando seu painel profissional.
         </p>
 
         <div className="mt-7 space-y-3">
           <Link
-            href="/profissional"
-            className="block rounded-xl bg-[#5E7357] px-5 py-3 font-bold text-white"
+            href="/terapia-vitrine#planos"
+            className="block rounded-xl bg-[#506A48] px-5 py-3 font-bold text-white"
           >
             Ver planos
           </Link>
@@ -253,7 +254,7 @@ const acessoLiberado =
           <button
             type="button"
             onClick={sair}
-            className="w-full rounded-xl border border-[#C8B8A8] px-5 py-3 font-semibold"
+            className="w-full rounded-xl border border-[#D7C18C]/40 px-5 py-3 font-semibold"
           >
             Sair
           </button>
@@ -280,14 +281,14 @@ const acessoLiberado =
     perfil?.preview_mode === true;
 
   return (
-    <div className="min-h-screen bg-[#F8F4EC] text-[#4F5E4A]">
-      <header className="sticky top-0 z-40 flex items-center justify-between border-b border-[#DCCFB8] bg-[#F7F1E4]/95 px-4 py-4 backdrop-blur md:hidden">
+    <div className="terapia-admin-theme min-h-screen bg-[#222F20] text-[#F5F0E6]">
+      <header className="sticky top-0 z-40 flex items-center justify-between border-b border-[#D7C18C]/30 bg-[#1B271A]/95 px-4 py-4 backdrop-blur md:hidden">
         <div>
-          <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#8AA27A]">
+          <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#D7C18C]">
             Terapia em Dia
           </p>
 
-          <p className="text-sm font-extrabold text-[#5E7357]">
+          <p className="text-sm font-extrabold text-[#F5F0E6]">
             {nomeProfissional}
           </p>
         </div>
@@ -297,7 +298,7 @@ const acessoLiberado =
           onClick={() =>
             setMenuAberto(true)
           }
-          className="rounded-xl border border-[#A9B89E] px-4 py-2 text-sm font-bold text-[#5E7357]"
+          className="rounded-xl border border-[#D7C18C]/50 px-4 py-2 text-sm font-bold text-[#F5F0E6]"
         >
           Menu
         </button>
@@ -315,7 +316,7 @@ const acessoLiberado =
       )}
 
       <aside
-        className={`fixed inset-y-0 left-0 z-50 flex w-[286px] flex-col border-r border-[#DCCFB8] bg-[#F7F1E4] p-5 transition-transform md:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-50 flex w-[286px] flex-col border-r border-[#D7C18C]/30 bg-[#1B271A] p-5 transition-transform md:translate-x-0 ${
           menuAberto
             ? "translate-x-0"
             : "-translate-x-full"
@@ -331,15 +332,15 @@ const acessoLiberado =
           />
 
           <div className="min-w-0">
-            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#8AA27A]">
+            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#D7C18C]">
               Terapia em Dia
             </p>
 
-            <h1 className="mt-1 text-xl font-extrabold text-[#5E7357]">
+            <h1 className="mt-1 text-xl font-extrabold text-[#F5F0E6]">
               {nomeProfissional}
             </h1>
 
-            <p className="mt-1 text-xs text-[#7A8D73]">
+            <p className="mt-1 text-xs text-[#C5CEBF]">
               Administra??o Terap?utica
             </p>
           </div>
@@ -372,8 +373,8 @@ const acessoLiberado =
                   }
                   className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold transition ${
                     active
-                      ? "bg-[#5E7357] text-[#F8F4EC] shadow"
-                      : "text-[#5E7357] hover:bg-[#E9E4D7]"
+                      ? "bg-[#506A48] text-[#F5F0E6] shadow"
+                      : "text-[#F5F0E6] hover:bg-[#31402D]"
                   }`}
                 >
                   <span className="w-5 text-center">
@@ -388,13 +389,13 @@ const acessoLiberado =
             }
           )}
 
-          <div className="my-3 border-t border-[#DDD2C2]" />
+          <div className="my-3 border-t border-[#D7C18C]/25" />
 
           {futuros.map(
             (label) => (
               <div
                 key={label}
-                className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-[#9AA493]"
+                className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-[#9BAF96]"
                 title="Em breve"
               >
                 <span className="w-5 text-center">
@@ -409,7 +410,7 @@ const acessoLiberado =
           )}
         </nav>
 
-        <div className="grid gap-2 border-t border-[#DDD2C2] pt-4">
+        <div className="grid gap-2 border-t border-[#D7C18C]/25 pt-4">
           {perfil?.central_access && (
             <Link
               href="/admin"
@@ -418,7 +419,7 @@ const acessoLiberado =
                   false
                 )
               }
-              className="rounded-xl bg-[#5E7357] px-4 py-3 text-center text-sm font-bold text-white shadow"
+              className="rounded-xl bg-[#506A48] px-4 py-3 text-center text-sm font-bold text-white shadow"
             >
               ← Voltar à Central
               de Negócios
@@ -428,7 +429,7 @@ const acessoLiberado =
           <button
             type="button"
             onClick={sair}
-            className="rounded-xl border border-[#C8B8A8] px-4 py-3 text-sm font-bold text-[#6C8465] transition hover:bg-[#E9E4D7]"
+            className="rounded-xl border border-[#D7C18C]/40 px-4 py-3 text-sm font-bold text-[#D4DCCE] transition hover:bg-[#31402D]"
           >
             Sair
           </button>
@@ -451,7 +452,7 @@ const acessoLiberado =
             <button
               type="button"
               onClick={sairVisualizacao}
-              className="rounded-xl bg-[#5E7357] px-4 py-2 text-sm font-bold text-white"
+              className="rounded-xl bg-[#506A48] px-4 py-2 text-sm font-bold text-white"
             >
               Sair da visualização
             </button>
