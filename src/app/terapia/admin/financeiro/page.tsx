@@ -5,6 +5,7 @@ import {
   useState,
 } from "react";
 import { adminFetch } from "../components/adminFetch";
+import ListaPorAnoMes from "../components/ListaPorAnoMes";
 
 function moeda(
   valor: number
@@ -159,61 +160,28 @@ export default function FinanceiroPage() {
           </h2>
         </div>
 
-        <div className="divide-y divide-[#E1D6C5]">
-          {dados.itens.map(
-            (item: any) => (
-              <div
-                key={
-                  item.id
-                }
-                className="grid gap-2 p-5 md:grid-cols-[1fr_180px_150px]"
-              >
+        <div className="p-4 sm:p-5">
+          <p className="mb-4 text-sm text-[#D4DCCE]">Abra o ano e depois o mês para consultar os lançamentos ({dados.itens.length}).</p>
+          <ListaPorAnoMes
+            itens={dados.itens}
+            vazio="Nenhum lançamento ainda."
+            renderItem={(item: any) => (
+              <div className="grid gap-2 rounded-xl border border-[#D7C18C]/25 bg-[#1B271A] p-4 md:grid-cols-[1fr_180px_150px]">
                 <div>
-                  <p className="font-extrabold text-[#5E7357]">
-                    {
-                      item.client_name
-                    }
-                  </p>
-
-                  <p className="mt-1 text-sm text-[#6C8465]">
-                    {
-                      item.service_type
-                    }{" "}
-                    ·{" "}
-                    {new Date(
-                      item.scheduled_at
-                    ).toLocaleDateString(
-                      "pt-BR"
-                    )}
+                  <p className="font-bold text-[#F5F0E6]">{item.client_name}</p>
+                  <p className="mt-1 text-sm text-[#D4DCCE]">
+                    {item.service_type} · {new Date(item.scheduled_at).toLocaleDateString("pt-BR")}
                   </p>
                 </div>
-
-                <p className="text-sm font-bold text-[#6C8465]">
-                  {item.charge_type ===
-                  "incluido_pacote"
-                    ? "Incluído no pacote"
-                    : "Avulso"}
+                <p className="text-sm font-semibold text-[#D4DCCE]">
+                  {item.charge_type === "incluido_pacote" ? "Incluído no pacote" : "Avulso"}
                 </p>
-
-                <p className="text-right font-extrabold text-[#5E7357]">
-                  {item.amount ===
-                  null
-                    ? "—"
-                    : moeda(
-                        item.amount
-                      )}
+                <p className="text-right font-bold text-[#F5F0E6]">
+                  {item.amount === null ? "—" : moeda(item.amount)}
                 </p>
               </div>
-            )
-          )}
-
-          {dados.itens.length ===
-            0 && (
-            <p className="p-5 text-sm text-[#6C8465]">
-              Nenhum lançamento
-              ainda.
-            </p>
-          )}
+            )}
+          />
         </div>
       </section>
     </div>
