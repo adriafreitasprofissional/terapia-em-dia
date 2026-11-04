@@ -65,90 +65,36 @@ export default function TerapiaInicioPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#F8F4EC] px-5 py-10 text-[#5E7357]">
-      <div className="mx-auto max-w-md">
-        <div className="rounded-[32px] border border-[#DCCFB8] bg-[#F7F1E4] p-7 shadow-xl sm:p-8">
-          <div className="overflow-hidden rounded-[32px] border border-[#DCCFB8] bg-white shadow-xl">
-  <Image
-    src="/imagens/adria-hero-terapia.png"
-    alt="Ádria Freitas"
-    width={900}
-    height={1200}
-    priority
-    className="h-full w-full object-cover object-center rounded-[32px]"
-  />
-</div>
-
-            <p className="mt-5 text-xs font-bold uppercase tracking-[0.24em] text-[#8AA27A]">
-              Terapia em Dia
-            </p>
-
-            <h1 className="mt-2 text-3xl font-bold">
-              com &Aacute;dria Freitas
-            </h1>
-
-            <p className="mt-4 text-sm leading-7 text-[#6C8465]">
-              Acesse seu espa&ccedil;o terap&ecirc;utico com seu e-mail e senha cadastrados.
-            </p>
-          </div>
-
-          <div className="mt-8 space-y-5">
-            <div>
-              <label className="text-sm font-semibold">
-                E-mail
-              </label>
-
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="seuemail@exemplo.com"
-                autoComplete="username"
-                className="mt-2 w-full rounded-xl border border-[#C8B8A8] bg-white px-4 py-3 text-[#4F5E4A] outline-none focus:border-[#5E7357]"
-              />
-            </div>
-
-            <div>
-              <label className="text-sm font-semibold">
-                Senha
-              </label>
-
-              <div className="relative mt-2">
-                <input
-                  type={mostrarSenha ? "text" : "password"}
-                  value={senha}
-                  onChange={(e) => setSenha(e.target.value)}
-                  placeholder="Sua senha"
-                  autoComplete="current-password"
-                  className="w-full rounded-xl border border-[#C8B8A8] bg-white px-4 py-3 pr-16 text-[#4F5E4A] outline-none focus:border-[#5E7357]"
-                />
-
-                <button
-                  type="button"
-                  onClick={() => setMostrarSenha(!mostrarSenha)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-[#5E7357]"
-                >
-                  {mostrarSenha ? "Ocultar" : "Ver"}
-                </button>
-              </div>
-            </div>
-
-            {erro && (
-              <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-                {erro}
-              </div>
-            )}
-
-            <button
-              type="button"
-              onClick={entrar}
-              disabled={carregando}
-              className="w-full rounded-xl bg-[#5E7357] px-5 py-3 font-bold text-white transition hover:bg-[#769566] disabled:opacity-60"
-            >
-              {carregando ? "Entrando..." : "Entrar"}
-            </button>
-          </div>
+    <main className="flex min-h-screen items-center justify-center bg-[#222F20] px-5 py-12 text-[#F5F0E6]">
+      <div className="w-full max-w-md rounded-[24px] border border-[#D7C18C]/40 bg-[#1B271A] p-7 sm:p-9">
+        <div className="mb-8 text-center">
+          <Image src="/terapia-icon-192-v2.png" alt="Terapia em Dia" width={88} height={88}
+            priority className="mx-auto h-[88px] w-[88px] rounded-full border border-[#D7C18C]/60 object-contain p-1" />
+          <p className="mt-5 text-xs uppercase tracking-[0.24em] text-[#D7C18C]">Terapia em Dia</p>
+          <h1 className="mt-3 font-serif text-3xl">Seu espaço terapêutico</h1>
+          <p className="mt-3 text-sm leading-7 text-[#D5DDCD]">Entre com seu e-mail e senha para acompanhar suas consultas e atividades.</p>
         </div>
-         </main>
+        {erro && <p role="alert" className="mb-5 rounded-lg border border-red-300/60 p-3 text-sm text-red-100">{erro}</p>}
+        <label htmlFor="paciente-email" className="block text-sm font-medium text-[#F0E6D1]">E-mail</label>
+        <input id="paciente-email" type="email" autoComplete="username" value={email} onChange={e => setEmail(e.target.value)}
+          placeholder="seuemail@exemplo.com"
+          className="mt-2 w-full rounded-lg border border-[#D7C18C]/40 bg-[#293A27] px-4 py-3 text-white outline-none placeholder:text-[#C1CDB9] focus:border-[#D7C18C]" />
+        <label htmlFor="paciente-senha" className="mt-5 block text-sm font-medium text-[#F0E6D1]">Senha</label>
+        <div className="relative mt-2">
+          <input id="paciente-senha" type={mostrarSenha ? "text" : "password"} autoComplete="current-password"
+            value={senha} onChange={e => setSenha(e.target.value)} placeholder="Sua senha"
+            className="w-full rounded-lg border border-[#D7C18C]/40 bg-[#293A27] px-4 py-3 pr-20 text-white outline-none placeholder:text-[#C1CDB9] focus:border-[#D7C18C]" />
+          <button type="button" onClick={() => setMostrarSenha(!mostrarSenha)}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-[#E0C994]">
+            {mostrarSenha ? "Ocultar" : "Ver"}
+          </button>
+        </div>
+        <button type="button" onClick={entrar} disabled={carregando}
+          className="mt-8 w-full rounded-lg bg-[#D8C399] px-5 py-4 font-semibold text-[#222F20] transition hover:bg-[#E8D5AD] disabled:opacity-60">
+          {carregando ? "Entrando..." : "Entrar"}
+        </button>
+        <a href="/" className="mt-5 block text-center text-sm text-[#D7C18C] hover:underline">Voltar ao início</a>
+      </div>
+    </main>
   );
 }
