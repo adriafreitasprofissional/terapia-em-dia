@@ -42,6 +42,10 @@ export default function AgendaTerapiaPage() {
     setFormAberto,
   ] = useState(false);
 
+  // Listas com datas: ano e mês sempre recolhidos inicialmente.
+  const [anosAbertos, setAnosAbertos] = useState<Record<string, boolean>>({});
+  const [mesesAbertos, setMesesAbertos] = useState<Record<string, boolean>>({});
+
   const [
     form,
     setForm,
@@ -135,6 +139,20 @@ export default function AgendaTerapiaPage() {
         ),
       [atendimentos]
     );
+
+  const proximosAgrupados = useMemo(() => {
+    const porAno: Record<string, Record<string, any[]>> = {};
+    for (const atendimento of proximos) {
+      const data = new Date(atendimento.scheduled_at);
+      if (Number.isNaN(data.getTime())) continue;
+      const ano = String(data.getFullYear());
+      const mes = String(data.getMonth() + 1).padStart(2, "0");
+      if (!porAno[ano]) porAno[ano] = {};
+      if (!porAno[ano][mes]) porAno[ano][mes] = [];
+      porAno[ano][mes].push(atendimento);
+    }
+    return porAno;
+  }, [proximos]);
 
   function alterar(
     campo: string,
@@ -511,74 +529,69 @@ export default function AgendaTerapiaPage() {
 
       <section className="mt-7 rounded-3xl border border-[#DCCFB8] bg-[#F7F1E4] p-6">
         <h2 className="text-xl font-extrabold text-[#5E7357]">
-          Próximos
-          atendimentos
+          Próximos atendimentos
+          <span className="ml-3 text-sm font-medium text-[#6C8465]">({proximos.length})</span>
         </h2>
+        <p className="mt-2 text-sm text-[#6C8465]">Abra o ano e depois o mês para consultar os horários.</p>
 
         <div className="mt-5 grid gap-3">
-          {proximos.map(
-            (item) => (
-              <div
-                key={item.id}
-                className="flex flex-col gap-4 rounded-2xl border border-[#E1D6C5] bg-white/70 p-4 sm:flex-row sm:items-center sm:justify-between"
-              >
-                <div>
-                  <p className="font-extrabold text-[#5E7357]">
-                    {
-                      item.client_name
-                    }
-                  </p>
-
-                  <p className="mt-1 text-sm text-[#6C8465]">
-                    {
-                      item.service_type
-                    }{" "}
-                    ·{" "}
-                    {new Date(
-                      item.scheduled_at
-                    ).toLocaleString(
-                      "pt-BR"
-                    )}
-                  </p>
-                </div>
-
-                <div className="flex flex-wrap gap-2">
-                  {item.meet_url && (
-                    <a
-                      href={
-                        item.meet_url
-                      }
-                      target="_blank"
-                      rel="noreferrer"
-                      className="rounded-xl bg-[#5E7357] px-3 py-2 text-xs font-bold text-white"
-                    >
-                      Meet
-                    </a>
-                  )}
-
-                  <button
-                    type="button"
-                    onClick={() =>
-                      cancelar(
-                        item.id
-                      )
-                    }
-                    className="rounded-xl border border-[#C8B8A8] px-3 py-2 text-xs font-bold text-[#6C8465]"
-                  >
-                    Cancelar
-                  </button>
-                </div>
+          {Object.keys(proximosAgrupados).sort((a, b) => Number(a) - Number(b)).map((ano) => {
+            const meses = proximosAgrupados[ano];
+            const totalAno = Object.values(meses).reduce((soma, lista) => soma + lista.length, 0);
+            return (
+              <div key={ano} className="rounded-2xl border border-[#D7C18C]/40 bg-[#1B271A] p-3">
+                <button type="button" aria-expanded={Boolean(anosAbertos[ano])}
+                  onClick={() => setAnosAbertos((anterior) => ({ ...anterior, [ano]: !anterior[ano] }))}
+                  className="flex w-full items-center justify-between rounded-xl px-3 py-3 text-left font-bold text-[#F5F0E6]">
+                  <span>{ano} <span className="ml-2 text-sm font-normal text-[#D4DCCE]">({totalAno} {totalAno === 1 ? "atendimento" : "atendimentos"})</span></span>
+                  <span className="text-sm text-[#D7C18C]">{anosAbertos[ano] ? "⌃ Recolher" : "⌄ Expandir"}</span>
+                </button>
+                {anosAbertos[ano] && (
+                  <div className="mt-2 grid gap-2 pl-2 sm:pl-4">
+                    {Object.keys(meses).sort().map((mes) => {
+                      const chave = ano + "-" + mes;
+                      const nomeMes = new Intl.DateTimeFormat("pt-BR", { month: "long" }).format(new Date(Number(ano), Number(mes) - 1, 1));
+                      return (
+                        <div key={chave} className="rounded-xl border border-[#D7C18C]/25 bg-[#293A27] p-3">
+                          <button type="button" aria-expanded={Boolean(mesesAbertos[chave])}
+                            onClick={() => setMesesAbertos((anterior) => ({ ...anterior, [chave]: !anterior[chave] }))}
+                            className="flex w-full items-center justify-between gap-3 px-2 py-2 text-left text-sm font-semibold text-[#F5F0E6]">
+                            <span className="capitalize">{nomeMes} <span className="ml-1 font-normal text-[#D4DCCE]">({meses[mes].length})</span></span>
+                            <span className="text-xs text-[#D7C18C]">{mesesAbertos[chave] ? "⌃ Recolher" : "⌄ Expandir"}</span>
+                          </button>
+                          {mesesAbertos[chave] && (
+                            <div className="mt-3 grid gap-3">
+                              {meses[mes].map((item) => (
+                                <div key={item.id} className="flex flex-col gap-4 rounded-2xl border border-[#D7C18C]/25 bg-[#1B271A] p-4 sm:flex-row sm:items-center sm:justify-between">
+                                  <div>
+                                    <p className="font-bold text-[#F5F0E6]">{item.client_name}</p>
+                                    <p className="mt-1 text-sm text-[#D4DCCE]">
+                                      {item.service_type} · {new Date(item.scheduled_at).toLocaleString("pt-BR")}
+                                    </p>
+                                  </div>
+                                  <div className="flex flex-wrap gap-2">
+                                    {item.meet_url && (
+                                      <a href={item.meet_url} target="_blank" rel="noreferrer"
+                                        className="rounded-xl bg-[#506A48] px-3 py-2 text-xs font-bold text-white">Meet</a>
+                                    )}
+                                    <button type="button" onClick={() => cancelar(item.id)}
+                                      className="rounded-xl border border-[#D7C18C]/40 px-3 py-2 text-xs font-bold text-[#F5F0E6]">
+                                      Cancelar
+                                    </button>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
-            )
-          )}
-
-          {proximos.length ===
-            0 && (
-            <p className="text-sm text-[#6C8465]">
-              Nenhum atendimento
-              futuro.
-            </p>
-          )}
+            );
+          })}
+          {proximos.length === 0 && <p className="text-sm text-[#D4DCCE]">Nenhum atendimento futuro.</p>}
         </div>
       </section>
     </div>
