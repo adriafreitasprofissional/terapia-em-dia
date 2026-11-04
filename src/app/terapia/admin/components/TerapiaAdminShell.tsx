@@ -170,7 +170,7 @@ export default function TerapiaAdminShell({
     );
 
     window.location.replace(
-      "/admin/terapia"
+      "/admin/terapia/li-stilus"
     );
   }
 
