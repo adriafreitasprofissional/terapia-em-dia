@@ -68,7 +68,7 @@ export default function TratamentosPage() {
         <article className="rounded-[24px] border border-[#D7C18C] bg-[#1B271A] p-6 sm:p-8">
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#D7C18C]">Condição Especial Mensal</p>
           <h2 id="condicao-especial-titulo" className="mt-4 font-serif text-3xl leading-tight sm:text-4xl">Acompanhamento Terapêutico – R$ 280,00/mês</h2>
-          <p className="mt-5 max-w-3xl text-sm leading-7 text-[#D8DFD1] sm:text-base">Valor promocional exclusivo para clientes com assinatura paga e ativa do Plano Prata do Clube do Tarô. A assinatura do clube é opcional, contratada e paga separadamente. O valor de R$ 280,00/mês corresponde somente às quatro consultas terapêuticas mensais. Quem preferir contratar apenas a terapia poderá escolher uma modalidade individual, sem necessidade de assinar o clube.</p>
+          <p className="mt-5 max-w-3xl text-sm leading-7 text-[#D8DFD1] sm:text-base">A condição especial de R$ 280,00/mês é exclusiva para clientes com assinatura paga e ativa do Plano Prata do Clube do Tarô. A assinatura do clube é opcional, contratada e paga separadamente. Não deseja assinar o Clube do Tarô? Nesse caso, escolha o Plano Social, disponível nesta mesma página, pelo valor de R$ 396,00 para quatro consultas mensais. Assim, você escolhe a modalidade que melhor atende às suas necessidades, com total transparência sobre os valores e serviços.</p>
           <h3 className="mt-7 text-lg font-semibold">O que está incluído:</h3>
           <ul className="mt-4 list-disc space-y-3 pl-5 text-sm leading-7 text-[#D8DFD1] sm:text-base">
             <li>1 consulta terapêutica por semana.</li>
