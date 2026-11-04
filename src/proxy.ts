@@ -1,36 +1,9 @@
-import {
-  NextRequest,
-  NextResponse,
-} from "next/server";
+import { NextResponse } from "next/server";
 
-export function proxy(
-  request: NextRequest
-) {
-  const host = (
-    request.headers.get("host") || ""
-  )
-    .split(":")[0]
-    .toLowerCase();
-
-  const dominioTerapia =
-    host ===
-      "adriafreitasterapeuta.com.br" ||
-    host ===
-      "www.adriafreitasterapeuta.com.br";
-
-  if (
-    dominioTerapia &&
-    request.nextUrl.pathname === "/"
-  ) {
-    const url =
-      request.nextUrl.clone();
-
-    url.pathname =
-      "/terapia-vitrine";
-
-    return NextResponse.rewrite(url);
-  }
-
+// A home pública já possui os três acessos oficiais do Terapia em Dia.
+// Não reescrever "/" para "/terapia-vitrine": isso escondia a home
+// verde aprovada e mostrava a vitrine antiga com fotografia.
+export function proxy() {
   return NextResponse.next();
 }
 
