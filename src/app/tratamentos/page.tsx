@@ -64,6 +64,30 @@ export default function TratamentosPage() {
         </a>
       </section>
 
+      <section id="condicao-especial" aria-labelledby="condicao-especial-titulo" className="mx-auto max-w-6xl scroll-mt-6 px-5 pb-16 sm:px-7">
+        <article className="rounded-[24px] border border-[#D7C18C] bg-[#1B271A] p-6 sm:p-8">
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#D7C18C]">Condição Especial Mensal</p>
+          <h2 id="condicao-especial-titulo" className="mt-4 font-serif text-3xl leading-tight sm:text-4xl">Acompanhamento Terapêutico – R$ 280,00/mês</h2>
+          <p className="mt-5 max-w-3xl text-sm leading-7 text-[#D8DFD1] sm:text-base">Uma condição exclusiva para quem deseja manter a continuidade do processo terapêutico com um investimento mensal acessível.</p>
+          <h3 className="mt-7 text-lg font-semibold">O que está incluído:</h3>
+          <ul className="mt-4 list-disc space-y-3 pl-5 text-sm leading-7 text-[#D8DFD1] sm:text-base">
+            <li>1 consulta terapêutica por semana.</li>
+            <li>4 consultas mensais.</li>
+            <li>Acompanhamento semanal contínuo.</li>
+            <li><strong className="text-[#E3C993]">Bônus especial:</strong> nos meses com 5 semanas e cinco consultas agendadas, a quinta consulta será gratuita, sem qualquer acréscimo à mensalidade.</li>
+          </ul>
+          <div className="mt-7 border-t border-[#D7C18C]/20 pt-6">
+            <p className="font-serif text-2xl sm:text-3xl"><strong className="font-normal">Investimento: R$ 280,00 por mês.</strong></p>
+            <p className="mt-3 text-sm leading-7 text-[#D8DFD1]">O valor permanece o mesmo, inclusive nos meses em que houver uma quinta consulta.</p>
+            <p className="mt-5 font-semibold text-[#E3C993]">Início disponível a partir de dezembro de 2026.</p>
+            <p className="mt-5 max-w-3xl text-sm leading-7 text-[#D8DFD1] sm:text-base">Invista no seu bem-estar emocional com regularidade, acolhimento e cuidado personalizado.</p>
+            <a href="https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=17739565-fdcf1f1d-3a72-48fc-a8e9-3cd4f8f33787" className="mt-7 inline-flex min-h-14 w-full items-center justify-center rounded-md bg-[#D8C399] px-5 py-4 text-center text-sm font-semibold text-[#222F20] transition hover:bg-[#E8D5AD] sm:w-auto">
+              CONTRATAR CONDIÇÃO ESPECIAL
+            </a>
+          </div>
+        </article>
+      </section>
+
       <section id="planos" className="mx-auto max-w-6xl scroll-mt-6 px-5 pb-16 sm:px-7">
         <div className="mb-8 text-center">
           <p className="text-xs uppercase tracking-[0.25em] text-[#D7C18C]">Seu investimento</p>
@@ -138,5 +162,3 @@ export default function TratamentosPage() {
     </main>
   );
 }
-
-
