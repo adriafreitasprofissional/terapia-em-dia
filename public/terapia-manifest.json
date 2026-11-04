@@ -3,11 +3,11 @@
   "short_name": "Terapia em Dia",
   "description": "Seu espaço de acompanhamento terapêutico com Ádria Freitas.",
   "id": "/terapia",
-  "start_url": "/terapia",
+  "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#F8F4EC",
-  "theme_color": "#5E7357",
+  "background_color": "#222F20",
+  "theme_color": "#222F20",
   "orientation": "portrait",
   "icons": [
     {
