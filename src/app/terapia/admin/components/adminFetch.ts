@@ -1,11 +1,9 @@
+import {therapyAccessToken} from "@/lib/therapy-session";
 export async function adminFetch(
   input: string,
   init: RequestInit = {}
 ) {
-  const token =
-    window.localStorage.getItem(
-      "terapia_auth_access_token"
-    );
+  const token = await therapyAccessToken();
 
   if (!token) {
     throw new Error(

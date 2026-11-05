@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import {therapyAccessToken,endTherapySession} from "@/lib/therapy-session";
+import {therapyLoginPath} from "@/lib/therapy-navigation";
 import {
   usePathname,
   useRouter,
@@ -81,6 +83,7 @@ export default function TerapiaAdminShell({
 }: {
   children: React.ReactNode;
 }) {
+  const [sessionError,setSessionError]=useState<string|null>(null);
   const pathname =
     usePathname();
 
@@ -112,57 +115,29 @@ export default function TerapiaAdminShell({
       return;
     }
 
+    let active=true;
     async function validar() {
-      const token =
-        window.localStorage.getItem(
-          "terapia_auth_access_token"
-        );
-
-      if (!token) {
-        router.replace("/terapia");
-        return;
-      }
-
-      const previewId =
-        window.localStorage.getItem(
-          "terapia_preview_professional_id"
-        );
-
-      const headers: Record<string, string> = {
-        Authorization: `Bearer ${token}`,
-      };
-
-      if (previewId) {
-        headers[
-          "x-therapy-preview-professional-id"
-        ] = previewId;
-      }
-
-      const response = await fetch(
-        "/api/terapia/admin/me",
-        {
-          cache: "no-store",
-          headers,
+      try {
+        const token=await therapyAccessToken();
+        if(!active)return;
+        if(!token){router.replace(therapyLoginPath(pathname));return;}
+        const previewId=window.localStorage.getItem("terapia_preview_professional_id");
+        const headers:Record<string,string>={Authorization:`Bearer ${token}`};
+        if(previewId)headers["x-therapy-preview-professional-id"]=previewId;
+        const response=await fetch("/api/terapia/admin/me",{cache:"no-store",headers});
+        if(!active)return;
+        if(!response.ok){
+          if(response.status===401||response.status===403){window.localStorage.removeItem("terapia_auth_access_token");router.replace(therapyLoginPath(pathname));return;}
+          throw new Error("Não foi possível verificar seu acesso. Atualize a página.");
         }
-      );
-
-      if (!response.ok) {
-        window.localStorage.removeItem(
-          "terapia_auth_access_token"
-        );
-
-        router.replace("/terapia");
-        return;
-      }
-
-      const data = await response.json();
-
-      setPerfil(data.admin || null);
-      setCarregando(false);
+        const data=await response.json();
+        if(active){setPerfil(data.admin||null);setSessionError(null);setCarregando(false);}
+      }catch{if(active){setSessionError("Não foi possível verificar seu acesso. Atualize a página para tentar novamente.");setCarregando(false);}}
     }
 
-    validar();
-  }, [login, router]);
+    void validar();
+    return()=>{active=false};
+  }, [login, router, pathname]);
 
   function sairVisualizacao() {
     window.localStorage.removeItem(
@@ -175,27 +150,15 @@ export default function TerapiaAdminShell({
   }
 
   async function sair() {
-    window.localStorage.removeItem(
-      "terapia_preview_professional_id"
-    );
-    window.localStorage.removeItem(
-      "terapia_auth_access_token"
-    );
-
-    window.localStorage.removeItem(
-      "terapia_auth_refresh_token"
-    );
-
-    window.localStorage.removeItem(
-      "terapia_em_dia_access_token"
-    );
-
-    router.replace("/terapia");
+    try {await endTherapySession();router.replace("/terapia");}
+    catch {setSessionError("Não foi possível sair. Tente novamente.");}
   }
 
   if (login) {
     return <>{children}</>;
   }
+
+  if(sessionError&&!perfil)return <main className="min-h-screen bg-[#222F20] p-8 text-[#F5F0E6]"><p role="alert">{sessionError}</p><button type="button" className="mt-4 underline" onClick={()=>window.location.reload()}>Tentar novamente</button></main>;
 
   if (carregando) {
     return (
@@ -282,6 +245,7 @@ const acessoLiberado =
 
   return (
     <div className="terapia-admin-theme min-h-screen bg-[#222F20] text-[#F5F0E6]">
+      {sessionError&&<p role="alert" className="p-4 text-red-100">{sessionError}</p>}
       <header className="sticky top-0 z-40 flex items-center justify-between border-b border-[#D7C18C]/30 bg-[#1B271A]/95 px-4 py-4 backdrop-blur md:hidden">
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#D7C18C]">

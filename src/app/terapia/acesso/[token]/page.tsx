@@ -10,6 +10,8 @@ import {
   useRouter,
 } from "next/navigation";
 import { jsPDF } from "jspdf";
+import {therapyAccessToken} from "@/lib/therapy-session";
+import {therapyLoginPath} from "@/lib/therapy-navigation";
 import { supabase } from "@/lib/supabase";
 
 type ProximoAtendimento = {
@@ -523,15 +525,11 @@ async function sair() {
           );
         }
 
-        const {
-          data: { session },
-        } =
-          await supabase.auth.getSession();
+        const previewToken=await therapyAccessToken();
 
-        if (!session?.access_token) {
-          throw new Error(
-            "Sua sessão administrativa expirou."
-          );
+        if (!previewToken) {
+          router.replace(therapyLoginPath(`/terapia/acesso/${token}`));
+          return;
         }
 
         response = await fetch(
@@ -542,7 +540,7 @@ async function sair() {
             cache: "no-store",
             headers: {
               Authorization:
-                `Bearer ${session.access_token}`,
+                `Bearer ${previewToken}`,
             },
           }
         );
@@ -561,10 +559,8 @@ async function sair() {
         await response.json();
 
       if (!response.ok) {
-        throw new Error(
-          data?.error ||
-            "Não foi possível abrir seu espaço."
-        );
+        if(modoPreview&&(response.status===401||response.status===403)){router.replace(therapyLoginPath(`/terapia/acesso/${token}`));return;}
+        throw new Error(data?.error || "Não foi possível abrir seu espaço.");
       }
 
       setDados(data);

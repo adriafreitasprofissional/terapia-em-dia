@@ -5,6 +5,7 @@ import {
   useState,
 } from "react";
 import { useRouter } from "next/navigation";
+import {safeTherapyReturn} from "@/lib/therapy-navigation";
 import { supabase } from "@/lib/supabase";
 
 export default function TerapiaAdminLoginPage() {
@@ -46,6 +47,7 @@ export default function TerapiaAdminLoginPage() {
     setLoading(true);
     setErro(null);
 
+    try {
     const {
       data,
       error,
@@ -95,9 +97,11 @@ export default function TerapiaAdminLoginPage() {
       return;
     }
 
-    router.replace(
-      "/terapia/admin"
-    );
+    window.localStorage.removeItem("terapia_preview_professional_id");
+    router.replace(safeTherapyReturn(new URLSearchParams(window.location.search).get("next")));
+    }catch{setErro("Não foi possível verificar seu acesso. Tente novamente.");}
+    finally{setLoading(false);}
+
   }
 
   return (
