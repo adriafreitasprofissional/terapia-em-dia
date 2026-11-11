@@ -781,9 +781,9 @@ async function sair() {
     : `/terapia/acesso/${token}/anamnese`;
 
   return (
-  <main className="min-h-screen bg-[#F8F4EC] text-[#4F5E4A]">
+  <main className="min-h-screen bg-[#222F20] text-[#F5F0E6]">
     {modoPreview && (
-      <div className="border-b border-[#DCCFB8] bg-[#5E7357] px-5 py-3 text-white">
+      <div className="border-b border-[#D7C18C]/40 bg-[#506A48] px-5 py-3 text-white">
         <div className="mx-auto flex max-w-6xl flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="text-xs font-black uppercase tracking-[0.18em]">
@@ -806,7 +806,7 @@ async function sair() {
                 "/terapia/admin/clientes"
               )
             }
-            className="rounded-xl bg-white px-4 py-2 text-sm font-bold text-[#5E7357]"
+            className="rounded-xl bg-[#D8C399] px-4 py-2 text-sm font-bold text-[#222F20]"
           >
             Voltar ao ADM
           </button>
@@ -815,7 +815,7 @@ async function sair() {
     )}
     
       <div className="mx-auto flex min-h-screen max-w-6xl flex-col md:flex-row">
-        <aside className="border-b border-[#DCCFB8] bg-[#F7F1E4] p-6 md:w-72 md:border-b-0 md:border-r">
+        <aside className="border-b border-[#D7C18C]/40 bg-[#222F20] p-6 md:w-72 md:border-b-0 md:border-r">
           <div className="md:sticky md:top-6">
             <div className="flex items-center gap-3">
               <img
@@ -825,18 +825,18 @@ async function sair() {
               />
 
               <div>
-                <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#8AA27A]">
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#E3C993]">
                   Terapia em Dia
                 </p>
 
-                <p className="mt-1 text-sm font-semibold text-[#5E7357]">
+                <p className="mt-1 text-sm font-semibold text-[#F5F0E6]">
                   com Ádria Freitas
                 </p>
               </div>
             </div>
 
-            <div className="mt-8 rounded-2xl border border-[#DCCFB8] bg-white p-5">
-              <p className="text-xs uppercase tracking-wide text-[#6C8465]">
+            <div className="mt-8 rounded-2xl border border-[#D7C18C]/40 bg-[#1B271A] p-5">
+              <p className="text-xs uppercase tracking-wide text-[#D8DFD1]">
                 Seu espaço
               </p>
 
@@ -844,7 +844,7 @@ async function sair() {
                 {dados.cliente.nome}
               </p>
 
-              <p className="mt-2 text-xs leading-5 text-[#6C8465]">
+              <p className="mt-2 text-xs leading-5 text-[#D8DFD1]">
                 Acompanhamento individual
                 e confidencial.
               </p>
@@ -853,21 +853,21 @@ async function sair() {
             <nav className="mt-6 grid gap-2">
               <Link
                 href={`/terapia/acesso/${token}`}
-                className="rounded-xl bg-[#8AA27A] px-4 py-3 text-sm font-bold text-white shadow"
+                className="rounded-xl bg-[#506A48] px-4 py-3 text-sm font-bold text-white shadow"
               >
                 Meu Portal
               </Link>
 
               <Link
                 href={hrefAnamnese}
-                className="rounded-xl px-4 py-3 text-sm font-semibold text-[#5E7357] transition hover:bg-[#EFE5D3]"
+                className="rounded-xl px-4 py-3 text-sm font-semibold text-[#F5F0E6] transition hover:bg-[#31402D]"
               >
                 Minha Anamnese
               </Link>
 
               <Link
                 href={`/terapia/acesso/${token}/atividades`}
-                className="rounded-xl px-4 py-3 text-sm font-semibold text-[#5E7357] transition hover:bg-[#EFE5D3]"
+                className="rounded-xl px-4 py-3 text-sm font-semibold text-[#F5F0E6] transition hover:bg-[#31402D]"
               >
                 Minhas Atividades
               </Link>
@@ -875,7 +875,7 @@ async function sair() {
             <button
   type="button"
   onClick={sair}
-  className="mt-10 w-full rounded-xl border border-[#DCCFB8] bg-white px-4 py-3 text-sm font-bold text-[#5E7357] transition hover:bg-[#EFE5D3]"
+  className="mt-10 w-full rounded-xl border border-[#D7C18C]/40 bg-[#1B271A] px-4 py-3 text-sm font-bold text-[#F5F0E6] transition hover:bg-[#31402D]"
 >
   Sair
 </button>
@@ -884,7 +884,7 @@ async function sair() {
 
         <section className="flex-1 px-5 py-8 md:px-10">
           <div className="mx-auto max-w-4xl">
-            <p className="text-sm font-semibold text-[#8AA27A]">
+            <p className="text-sm font-semibold text-[#E3C993]">
               Seu acompanhamento começa aqui
             </p>
 
@@ -892,7 +892,7 @@ async function sair() {
               Bem-vinda, {dados.cliente.nome}.
             </h1>
 
-            <p className="mt-4 max-w-2xl text-sm leading-7 text-[#6C8465] md:text-base">
+            <p className="mt-4 max-w-2xl text-sm leading-7 text-[#D8DFD1] md:text-base">
               Este é o seu espaço de acompanhamento
               com Ádria Freitas. Aqui você poderá
               organizar sua jornada, acessar suas
@@ -900,8 +900,8 @@ async function sair() {
             </p>
 
             {proximo && (
-              <div className="mt-8 overflow-hidden rounded-3xl border border-[#DCCFB8] bg-gradient-to-br from-[#8AA27A] to-[#5E7357] p-6 text-white shadow-xl">
-                <p className="text-xs font-bold uppercase tracking-[0.18em] text-orange-100">
+              <div className="mt-8 overflow-hidden rounded-3xl border border-[#D7C18C]/40 bg-[#31452F] p-6 text-white shadow-xl">
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#F5F0E6]">
                   Próximo encontro
                 </p>
 
@@ -909,13 +909,13 @@ async function sair() {
                   {proximo.service_type}
                 </h2>
 
-                <p className="mt-2 capitalize text-sm leading-6 text-orange-50">
+                <p className="mt-2 capitalize text-sm leading-6 text-[#F5F0E6]">
                   {formatarDataHora(
                     proximo.scheduled_at
                   )}
                 </p>
 
-                <p className="mt-1 text-xs text-orange-100">
+                <p className="mt-1 text-xs text-[#F5F0E6]">
                   {proximo.duration_minutes} minutos
                 </p>
 
@@ -925,12 +925,12 @@ async function sair() {
                       href={proximo.meet_url}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex rounded-xl bg-white px-5 py-3 text-sm font-bold text-[#5E7357] shadow transition hover:bg-orange-50"
+                      className="inline-flex rounded-xl bg-[#D8C399] px-5 py-3 text-sm font-bold text-[#222F20] shadow transition hover:bg-[#31402D]"
                     >
                       Entrar na sessão
                     </a>
                   ) : (
-                    <p className="inline-flex rounded-xl border border-white/25 bg-white/10 px-4 py-3 text-xs font-semibold text-orange-50">
+                    <p className="inline-flex rounded-xl border border-[#D7C18C]/40 bg-[#263825] px-4 py-3 text-xs font-semibold text-[#F5F0E6]">
                       O acesso à sala será liberado
                       antes do encontro.
                     </p>
@@ -971,14 +971,14 @@ async function sair() {
                 )}
 
                 {mostrarHorarios && !modoPreview && (
-                  <div className="mt-5 rounded-2xl bg-white p-5 text-[#4F5E4A] shadow-lg">
+                  <div className="mt-5 rounded-2xl bg-[#1B271A] p-5 text-[#F5F0E6] shadow-lg">
                     <div className="flex items-start justify-between gap-4">
                       <div>
                         <p className="text-sm font-extrabold">
                           Horários disponíveis neste dia
                         </p>
 
-                        <p className="mt-1 text-xs leading-5 text-[#6C8465]">
+                        <p className="mt-1 text-xs leading-5 text-[#D8DFD1]">
                           Escolha um horário livre para
                           mudar sua sessão.
                         </p>
@@ -989,7 +989,7 @@ async function sair() {
                         onClick={() =>
                           setMostrarHorarios(false)
                         }
-                        className="rounded-lg px-2 py-1 text-lg text-[#6C8465]"
+                        className="rounded-lg px-2 py-1 text-lg text-[#D8DFD1]"
                         aria-label="Fechar horários"
                       >
                         ×
@@ -997,7 +997,7 @@ async function sair() {
                     </div>
 
                     {horariosDisponiveis.length === 0 ? (
-                      <p className="mt-4 rounded-xl bg-[#F7F1E4] p-4 text-sm text-[#6C8465]">
+                      <p className="mt-4 rounded-xl bg-[#222F20] p-4 text-sm text-[#D8DFD1]">
                         Não há outro horário disponível
                         neste dia.
                       </p>
@@ -1016,7 +1016,7 @@ async function sair() {
                               disabled={
                                 alterandoAgenda
                               }
-                              className="rounded-xl border border-[#8AA27A] bg-[#EEF3E9] px-5 py-3 text-sm font-extrabold text-[#5E7357] transition hover:bg-[#DDE8D6] disabled:cursor-not-allowed disabled:opacity-60"
+                              className="rounded-xl border border-[#D7C18C]/40 bg-[#31402D] px-5 py-3 text-sm font-extrabold text-[#F5F0E6] transition hover:bg-[#37513A] disabled:cursor-not-allowed disabled:opacity-60"
                             >
                               {horario}
                             </button>
@@ -1029,13 +1029,13 @@ async function sair() {
               </div>
             )}
             {palestraDestaque && (
-              <section className="mt-8 overflow-hidden rounded-3xl border border-[#CBD6C2] bg-white shadow-lg">
-                <div className="bg-[#EAF0E4] px-6 py-4">
-                  <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#6C8465]">
+              <section className="mt-8 overflow-hidden rounded-3xl border border-[#D7C18C]/40 bg-[#1B271A] shadow-lg">
+                <div className="bg-[#31402D] px-6 py-4">
+                  <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#D8DFD1]">
                     Para entender melhor
                   </p>
 
-                  <p className="mt-1 text-sm text-[#6C8465]">
+                  <p className="mt-1 text-sm text-[#D8DFD1]">
                     Uma explicação preparada para
                     complementar o que conversamos
                     em sessão.
@@ -1045,13 +1045,13 @@ async function sair() {
                 <div className="p-6">
                   <div className="flex flex-wrap gap-2">
                     {palestraDestaque.category && (
-                      <span className="rounded-full bg-[#F0F3EB] px-3 py-1 text-xs font-bold text-[#6C8465]">
+                      <span className="rounded-full bg-[#263825] px-3 py-1 text-xs font-bold text-[#D8DFD1]">
                         {palestraDestaque.category}
                       </span>
                     )}
 
                     {palestraDestaque.duration_minutes && (
-                      <span className="rounded-full bg-[#F7F1E4] px-3 py-1 text-xs font-bold text-[#7A826F]">
+                      <span className="rounded-full bg-[#222F20] px-3 py-1 text-xs font-bold text-[#D8DFD1]">
                         {
                           palestraDestaque.duration_minutes
                         }{" "}
@@ -1060,12 +1060,12 @@ async function sair() {
                     )}
                   </div>
 
-                  <h2 className="mt-4 text-2xl font-extrabold text-[#4F5E4A]">
+                  <h2 className="mt-4 text-2xl font-extrabold text-[#F5F0E6]">
                     {palestraDestaque.title}
                   </h2>
 
                   {palestraDestaque.subtitle && (
-                    <p className="mt-3 max-w-2xl text-sm leading-6 text-[#6C8465]">
+                    <p className="mt-3 max-w-2xl text-sm leading-6 text-[#D8DFD1]">
                       {
                         palestraDestaque.subtitle
                       }
@@ -1074,12 +1074,12 @@ async function sair() {
 
                   {miniPalestras[0]
                     ?.therapist_note && (
-                    <div className="mt-5 rounded-2xl bg-[#F7F1E4] p-4">
-                      <p className="text-xs font-bold uppercase tracking-wide text-[#8AA27A]">
+                    <div className="mt-5 rounded-2xl bg-[#222F20] p-4">
+                      <p className="text-xs font-bold uppercase tracking-wide text-[#E3C993]">
                         Um recado para você
                       </p>
 
-                      <p className="mt-2 whitespace-pre-line text-sm leading-6 text-[#5E7357]">
+                      <p className="mt-2 whitespace-pre-line text-sm leading-6 text-[#F5F0E6]">
                         {
                           miniPalestras[0]
                             .therapist_note
@@ -1094,12 +1094,12 @@ async function sair() {
                     }
                     target="_blank"
                     rel="noreferrer"
-                    className="mt-5 inline-flex rounded-xl bg-[#6C8465] px-5 py-3 text-sm font-bold text-white shadow transition hover:bg-[#5E7357]"
+                    className="mt-5 inline-flex rounded-xl bg-[#6C8465] px-5 py-3 text-sm font-bold text-white shadow transition hover:bg-[#506A48]"
                   >
                     ▶ Assistir mini palestra
                   </a>
 
-                  <p className="mt-4 text-xs leading-5 text-[#8A9284]">
+                  <p className="mt-4 text-xs leading-5 text-[#D8DFD1]">
                     Assista no seu tempo. Você
                     poderá voltar a este conteúdo
                     sempre que quiser.
@@ -1109,17 +1109,17 @@ async function sair() {
             )}
 
             {miniPalestras.length > 1 && (
-              <section className="mt-6 rounded-3xl border border-[#DCCFB8] bg-white p-6 shadow-lg">
+              <section className="mt-6 rounded-3xl border border-[#D7C18C]/40 bg-[#1B271A] p-6 shadow-lg">
                 <div>
-                  <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#8AA27A]">
+                  <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#E3C993]">
                     Seu aprendizado
                   </p>
 
-                  <h2 className="mt-2 text-xl font-extrabold text-[#4F5E4A]">
+                  <h2 className="mt-2 text-xl font-extrabold text-[#F5F0E6]">
                     Minhas mini palestras
                   </h2>
 
-                  <p className="mt-2 text-sm leading-6 text-[#6C8465]">
+                  <p className="mt-2 text-sm leading-6 text-[#D8DFD1]">
                     Aqui ficam os conteúdos que
                     foram indicados ao longo do
                     seu acompanhamento.
@@ -1143,15 +1143,15 @@ async function sair() {
                       return (
                         <div
                           key={indicacao.id}
-                          className="rounded-2xl border border-[#DFE3D9] bg-[#FDFBF7] p-4"
+                          className="rounded-2xl border border-[#D7C18C]/40 bg-[#1B271A] p-4"
                         >
                           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                             <div>
-                              <p className="font-bold text-[#4F5E4A]">
+                              <p className="font-bold text-[#F5F0E6]">
                                 {palestra.title}
                               </p>
 
-                              <div className="mt-1 flex flex-wrap gap-2 text-xs text-[#818A7B]">
+                              <div className="mt-1 flex flex-wrap gap-2 text-xs text-[#D8DFD1]">
                                 {palestra.category && (
                                   <span>
                                     {
@@ -1172,7 +1172,7 @@ async function sair() {
                               </div>
 
                               {indicacao.session_date && (
-                                <p className="mt-2 text-xs text-[#93998D]">
+                                <p className="mt-2 text-xs text-[#D8DFD1]">
                                   Indicada na sessão de{" "}
                                   {new Date(
                                     `${indicacao.session_date}T12:00:00`
@@ -1189,7 +1189,7 @@ async function sair() {
                               }
                               target="_blank"
                               rel="noreferrer"
-                              className="shrink-0 rounded-xl border border-[#8AA27A] bg-white px-4 py-2 text-sm font-bold text-[#5E7357] transition hover:bg-[#F0F3EB]"
+                              className="shrink-0 rounded-xl border border-[#D7C18C]/40 bg-[#1B271A] px-4 py-2 text-sm font-bold text-[#F5F0E6] transition hover:bg-[#263825]"
                             >
                               ▶ Assistir
                             </a>
@@ -1208,10 +1208,10 @@ async function sair() {
                 className={`rounded-3xl border p-6 shadow-lg transition hover:-translate-y-1 ${
                   dados.anamnese.preenchida
                     ? "border-emerald-200 bg-emerald-50"
-                    : "border-[#DCCFB8] bg-white hover:border-[#8AA27A]"
+                    : "border-[#D7C18C]/40 bg-[#1B271A] hover:border-[#D7C18C]/40"
                 }`}
               >
-                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#EFE5D3] text-xl">
+                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#31402D] text-xl">
                   📝
                 </div>
 
@@ -1219,7 +1219,7 @@ async function sair() {
                   Minha Anamnese
                 </h2>
 
-                <p className="mt-3 text-sm leading-6 text-[#6C8465]">
+                <p className="mt-3 text-sm leading-6 text-[#D8DFD1]">
                   {dados.anamnese.preenchida
                     ? "Sua anamnese foi recebida pela Ádria."
                     : "Preencha suas informações antes do primeiro encontro."}
@@ -1229,7 +1229,7 @@ async function sair() {
                   className={`mt-5 text-sm font-bold ${
                     dados.anamnese.preenchida
                       ? "text-emerald-700"
-                      : "text-[#8AA27A]"
+                      : "text-[#E3C993]"
                   }`}
                 >
                   {dados.anamnese.preenchida
@@ -1239,9 +1239,9 @@ async function sair() {
               </Link>
               <Link
                 href={`/terapia/acesso/${token}/atividades`}
-                className="rounded-3xl border border-[#DCCFB8] bg-white p-6 shadow-lg transition hover:-translate-y-1 hover:border-[#8AA27A]"
+                className="rounded-3xl border border-[#D7C18C]/40 bg-[#1B271A] p-6 shadow-lg transition hover:-translate-y-1 hover:border-[#D7C18C]/40"
               >
-                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#EFE5D3] text-xl">
+                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#31402D] text-xl">
                   🧩
                 </div>
 
@@ -1249,16 +1249,16 @@ async function sair() {
                   Minhas Atividades
                 </h2>
 
-                <p className="mt-3 text-sm leading-6 text-[#6C8465]">
+                <p className="mt-3 text-sm leading-6 text-[#D8DFD1]">
                   Acesse as atividades e reflexões preparadas para acompanhar seu processo entre as sessões.
                 </p>
 
-                <p className="mt-5 text-sm font-bold text-[#8AA27A]">
+                <p className="mt-5 text-sm font-bold text-[#E3C993]">
                   Abrir atividades →
                 </p>
               </Link>
 
-            <div className="rounded-3xl border border-[#DCCFB8] bg-white p-6 shadow-lg md:col-span-2">
+            <div className="rounded-3xl border border-[#D7C18C]/40 bg-[#1B271A] p-6 shadow-lg md:col-span-2">
   <button
     type="button"
     onClick={() =>
@@ -1270,7 +1270,7 @@ async function sair() {
     className="flex w-full items-center justify-between gap-4 text-left"
   >
     <div className="flex items-center gap-4">
-      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#EFE5D3] text-xl">
+      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#31402D] text-xl">
         🌿
       </div>
 
@@ -1279,14 +1279,14 @@ async function sair() {
           Minha Jornada
         </h2>
 
-        <p className="mt-1 text-sm leading-6 text-[#6C8465]">
+        <p className="mt-1 text-sm leading-6 text-[#D8DFD1]">
           Aqui ficam organizadas suas sessões, gravações, relatórios e orientações.
         </p>
       </div>
     </div>
 
     <span
-      className="shrink-0 rounded-xl border border-[#B9C7AE] bg-[#F3F7F0] px-4 py-2 text-sm font-extrabold text-[#5E7357]"
+      className="shrink-0 rounded-xl border border-[#D7C18C]/40 bg-[#263825] px-4 py-2 text-sm font-extrabold text-[#F5F0E6]"
       aria-hidden="true"
     >
       {jornadaAberta
@@ -1298,7 +1298,7 @@ async function sair() {
   {jornadaAberta && (
     <>
       {dados.jornada.length === 0 ? (
-        <div className="mt-5 rounded-2xl bg-[#F7F1E4] p-5 text-sm text-[#6C8465]">
+        <div className="mt-5 rounded-2xl bg-[#222F20] p-5 text-sm text-[#D8DFD1]">
           Sua jornada será registrada aqui durante o acompanhamento.
         </div>
       ) : (
@@ -1362,7 +1362,7 @@ async function sair() {
               return (
                 <div
                   key={chaveMes}
-                  className="overflow-hidden rounded-2xl border border-[#DCCFB8] bg-[#FDFBF7]"
+                  className="overflow-hidden rounded-2xl border border-[#D7C18C]/40 bg-[#1B271A]"
                 >
                   <button
                     type="button"
@@ -1372,14 +1372,14 @@ async function sair() {
                       )
                     }
                     aria-expanded={aberto}
-                    className="flex w-full items-center justify-between gap-4 bg-[#F3EEE4] px-5 py-5 text-left transition hover:bg-[#EDE5D7]"
+                    className="flex w-full items-center justify-between gap-4 bg-[#263825] px-5 py-5 text-left transition hover:bg-[#263825]"
                   >
-                    <span className="text-lg font-extrabold capitalize text-[#4F5E4A]">
+                    <span className="text-lg font-extrabold capitalize text-[#F5F0E6]">
                       {nomeMes}
                     </span>
 
                     <span
-      className="shrink-0 rounded-lg border border-[#C8D3C0] bg-white px-3 py-2 text-xs font-extrabold text-[#5E7357]"
+      className="shrink-0 rounded-lg border border-[#D7C18C]/40 bg-[#1B271A] px-3 py-2 text-xs font-extrabold text-[#F5F0E6]"
       aria-hidden="true"
     >
       {aberto
@@ -1399,29 +1399,29 @@ async function sair() {
                         return (
                           <div
                             key={sessao.id}
-                            className="rounded-2xl border border-[#DCCFB8] bg-white p-5"
+                            className="rounded-2xl border border-[#D7C18C]/40 bg-[#1B271A] p-5"
                           >
-                            <p className="text-xs font-bold uppercase tracking-wide text-[#8AA27A]">
+                            <p className="text-xs font-bold uppercase tracking-wide text-[#E3C993]">
                               {new Date(
                                 sessao.scheduled_at
                               ).toLocaleDateString("pt-BR")}
                             </p>
 
-                            <h3 className="mt-2 text-lg font-extrabold text-[#4F5E4A]">
+                            <h3 className="mt-2 text-lg font-extrabold text-[#F5F0E6]">
                               {titulo}
                             </h3>
 
-                            <p className="mt-1 text-sm text-[#6C8465]">
+                            <p className="mt-1 text-sm text-[#D8DFD1]">
                               {sessao.service_type}
                             </p>
 
                             {sessao.client_activity && (
-                              <div className="mt-4 rounded-xl bg-[#F3EEE4] p-4">
-                                <p className="text-xs font-bold uppercase tracking-wide text-[#8AA27A]">
+                              <div className="mt-4 rounded-xl bg-[#263825] p-4">
+                                <p className="text-xs font-bold uppercase tracking-wide text-[#E3C993]">
                                   Orientação
                                 </p>
 
-                                <p className="mt-2 whitespace-pre-line text-sm leading-6 text-[#5E7357]">
+                                <p className="mt-2 whitespace-pre-line text-sm leading-6 text-[#F5F0E6]">
                                   {sessao.client_activity}
                                 </p>
                               </div>
@@ -1453,7 +1453,7 @@ async function sair() {
                                           }
                                           target="_blank"
                                           rel="noreferrer"
-                                          className="inline-flex items-center rounded-xl bg-[#8AA27A] px-4 py-3 text-sm font-bold text-white shadow transition hover:bg-[#769566]"
+                                          className="inline-flex items-center rounded-xl bg-[#506A48] px-4 py-3 text-sm font-bold text-white shadow transition hover:bg-[#506A48]"
                                         >
                                           ▶{" "}
                                           {conteudo.title?.trim() ||
@@ -1470,7 +1470,7 @@ async function sair() {
                                     }
                                     target="_blank"
                                     rel="noreferrer"
-                                    className="inline-flex items-center rounded-xl bg-[#8AA27A] px-4 py-3 text-sm font-bold text-white shadow transition hover:bg-[#769566]"
+                                    className="inline-flex items-center rounded-xl bg-[#506A48] px-4 py-3 text-sm font-bold text-white shadow transition hover:bg-[#506A48]"
                                   >
                                     ▶ Assistir gravação
                                   </a>
@@ -1488,7 +1488,7 @@ async function sair() {
                                       sessao.client_report || ""
                                     )
                                   }
-                                  className="inline-flex rounded-xl border border-[#8AA27A] bg-white px-4 py-3 text-sm font-bold text-[#5E7357] shadow transition hover:bg-[#F7F1E4]"
+                                  className="inline-flex rounded-xl border border-[#D7C18C]/40 bg-[#1B271A] px-4 py-3 text-sm font-bold text-[#F5F0E6] shadow transition hover:bg-[#222F20]"
                                 >
                                   📄 Baixar relatório
                                 </button>
@@ -1509,8 +1509,8 @@ async function sair() {
   )}
 </div>
 
-              <div className="rounded-3xl border border-[#DCCFB8] bg-white p-6 shadow-lg">
-                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#EFE5D3] text-xl">
+              <div className="rounded-3xl border border-[#D7C18C]/40 bg-[#1B271A] p-6 shadow-lg">
+                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#31402D] text-xl">
                   📅
                 </div>
 
@@ -1518,7 +1518,7 @@ async function sair() {
                   Minha Agenda
                 </h2>
 
-                <p className="mt-3 text-sm leading-6 text-[#6C8465]">
+                <p className="mt-3 text-sm leading-6 text-[#D8DFD1]">
                   {proximo
                     ? `Seu próximo encontro está marcado para ${formatarDataHora(
                         proximo.scheduled_at
@@ -1527,8 +1527,8 @@ async function sair() {
                 </p>
               </div>
 
-              <div className="rounded-3xl border border-[#DCCFB8] bg-white p-6 shadow-lg">
-                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#EFE5D3] text-xl">
+              <div className="rounded-3xl border border-[#D7C18C]/40 bg-[#1B271A] p-6 shadow-lg">
+                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#31402D] text-xl">
                   ✦
                 </div>
 
@@ -1536,24 +1536,24 @@ async function sair() {
                   Recados da Ádria
                 </h2>
 
-                <p className="mt-3 text-sm leading-6 text-[#6C8465]">
+                <p className="mt-3 text-sm leading-6 text-[#D8DFD1]">
                   Este espaço receberá orientações
                   e recados relacionados ao seu
                   acompanhamento.
                 </p>
 
-                <p className="mt-5 text-xs font-bold uppercase tracking-wide text-[#6C8465]">
+                <p className="mt-5 text-xs font-bold uppercase tracking-wide text-[#D8DFD1]">
                   Em breve
                 </p>
               </div>
             </div>
 
-            <div className="mt-8 rounded-3xl border border-[#DCCFB8] bg-[#F7F1E4] p-6">
-              <p className="text-sm font-bold text-[#8AA27A]">
+            <div className="mt-8 rounded-3xl border border-[#D7C18C]/40 bg-[#222F20] p-6">
+              <p className="text-sm font-bold text-[#E3C993]">
                 Privacidade
               </p>
 
-              <p className="mt-2 text-xs leading-6 text-[#6C8465]">
+              <p className="mt-2 text-xs leading-6 text-[#D8DFD1]">
                 Seu link de acesso é individual.
                 Não encaminhe este endereço para
                 outras pessoas.
