@@ -12,8 +12,8 @@ type PlanoId = "teste" | "social" | "profundo" | "avancado";
 const planos: { id: PlanoId; nome: string; periodo: string; consultas: number; valor: number; descricao: string; destaque?: boolean }[] = [
   { id: "teste", nome: "Fase Teste", periodo: "7 dias", consultas: 1, valor: 27, descricao: "Conheça o acompanhamento terapêutico e seu espaço digital." },
   { id: "social", nome: "Social", periodo: "1 mês", consultas: 4, valor: 396, descricao: "Um encontro por semana para um cuidado com continuidade." },
-  { id: "profundo", nome: "Tratamento Profundo", periodo: "3 meses", consultas: 24, valor: 2280, descricao: "Dois encontros por semana para aprofundar seu processo.", destaque: true },
-  { id: "avancado", nome: "Tratamento Avançado", periodo: "6 meses", consultas: 48, valor: 4080, descricao: "Dois encontros por semana com acompanhamento prolongado." },
+  { id: "profundo", nome: "Tratamento Profundo", periodo: "3 meses", consultas: 24, valor: 4800, descricao: "Dois encontros por semana para aprofundar seu processo.", destaque: true },
+  { id: "avancado", nome: "Tratamento Avançado", periodo: "6 meses", consultas: 48, valor: 9600, descricao: "Dois encontros por semana com acompanhamento prolongado." },
 ];
 
 const moeda = (valor: number) => valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
@@ -92,7 +92,7 @@ export default function TratamentosPage() {
         <div className="mb-8 text-center">
           <p className="text-xs uppercase tracking-[0.25em] text-[#D7C18C]">Seu investimento</p>
           <h2 className="mt-3 font-serif text-3xl sm:text-4xl">Tratamentos disponíveis</h2>
-          <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-[#D6DCCF]">Valores totais por tratamento. Desconto de 5% para pagamento à vista por Pix ou saldo Mercado Pago. Parcelamento no cartão sujeito às condições do Mercado Pago.</p>
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-[#D6DCCF]">Valores totais por tratamento. Desconto de 5% para pagamento à vista por Pix ou saldo Mercado Pago. Parcelamento no cartão sujeito às condições do Mercado Pago. As parcelas em 12 vezes dos tratamentos Profundo e Avançado são valores de referência, sujeitos à confirmação no checkout.</p>
         </div>
         <div className="grid gap-5 md:grid-cols-2">
           {planos.map(plano => (
@@ -115,10 +115,26 @@ export default function TratamentosPage() {
               </div>
               <p className="mt-5 min-h-[50px] text-sm leading-7 text-[#D8DFD1]">{plano.descricao}</p>
               <div className="mt-5 border-t border-[#D7C18C]/20 pt-5">
-                <p className="text-xs uppercase tracking-[0.18em] text-[#D7C18C]">Valor total</p>
-                <p className="mt-2 font-serif text-3xl sm:text-4xl">{moeda(plano.valor)}</p>
+                {plano.id === "profundo" || plano.id === "avancado" ? (
+                  <>
+                    <p className="text-xs uppercase tracking-[0.18em] text-[#D7C18C]">Parcelamento em 12 vezes*</p>
+                    <p className="mt-2 font-serif text-3xl sm:text-4xl">12x de {moeda(plano.valor / 12)}</p>
+                    <p className="mt-2 text-sm text-[#D8DFD1]">Valor total: {moeda(plano.valor)}</p>
+                  </>
+                ) : (
+                  <>
+                    <p className="text-xs uppercase tracking-[0.18em] text-[#D7C18C]">Valor total</p>
+                    <p className="mt-2 font-serif text-3xl sm:text-4xl">{moeda(plano.valor)}</p>
+                  </>
+                )}
                 <p className="mt-3 text-sm text-[#E3C993]">À vista (5% de desconto): {moeda(Math.round(plano.valor * 95) / 100)}</p>
               </div>
+              {plano.id === "profundo" || plano.id === "avancado" ? (
+                <div className="mt-8 rounded-md border border-[#D7C18C]/50 p-4 text-center text-sm text-[#E3C993]">
+                  Pagamento temporariamente indisponível para este pacote. Os links do Mercado Pago estão em atualização para os novos valores.
+                </div>
+              ) : (
+                <>
               <a href={pagamentos[plano.id].cartao} aria-label={"Pagar " + plano.nome + " com cartão no Mercado Pago"}
                 className="mt-8 flex min-h-14 items-center justify-center gap-2 rounded-md bg-[#D8C399] px-5 py-4 text-center text-sm font-semibold text-[#222F20] transition hover:bg-[#E8D5AD]">
                 Pagar com cartão <ArrowUpRight size={16} />
@@ -127,6 +143,8 @@ export default function TratamentosPage() {
                 className="mt-3 flex min-h-14 items-center justify-center gap-2 rounded-md border border-[#D7C18C]/70 px-5 py-4 text-center text-sm font-semibold text-[#E3C993] transition hover:bg-white/10">
                 Pagar à vista · 5% de desconto <ArrowUpRight size={16} />
               </a>
+                </>
+              )}
               <p className="mt-3 text-center text-xs leading-5 text-[#C9D2C3]">Pagamento seguro no Mercado Pago. À vista por Pix ou saldo da conta.</p>
             </article>
           ))}
