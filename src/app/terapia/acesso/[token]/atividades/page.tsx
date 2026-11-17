@@ -7,8 +7,10 @@ import {
 import Link from "next/link";
 import {
   useParams,
+  useRouter,
 } from "next/navigation";
-import { supabase } from "@/lib/supabase";
+import { therapyAccessToken } from "@/lib/therapy-session";
+import { therapyLoginPath } from "@/lib/therapy-navigation";
 
 type Quiz = {
   id: string;
@@ -27,6 +29,7 @@ type Quiz = {
 export default function AtividadesPage() {
   const params =
     useParams();
+  const router = useRouter();
 
   const token =
     String(
@@ -68,26 +71,12 @@ export default function AtividadesPage() {
           > = {};
 
         if (preview) {
-          const {
-            data: {
-              session,
-            },
-          } =
-            await supabase
-              .auth
-              .getSession();
-
-          if (
-            !session
-              ?.access_token
-          ) {
-            throw new Error(
-              "Sua sessão administrativa expirou."
-            );
+          const accessToken = await therapyAccessToken();
+          if (!accessToken) {
+            router.replace(therapyLoginPath(`/terapia/acesso/${token}/atividades`));
+            return;
           }
-
-          headers.Authorization =
-            `Bearer ${session.access_token}`;
+          headers.Authorization = `Bearer ${accessToken}`;
         }
 
         const response =
@@ -101,6 +90,11 @@ export default function AtividadesPage() {
               headers,
             }
           );
+
+        if (preview && response.status === 401) {
+          router.replace(therapyLoginPath(`/terapia/acesso/${token}/atividades`));
+          return;
+        }
 
         const data =
           await response.json();
@@ -143,6 +137,7 @@ export default function AtividadesPage() {
   }, [
     token,
     preview,
+    router,
   ]);
 
   return (

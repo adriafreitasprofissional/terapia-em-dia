@@ -11,7 +11,8 @@ import {
   useParams,
   useRouter,
 } from "next/navigation";
-import { supabase } from "@/lib/supabase";
+import { therapyAccessToken } from "@/lib/therapy-session";
+import { therapyLoginPath } from "@/lib/therapy-navigation";
 
 type Pergunta = {
   id: string;
@@ -133,26 +134,12 @@ export default function ResponderAtividadePage() {
           > = {};
 
         if (preview) {
-          const {
-            data: {
-              session,
-            },
-          } =
-            await supabase
-              .auth
-              .getSession();
-
-          if (
-            !session
-              ?.access_token
-          ) {
-            throw new Error(
-              "Sua sessão administrativa expirou."
-            );
+          const accessToken = await therapyAccessToken();
+          if (!accessToken) {
+            router.replace(therapyLoginPath(`/terapia/acesso/${token}/atividades/${quizId}`));
+            return;
           }
-
-          headers.Authorization =
-            `Bearer ${session.access_token}`;
+          headers.Authorization = `Bearer ${accessToken}`;
         }
 
         const response =
@@ -168,6 +155,11 @@ export default function ResponderAtividadePage() {
               headers,
             }
           );
+
+        if (preview && response.status === 401) {
+          router.replace(therapyLoginPath(`/terapia/acesso/${token}/atividades/${quizId}`));
+          return;
+        }
 
         const data =
           await response.json();
@@ -237,6 +229,7 @@ export default function ResponderAtividadePage() {
     token,
     quizId,
     preview,
+    router,
   ]);
 
   const perguntas =
