@@ -744,7 +744,7 @@ async function sair() {
 
   if (carregando) {
     return (
-      <main className="min-h-screen bg-[#F8F4EC] p-8 text-center text-[#6C8465]">
+      <main className="min-h-screen bg-[#222F20] p-8 text-center text-[#D8DFD1]">
         Preparando seu espaço...
       </main>
     );
@@ -752,8 +752,8 @@ async function sair() {
 
   if (erro || !dados) {
     return (
-      <main className="min-h-screen bg-[#F8F4EC] p-8">
-        <div className="mx-auto max-w-xl rounded-3xl border border-red-200 bg-white p-7 text-center text-red-700 shadow">
+      <main className="min-h-screen bg-[#222F20] p-8">
+        <div className="mx-auto max-w-xl rounded-3xl border border-red-200 bg-[#1B271A] p-7 text-center text-red-200 shadow">
           {erro ||
             "Não foi possível abrir seu espaço."}
         </div>
@@ -942,7 +942,7 @@ async function sair() {
                         type="button"
                         onClick={cancelarSessao}
                         disabled={alterandoAgenda}
-                        className="inline-flex rounded-xl border border-white/50 bg-transparent px-5 py-3 text-sm font-bold text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-60"
+                        className="inline-flex rounded-xl border border-white/50 bg-transparent px-5 py-3 text-sm font-bold text-white transition hover:bg-[#1B271A]/10 disabled:cursor-not-allowed disabled:opacity-60"
                       >
                         Cancelar sessão
                       </button>
@@ -954,7 +954,7 @@ async function sair() {
                           carregandoHorarios ||
                           alterandoAgenda
                         }
-                        className="inline-flex rounded-xl border border-white/30 bg-white/15 px-5 py-3 text-sm font-bold text-white transition hover:bg-white/20 disabled:cursor-not-allowed disabled:opacity-60"
+                        className="inline-flex rounded-xl border border-white/30 bg-[#1B271A]/15 px-5 py-3 text-sm font-bold text-white transition hover:bg-[#1B271A]/20 disabled:cursor-not-allowed disabled:opacity-60"
                       >
                         {carregandoHorarios
                           ? "Buscando horários..."
@@ -965,7 +965,7 @@ async function sair() {
                 </div>
 
                 {mensagemAgenda && (
-                  <div className="mt-4 rounded-xl border border-white/30 bg-white/10 px-4 py-3 text-sm text-white">
+                  <div className="mt-4 rounded-xl border border-white/30 bg-[#1B271A]/10 px-4 py-3 text-sm text-white">
                     {mensagemAgenda}
                   </div>
                 )}
@@ -1207,7 +1207,7 @@ async function sair() {
                 href={hrefAnamnese}
                 className={`rounded-3xl border p-6 shadow-lg transition hover:-translate-y-1 ${
                   dados.anamnese.preenchida
-                    ? "border-emerald-200 bg-emerald-50"
+                    ? "border-[#D7C18C]/60 bg-[#1B271A]"
                     : "border-[#D7C18C]/40 bg-[#1B271A] hover:border-[#D7C18C]/40"
                 }`}
               >
@@ -1228,7 +1228,7 @@ async function sair() {
                 <p
                   className={`mt-5 text-sm font-bold ${
                     dados.anamnese.preenchida
-                      ? "text-emerald-700"
+                      ? "text-[#E3C993]"
                       : "text-[#E3C993]"
                   }`}
                 >

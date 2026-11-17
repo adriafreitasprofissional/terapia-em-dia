@@ -457,7 +457,7 @@ export default function ResponderAtividadePage() {
     carregando
   ) {
     return (
-      <main className="min-h-screen bg-[#F8F4EC] p-8 text-center text-[#6C8465]">
+      <main className="min-h-screen bg-[#222F20] p-8 text-center text-[#D8DFD1]">
         Abrindo atividade...
       </main>
     );
@@ -468,8 +468,8 @@ export default function ResponderAtividadePage() {
     !quiz
   ) {
     return (
-      <main className="min-h-screen bg-[#F8F4EC] p-6">
-        <div className="mx-auto max-w-xl rounded-3xl border border-red-200 bg-white p-7 text-center text-red-700">
+      <main className="min-h-screen bg-[#222F20] p-6 text-[#F5F0E6]">
+        <div className="mx-auto max-w-xl rounded-3xl border border-red-200 bg-[#1B271A] p-7 text-center text-red-200">
           {erro ||
             "Atividade não encontrada."}
         </div>
@@ -478,7 +478,7 @@ export default function ResponderAtividadePage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#F8F4EC] px-5 py-8 text-[#4F5E4A]">
+    <main className="min-h-screen bg-[#222F20] px-5 py-8 text-[#F5F0E6]">
       <div className="mx-auto max-w-3xl">
         {preview && (
           <div className="mb-5 rounded-2xl bg-[#5E7357] p-4 text-sm font-bold text-white">
@@ -488,34 +488,34 @@ export default function ResponderAtividadePage() {
 
         <Link
           href={`/terapia/acesso/${token}/atividades`}
-          className="text-sm font-bold text-[#6C8465]"
+          className="text-sm font-bold text-[#D8DFD1]"
         >
           ← Minhas Atividades
         </Link>
 
-        <section className="mt-7 rounded-3xl border border-[#DCCFB8] bg-white p-6 shadow-sm md:p-8">
-          <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#8AA27A]">
+        <section className="mt-7 rounded-3xl border border-[#D7C18C]/40 bg-[#1B271A] p-6 shadow-sm md:p-8">
+          <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#E3C993]">
             Atividade terapêutica
           </p>
 
-          <h1 className="mt-3 text-3xl font-extrabold text-[#4F5E4A]">
+          <h1 className="mt-3 text-3xl font-extrabold text-[#F5F0E6]">
             {quiz.title}
           </h1>
 
           {quiz.subtitle && (
-            <p className="mt-3 text-sm leading-6 text-[#6C8465]">
+            <p className="mt-3 text-sm leading-6 text-[#D8DFD1]">
               {quiz.subtitle}
             </p>
           )}
 
           {quiz.instructions && (
-            <div className="mt-6 rounded-2xl bg-[#F7F1E4] p-5 text-sm leading-7 text-[#5E7357] whitespace-pre-line">
+            <div className="mt-6 rounded-2xl bg-[#263825] p-5 text-sm leading-7 text-[#F5F0E6] whitespace-pre-line">
               {quiz.instructions}
             </div>
           )}
 
           {concluida && (
-            <div className="mt-6 rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm font-bold text-emerald-700">
+            <div className="mt-6 rounded-2xl border border-emerald-200 bg-[#263825] p-4 text-sm font-bold text-[#DDECCB]">
               ✓ Esta atividade já foi concluída.
             </div>
           )}
@@ -537,21 +537,21 @@ export default function ResponderAtividadePage() {
                   key={
                     pergunta.id
                   }
-                  className="rounded-3xl border border-[#DCCFB8] bg-white p-6 shadow-sm"
+                  className="rounded-3xl border border-[#D7C18C]/40 bg-[#1B271A] p-6 shadow-sm"
                 >
-                  <p className="text-xs font-bold uppercase tracking-wide text-[#8AA27A]">
+                  <p className="text-xs font-bold uppercase tracking-wide text-[#E3C993]">
                     Pergunta{" "}
                     {index + 1}
                   </p>
 
-                  <h2 className="mt-2 text-lg font-extrabold text-[#4F5E4A]">
+                  <h2 className="mt-2 text-lg font-extrabold text-[#F5F0E6]">
                     {
                       pergunta.prompt
                     }
                   </h2>
 
                   {pergunta.helper && (
-                    <p className="mt-2 text-sm leading-6 text-[#6C8465]">
+                    <p className="mt-2 text-sm leading-6 text-[#D8DFD1]">
                       {
                         pergunta.helper
                       }
@@ -570,7 +570,7 @@ export default function ResponderAtividadePage() {
                             key={
                               opcao
                             }
-                            className="flex cursor-pointer items-start gap-3 rounded-xl border border-[#E1D6C5] bg-[#FDFBF7] p-4"
+                            className="flex cursor-pointer items-start gap-3 rounded-xl border border-[#D7C18C]/40 bg-[#263825] p-4"
                           >
                             <input
                               type="radio"
@@ -616,7 +616,7 @@ export default function ResponderAtividadePage() {
                             key={
                               opcao
                             }
-                            className="flex cursor-pointer items-start gap-3 rounded-xl border border-[#E1D6C5] bg-[#FDFBF7] p-4"
+                            className="flex cursor-pointer items-start gap-3 rounded-xl border border-[#D7C18C]/40 bg-[#263825] p-4"
                           >
                             <input
                               type="checkbox"
@@ -676,7 +676,7 @@ export default function ResponderAtividadePage() {
                         )
                       }
                       placeholder="Escreva no seu tempo..."
-                      className="mt-5 w-full rounded-xl border border-[#C8B8A8] bg-white px-4 py-3 outline-none focus:border-[#8AA27A]"
+                      className="mt-5 w-full rounded-xl border border-[#D7C18C]/40 bg-[#1B271A] px-4 py-3 outline-none focus:border-[#8AA27A]"
                     />
                   )}
 
@@ -703,14 +703,14 @@ export default function ResponderAtividadePage() {
                       }
                       rows={5}
                       placeholder="Escreva apenas o que se sentir confortável para responder..."
-                      className="mt-5 w-full rounded-xl border border-[#C8B8A8] bg-white px-4 py-3 outline-none focus:border-[#8AA27A]"
+                      className="mt-5 w-full rounded-xl border border-[#D7C18C]/40 bg-[#1B271A] px-4 py-3 outline-none focus:border-[#8AA27A]"
                     />
                   )}
 
                   {pergunta.type ===
                     "scale" && (
                     <div className="mt-5">
-                      <div className="mb-2 flex justify-between gap-3 text-xs text-[#6C8465]">
+                      <div className="mb-2 flex justify-between gap-3 text-xs text-[#D8DFD1]">
                         <span>
                           {pergunta.min_label ||
                             pergunta.min ||
@@ -759,7 +759,7 @@ export default function ResponderAtividadePage() {
                         className="w-full"
                       />
 
-                      <p className="mt-2 text-center text-sm font-bold text-[#5E7357]">
+                      <p className="mt-2 text-center text-sm font-bold text-[#F5F0E6]">
                         {typeof valor ===
                         "number"
                           ? valor
@@ -790,7 +790,7 @@ export default function ResponderAtividadePage() {
                           }
                         )
                       }
-                      className="mt-4 text-xs font-bold text-[#8A7A69]"
+                      className="mt-4 text-xs font-bold text-[#D8DFD1]"
                     >
                       Pular esta pergunta
                     </button>
@@ -802,7 +802,7 @@ export default function ResponderAtividadePage() {
         </div>
 
         {mensagem && (
-          <div className="mt-6 rounded-2xl border border-[#C7D4C0] bg-[#E8F0E4] p-4 text-sm font-semibold text-[#4F6548]">
+          <div className="mt-6 rounded-2xl border border-[#C7D4C0] bg-[#31452F] p-4 text-sm font-semibold text-[#F5F0E6]">
             {mensagem}
           </div>
         )}
@@ -819,7 +819,7 @@ export default function ResponderAtividadePage() {
                   "save"
                 )
               }
-              className="rounded-xl border border-[#8AA27A] bg-white px-5 py-4 text-sm font-bold text-[#5E7357] disabled:opacity-50"
+              className="rounded-xl border border-[#8AA27A] bg-[#1B271A] px-5 py-4 text-sm font-bold text-[#F5F0E6] disabled:opacity-50"
             >
               {salvando
                 ? "Salvando..."
@@ -867,7 +867,7 @@ export default function ResponderAtividadePage() {
                   );
                 }
               }}
-              className="sm:col-span-2 rounded-xl bg-[#F0E8DA] px-5 py-3 text-sm font-bold text-[#6C5B4C]"
+              className="sm:col-span-2 rounded-xl bg-[#31402D] px-5 py-3 text-sm font-bold text-[#F5F0E6]"
             >
               Parar por aqui e voltar
             </button>

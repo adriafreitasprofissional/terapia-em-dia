@@ -141,7 +141,7 @@ export default function AtividadesPage() {
   ]);
 
   return (
-    <main className="min-h-screen bg-[#F8F4EC] px-5 py-8 text-[#4F5E4A]">
+    <main className="min-h-screen bg-[#222F20] px-5 py-8 text-[#F5F0E6]">
       <div className="mx-auto max-w-3xl">
         {preview && (
           <div className="mb-5 rounded-2xl bg-[#5E7357] p-4 text-sm font-bold text-white">
@@ -151,31 +151,31 @@ export default function AtividadesPage() {
 
         <Link
           href={`/terapia/acesso/${token}`}
-          className="text-sm font-bold text-[#6C8465]"
+          className="text-sm font-bold text-[#D8DFD1]"
         >
           ← Voltar ao meu portal
         </Link>
 
-        <p className="mt-8 text-xs font-bold uppercase tracking-[0.18em] text-[#8AA27A]">
+        <p className="mt-8 text-xs font-bold uppercase tracking-[0.18em] text-[#E3C993]">
           Terapia em Dia
         </p>
 
-        <h1 className="mt-2 text-3xl font-extrabold text-[#4F5E4A]">
+        <h1 className="mt-2 text-3xl font-extrabold text-[#F5F0E6]">
           Minhas Atividades
         </h1>
 
-        <p className="mt-3 text-sm leading-6 text-[#6C8465]">
+        <p className="mt-3 text-sm leading-6 text-[#D8DFD1]">
           Aqui ficam as atividades preparadas para acompanhar seu processo entre as sessões.
         </p>
 
         {carregando && (
-          <div className="mt-7 rounded-2xl border border-[#DCCFB8] bg-white p-5 text-sm text-[#6C8465]">
+          <div className="mt-7 rounded-2xl border border-[#D7C18C]/40 bg-[#1B271A] p-5 text-sm text-[#D8DFD1]">
             Carregando atividades...
           </div>
         )}
 
         {erro && (
-          <div className="mt-7 rounded-2xl border border-red-200 bg-red-50 p-5 text-sm text-red-700">
+          <div className="mt-7 rounded-2xl border border-red-200 bg-[#3A2424] p-5 text-sm text-red-200">
             {erro}
           </div>
         )}
@@ -184,12 +184,12 @@ export default function AtividadesPage() {
           !erro &&
           quizzes.length ===
             0 && (
-            <div className="mt-7 rounded-3xl border border-[#DCCFB8] bg-white p-7 text-center shadow-sm">
+            <div className="mt-7 rounded-3xl border border-[#D7C18C]/40 bg-[#1B271A] p-7 text-center shadow-sm">
               <p className="font-bold">
                 Nenhuma atividade disponível agora.
               </p>
 
-              <p className="mt-2 text-sm leading-6 text-[#6C8465]">
+              <p className="mt-2 text-sm leading-6 text-[#D8DFD1]">
                 Quando uma nova atividade for liberada, ela aparecerá aqui.
               </p>
             </div>
@@ -214,18 +214,18 @@ export default function AtividadesPage() {
                     quiz.id
                   }
                   href={`/terapia/acesso/${token}/atividades/${quiz.id}`}
-                  className="block rounded-3xl border border-[#DCCFB8] bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-[#8AA27A]"
+                  className="block rounded-3xl border border-[#D7C18C]/40 bg-[#1B271A] p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-[#8AA27A]"
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div>
-                      <h2 className="text-xl font-extrabold text-[#4F5E4A]">
+                      <h2 className="text-xl font-extrabold text-[#F5F0E6]">
                         {
                           quiz.title
                         }
                       </h2>
 
                       {quiz.subtitle && (
-                        <p className="mt-2 text-sm leading-6 text-[#6C8465]">
+                        <p className="mt-2 text-sm leading-6 text-[#D8DFD1]">
                           {
                             quiz.subtitle
                           }
@@ -236,10 +236,10 @@ export default function AtividadesPage() {
                     <span
                       className={`shrink-0 rounded-full px-3 py-1 text-[10px] font-black ${
                         concluida
-                          ? "bg-emerald-100 text-emerald-700"
+                          ? "bg-[#31452F] text-[#DDECCB]"
                           : emAndamento
-                            ? "bg-[#EFE5D3] text-[#806A55]"
-                            : "bg-[#E8F0E4] text-[#4F6548]"
+                            ? "bg-[#31402D] text-[#F5F0E6]"
+                            : "bg-[#31452F] text-[#F5F0E6]"
                       }`}
                     >
                       {concluida
@@ -250,7 +250,7 @@ export default function AtividadesPage() {
                     </span>
                   </div>
 
-                  <p className="mt-5 text-sm font-bold text-[#8AA27A]">
+                  <p className="mt-5 text-sm font-bold text-[#E3C993]">
                     {concluida
                       ? "Ver atividade →"
                       : emAndamento
