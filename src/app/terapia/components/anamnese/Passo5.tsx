@@ -6,7 +6,7 @@ type Props = {
 };
 
 const campo =
-  "w-full rounded-2xl border border-[#DCCFB8] bg-[#F7F1E4] p-4 text-[#5E7357] outline-none placeholder:text-[#7A8D73] focus:border-[#8AA27A]";
+  "w-full rounded-2xl border border-[#D7C18C]/40 bg-[#263825] p-4 text-[#F5F0E6] outline-none placeholder:text-[#D8DFD1] focus:border-[#8AA27A]";
 
 export default function Passo5({
   dados,
@@ -15,22 +15,22 @@ export default function Passo5({
   return (
     <div className="space-y-7">
       <div>
-        <span className="text-xs font-bold uppercase tracking-[0.18em] text-[#8AA27A]">
+        <span className="text-xs font-bold uppercase tracking-[0.18em] text-[#E3C993]">
           Etapa 5
         </span>
 
-        <h2 className="mt-2 text-3xl font-extrabold text-[#5E7357]">
+        <h2 className="mt-2 text-3xl font-extrabold text-[#F5F0E6]">
           Saúde e acompanhamentos
         </h2>
 
-        <p className="mt-2 text-sm leading-6 text-[#6C8465]">
+        <p className="mt-2 text-sm leading-6 text-[#D8DFD1]">
           Estas informações ajudam Ádria a compreender
           seu contexto de forma mais responsável.
         </p>
       </div>
 
       <div>
-        <p className="mb-3 text-sm font-semibold text-[#5E7357]">
+        <p className="mb-3 text-sm font-semibold text-[#F5F0E6]">
           Atualmente você faz algum acompanhamento psicológico, psiquiátrico ou médico relacionado ao seu bem-estar emocional?
         </p>
 
@@ -74,7 +74,7 @@ export default function Passo5({
       </div>
 
       <div>
-        <p className="mb-3 text-sm font-semibold text-[#5E7357]">
+        <p className="mb-3 text-sm font-semibold text-[#F5F0E6]">
           Utiliza algum medicamento de uso contínuo?
         </p>
 
@@ -116,7 +116,7 @@ export default function Passo5({
       </div>
 
       <div>
-        <p className="mb-3 text-sm font-semibold text-[#5E7357]">
+        <p className="mb-3 text-sm font-semibold text-[#F5F0E6]">
           Existe algum diagnóstico ou condição de saúde que considera importante informar?
         </p>
 
@@ -157,8 +157,8 @@ export default function Passo5({
         )}
       </div>
 
-      <div className="rounded-2xl border border-[#DCCFB8] bg-[#F7F1E4] p-4">
-        <p className="text-xs leading-6 text-[#6C8465]">
+      <div className="rounded-2xl border border-[#D7C18C]/40 bg-[#263825] p-4">
+        <p className="text-xs leading-6 text-[#D8DFD1]">
           Este acompanhamento não substitui atendimento
           médico, psicológico ou psiquiátrico quando
           esses cuidados forem necessários.

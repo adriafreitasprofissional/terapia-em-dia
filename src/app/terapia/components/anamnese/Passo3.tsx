@@ -13,15 +13,15 @@ export default function Passo3({
   return (
     <div className="space-y-7">
       <div>
-        <span className="text-xs font-bold uppercase tracking-[0.18em] text-[#8AA27A]">
+        <span className="text-xs font-bold uppercase tracking-[0.18em] text-[#E3C993]">
           Etapa 3
         </span>
 
-        <h2 className="mt-2 text-3xl font-extrabold text-[#5E7357]">
+        <h2 className="mt-2 text-3xl font-extrabold text-[#F5F0E6]">
           Como você está hoje
         </h2>
 
-        <p className="mt-2 text-sm leading-6 text-[#6C8465]">
+        <p className="mt-2 text-sm leading-6 text-[#D8DFD1]">
           Não existe resposta certa. Use as escalas
           apenas para representar como você se percebe
           neste momento.
@@ -29,7 +29,7 @@ export default function Passo3({
       </div>
 
       <div>
-        <p className="mb-3 text-sm font-semibold text-[#5E7357]">
+        <p className="mb-3 text-sm font-semibold text-[#F5F0E6]">
           Nível de ansiedade ou preocupação
         </p>
 
@@ -49,7 +49,7 @@ export default function Passo3({
       </div>
 
       <div>
-        <p className="mb-3 text-sm font-semibold text-[#5E7357]">
+        <p className="mb-3 text-sm font-semibold text-[#F5F0E6]">
           Nível de estresse
         </p>
 
@@ -69,7 +69,7 @@ export default function Passo3({
       </div>
 
       <div>
-        <p className="mb-3 text-sm font-semibold text-[#5E7357]">
+        <p className="mb-3 text-sm font-semibold text-[#F5F0E6]">
           Sensação de sobrecarga emocional
         </p>
 
@@ -89,7 +89,7 @@ export default function Passo3({
       </div>
 
       <div>
-        <p className="mb-3 text-sm font-semibold text-[#5E7357]">
+        <p className="mb-3 text-sm font-semibold text-[#F5F0E6]">
           Qualidade do sono
         </p>
 
@@ -110,7 +110,7 @@ export default function Passo3({
       </div>
 
       <div>
-        <p className="mb-3 text-sm font-semibold text-[#5E7357]">
+        <p className="mb-3 text-sm font-semibold text-[#F5F0E6]">
           Com que frequência preocupações ocupam grande parte do seu dia?
         </p>
 

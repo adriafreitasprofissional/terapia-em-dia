@@ -84,7 +84,7 @@ export default function AnamnesePage() {
 
   if (carregando) {
     return (
-      <main className="min-h-screen bg-[#F8F4EC] p-8 text-center text-[#6C8465]">
+      <main className="min-h-screen bg-[#222F20] p-8 text-center text-[#D8DFD1]">
         Preparando sua anamnese...
       </main>
     );
@@ -92,8 +92,8 @@ export default function AnamnesePage() {
 
   if (erro || !dados) {
     return (
-      <main className="min-h-screen bg-[#F8F4EC] p-8">
-        <div className="mx-auto max-w-xl rounded-3xl border border-red-200 bg-white p-7 text-center text-red-700">
+      <main className="min-h-screen bg-[#222F20] p-8">
+        <div className="mx-auto max-w-xl rounded-3xl border border-red-200 bg-[#1B271A] p-7 text-center text-red-200">
           {erro ||
             "Não foi possível abrir a anamnese."}
         </div>
@@ -103,14 +103,14 @@ export default function AnamnesePage() {
 
   if (dados.ja_preenchida) {
     return (
-      <main className="min-h-screen bg-[#F8F4EC] px-5 py-12 text-[#5E7357]">
+      <main className="min-h-screen bg-[#222F20] px-5 py-12 text-[#F5F0E6]">
         <div className="mx-auto max-w-xl">
-          <div className="rounded-[32px] border border-emerald-200 bg-white p-8 text-center shadow-xl">
-            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-3xl">
+          <div className="rounded-[32px] border border-emerald-200 bg-[#1B271A] p-8 text-center shadow-xl">
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#31452F] text-3xl">
               ✓
             </div>
 
-            <p className="mt-6 text-xs font-bold uppercase tracking-[0.18em] text-emerald-700">
+            <p className="mt-6 text-xs font-bold uppercase tracking-[0.18em] text-[#DDECCB]">
               Recebida com sucesso
             </p>
 
@@ -118,7 +118,7 @@ export default function AnamnesePage() {
               Obrigada, {dados.cliente.nome}.
             </h1>
 
-            <p className="mt-4 text-sm leading-7 text-[#6C8465]">
+            <p className="mt-4 text-sm leading-7 text-[#D8DFD1]">
               Sua anamnese já foi recebida pela
               Ádria e ficará vinculada ao seu
               acompanhamento.
@@ -126,7 +126,7 @@ export default function AnamnesePage() {
 
             <Link
               href={`/terapia/acesso/${token}`}
-              className="mt-7 inline-flex rounded-xl bg-[#8AA27A] px-6 py-3 text-sm font-bold text-white shadow"
+              className="mt-7 inline-flex rounded-xl bg-[#506A48] px-6 py-3 text-sm font-bold text-white shadow"
             >
               Voltar ao meu portal
             </Link>
@@ -137,21 +137,21 @@ export default function AnamnesePage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#F8F4EC] px-4 py-8 text-[#5E7357] md:px-6 md:py-12">
+    <main className="min-h-screen bg-[#222F20] px-4 py-8 text-[#F5F0E6] md:px-6 md:py-12">
       <div className="mx-auto max-w-3xl">
         <Link
           href={`/terapia/acesso/${token}`}
-          className="mb-6 inline-flex text-sm font-bold text-[#8AA27A]"
+          className="mb-6 inline-flex text-sm font-bold text-[#E3C993]"
         >
           ← Voltar ao meu portal
         </Link>
 
         <div className="mb-8 text-center">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#8AA27A] font-black text-white shadow-lg">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#506A48] font-black text-white shadow-lg">
             TE
           </div>
 
-          <p className="mt-5 text-xs font-bold uppercase tracking-[0.2em] text-[#8AA27A]">
+          <p className="mt-5 text-xs font-bold uppercase tracking-[0.2em] text-[#E3C993]">
             Terapia em Dia
           </p>
 
@@ -159,7 +159,7 @@ export default function AnamnesePage() {
             Anamnese Inicial
           </h1>
 
-          <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-[#6C8465]">
+          <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-[#D8DFD1]">
             Este formulário vai ajudar Ádria a
             compreender melhor seu momento atual,
             sua história e os objetivos que deseja

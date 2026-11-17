@@ -18,7 +18,7 @@ export default function SliderInput({
   rightLabel = "Alto",
 }: Props) {
   return (
-    <div className="space-y-3 rounded-2xl border border-[#E8D3C5] bg-[#F7F1E4] p-4">
+    <div className="space-y-3 rounded-2xl border border-[#D7C18C]/40 bg-[#263825] p-4">
       <input
         type="range"
         min={min}
@@ -35,10 +35,10 @@ export default function SliderInput({
         className="w-full accent-[#8AA27A]"
       />
 
-      <div className="flex items-center justify-between gap-3 text-xs text-[#6C8465]">
+      <div className="flex items-center justify-between gap-3 text-xs text-[#D8DFD1]">
         <span>{leftLabel}</span>
 
-        <span className="rounded-full bg-[#F2DDD0] px-3 py-1 text-sm font-black text-[#5E7357]">
+        <span className="rounded-full bg-[#31402D] px-3 py-1 text-sm font-black text-[#F5F0E6]">
           {value}
         </span>
 

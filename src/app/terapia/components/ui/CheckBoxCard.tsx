@@ -35,8 +35,8 @@ export default function CheckBoxCard({
             onClick={() => toggle(item)}
             className={`rounded-2xl border px-4 py-3 text-left text-sm font-semibold transition ${
               selecionada
-                ? "border-[#8AA27A] bg-[#8AA27A] text-white shadow"
-                : "border-[#DCCFB8] bg-[#F7F1E4] text-[#5E7357] hover:border-[#8AA27A]"
+                ? "border-[#8AA27A] bg-[#506A48] text-white shadow"
+                : "border-[#D7C18C]/40 bg-[#263825] text-[#F5F0E6] hover:border-[#8AA27A]"
             }`}
           >
             {selecionada

@@ -254,9 +254,9 @@ export default function AnamneseTRGWizard({
         total={TOTAL}
       />
 
-      <div className="rounded-[32px] border border-[#DCCFB8] bg-white p-6 shadow-xl md:p-9">
+      <div className="rounded-[32px] border border-[#D7C18C]/40 bg-[#1B271A] p-6 shadow-xl md:p-9">
         {erro && (
-          <div className="mb-6 rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+          <div className="mb-6 rounded-2xl border border-red-200 bg-[#3A2424] p-4 text-sm text-red-200">
             {erro}
           </div>
         )}
@@ -319,13 +319,13 @@ export default function AnamneseTRGWizard({
           />
         )}
 
-        <div className="mt-9 flex flex-col-reverse gap-3 border-t border-[#EFE5D3] pt-6 sm:flex-row sm:justify-between">
+        <div className="mt-9 flex flex-col-reverse gap-3 border-t border-[#D7C18C]/40 pt-6 sm:flex-row sm:justify-between">
           {step > 1 ? (
             <button
               type="button"
               onClick={voltar}
               disabled={loading}
-              className="rounded-xl border border-[#DCCFB8] px-6 py-3 text-sm font-bold text-[#5E7357] transition hover:bg-[#F7F1E4] disabled:opacity-50"
+              className="rounded-xl border border-[#D7C18C]/40 px-6 py-3 text-sm font-bold text-[#F5F0E6] transition hover:bg-[#263825] disabled:opacity-50"
             >
               ← Voltar
             </button>
@@ -337,7 +337,7 @@ export default function AnamneseTRGWizard({
             <button
               type="button"
               onClick={proximo}
-              className="rounded-xl bg-[#8AA27A] px-7 py-3 text-sm font-bold text-white shadow transition hover:bg-[#769566]"
+              className="rounded-xl bg-[#506A48] px-7 py-3 text-sm font-bold text-white shadow transition hover:bg-[#37513A]"
             >
               Próximo →
             </button>
@@ -346,7 +346,7 @@ export default function AnamneseTRGWizard({
               type="button"
               onClick={enviar}
               disabled={loading}
-              className="rounded-xl bg-[#8AA27A] px-7 py-3 text-sm font-bold text-white shadow transition hover:bg-[#769566] disabled:cursor-not-allowed disabled:opacity-60"
+              className="rounded-xl bg-[#506A48] px-7 py-3 text-sm font-bold text-white shadow transition hover:bg-[#37513A] disabled:cursor-not-allowed disabled:opacity-60"
             >
               {loading
                 ? "Enviando..."

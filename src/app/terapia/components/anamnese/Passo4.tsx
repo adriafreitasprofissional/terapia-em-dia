@@ -6,7 +6,7 @@ type Props = {
 };
 
 const campo =
-  "w-full rounded-2xl border border-[#DCCFB8] bg-[#F7F1E4] p-4 text-[#5E7357] outline-none placeholder:text-[#7A8D73] focus:border-[#8AA27A]";
+  "w-full rounded-2xl border border-[#D7C18C]/40 bg-[#263825] p-4 text-[#F5F0E6] outline-none placeholder:text-[#D8DFD1] focus:border-[#8AA27A]";
 
 export default function Passo4({
   dados,
@@ -15,22 +15,22 @@ export default function Passo4({
   return (
     <div className="space-y-7">
       <div>
-        <span className="text-xs font-bold uppercase tracking-[0.18em] text-[#8AA27A]">
+        <span className="text-xs font-bold uppercase tracking-[0.18em] text-[#E3C993]">
           Etapa 4
         </span>
 
-        <h2 className="mt-2 text-3xl font-extrabold text-[#5E7357]">
+        <h2 className="mt-2 text-3xl font-extrabold text-[#F5F0E6]">
           História emocional e familiar
         </h2>
 
-        <p className="mt-2 text-sm leading-6 text-[#6C8465]">
+        <p className="mt-2 text-sm leading-6 text-[#D8DFD1]">
           Compartilhe apenas o que se sentir
           confortável para registrar agora.
         </p>
       </div>
 
       <div>
-        <label className="mb-2 block text-sm font-semibold text-[#5E7357]">
+        <label className="mb-2 block text-sm font-semibold text-[#F5F0E6]">
           Como você descreveria sua relação com sua família hoje?
         </label>
 
@@ -52,7 +52,7 @@ export default function Passo4({
       </div>
 
       <div>
-        <p className="mb-3 text-sm font-semibold text-[#5E7357]">
+        <p className="mb-3 text-sm font-semibold text-[#F5F0E6]">
           Você percebe padrões emocionais ou relacionais que se repetem em sua vida?
         </p>
 
@@ -94,7 +94,7 @@ export default function Passo4({
       </div>
 
       <div>
-        <label className="mb-2 block text-sm font-semibold text-[#5E7357]">
+        <label className="mb-2 block text-sm font-semibold text-[#F5F0E6]">
           Há acontecimentos do passado que você sente que ainda influenciam sua vida atual?
         </label>
 

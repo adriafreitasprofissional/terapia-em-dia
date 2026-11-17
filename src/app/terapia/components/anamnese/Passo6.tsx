@@ -13,15 +13,15 @@ export default function Passo6({
   return (
     <div className="space-y-7">
       <div>
-        <span className="text-xs font-bold uppercase tracking-[0.18em] text-[#8AA27A]">
+        <span className="text-xs font-bold uppercase tracking-[0.18em] text-[#E3C993]">
           Etapa 6
         </span>
 
-        <h2 className="mt-2 text-3xl font-extrabold text-[#5E7357]">
+        <h2 className="mt-2 text-3xl font-extrabold text-[#F5F0E6]">
           Relações, culpa e limites
         </h2>
 
-        <p className="mt-2 text-sm leading-6 text-[#6C8465]">
+        <p className="mt-2 text-sm leading-6 text-[#D8DFD1]">
           Estas perguntas ajudam a observar como
           suas relações interferem em suas escolhas
           e no seu bem-estar.
@@ -29,7 +29,7 @@ export default function Passo6({
       </div>
 
       <div>
-        <p className="mb-3 text-sm font-semibold text-[#5E7357]">
+        <p className="mb-3 text-sm font-semibold text-[#F5F0E6]">
           Quanto você sente dificuldade para dizer “não” quando algo ultrapassa seus limites?
         </p>
 
@@ -51,7 +51,7 @@ export default function Passo6({
       </div>
 
       <div>
-        <p className="mb-3 text-sm font-semibold text-[#5E7357]">
+        <p className="mb-3 text-sm font-semibold text-[#F5F0E6]">
           Quanto você sente culpa ao se priorizar?
         </p>
 
@@ -73,7 +73,7 @@ export default function Passo6({
       </div>
 
       <div>
-        <p className="mb-3 text-sm font-semibold text-[#5E7357]">
+        <p className="mb-3 text-sm font-semibold text-[#F5F0E6]">
           Quanto você se sente responsável pelos problemas ou emoções de outras pessoas?
         </p>
 
@@ -95,7 +95,7 @@ export default function Passo6({
       </div>
 
       <div>
-        <p className="mb-3 text-sm font-semibold text-[#5E7357]">
+        <p className="mb-3 text-sm font-semibold text-[#F5F0E6]">
           Quando alguém próximo está mal, você costuma deixar suas próprias necessidades em segundo plano?
         </p>
 

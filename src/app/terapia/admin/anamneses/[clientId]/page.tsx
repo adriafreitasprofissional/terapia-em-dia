@@ -83,23 +83,23 @@ export default function AnamneseDetalhePage() {
   }, [clientId]);
 
   if (erro) {
-    return <div className="rounded-2xl border border-red-200 bg-red-50 p-5 text-red-700">{erro}</div>;
+    return <div className="rounded-2xl border border-red-200 bg-[#3A2424] p-5 text-red-200">{erro}</div>;
   }
 
-  if (!dados) return <p className="text-[#6C8465]">Carregando anamnese...</p>;
+  if (!dados) return <p className="text-[#D8DFD1]">Carregando anamnese...</p>;
 
   if (!dados.anamnese) {
     return (
       <div>
-        <button onClick={() => router.back()} className="text-sm font-bold text-[#6C8465]">
+        <button onClick={() => router.back()} className="text-sm font-bold text-[#D8DFD1]">
           ← Voltar
         </button>
 
-        <div className="mt-5 rounded-3xl border border-[#DCCFB8] bg-[#F7F1E4] p-6">
-          <h1 className="text-2xl font-extrabold text-[#5E7357]">
+        <div className="mt-5 rounded-3xl border border-[#D7C18C]/40 bg-[#263825] p-6">
+          <h1 className="text-2xl font-extrabold text-[#F5F0E6]">
             {dados.cliente.nome}
           </h1>
-          <p className="mt-2 text-sm text-[#6C8465]">
+          <p className="mt-2 text-sm text-[#D8DFD1]">
             A anamnese ainda não foi enviada.
           </p>
         </div>
@@ -111,20 +111,20 @@ export default function AnamneseDetalhePage() {
 
   return (
     <div className="mx-auto max-w-6xl">
-      <button onClick={() => router.back()} className="text-sm font-bold text-[#6C8465]">
+      <button onClick={() => router.back()} className="text-sm font-bold text-[#D8DFD1]">
         ← Voltar para Anamneses
       </button>
 
-      <div className="mt-5 rounded-3xl border border-[#DCCFB8] bg-[#F7F1E4] p-6 shadow-sm">
-        <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#8AA27A]">
+      <div className="mt-5 rounded-3xl border border-[#D7C18C]/40 bg-[#263825] p-6 shadow-sm">
+        <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#E3C993]">
           Anamnese Inicial · Terapia TRG
         </p>
 
-        <h1 className="mt-2 text-3xl font-extrabold text-[#5E7357]">
+        <h1 className="mt-2 text-3xl font-extrabold text-[#F5F0E6]">
           {dados.cliente.nome}
         </h1>
 
-        <p className="mt-2 text-sm text-[#6C8465]">
+        <p className="mt-2 text-sm text-[#D8DFD1]">
           Recebida em {new Date(dados.anamnese.submitted_at).toLocaleString("pt-BR")}
         </p>
       </div>
@@ -133,9 +133,9 @@ export default function AnamneseDetalhePage() {
         {secoes.map(([titulo, campos]) => (
           <section
             key={titulo}
-            className="rounded-3xl border border-[#DCCFB8] bg-[#F7F1E4] p-6"
+            className="rounded-3xl border border-[#D7C18C]/40 bg-[#263825] p-6"
           >
-            <h2 className="text-lg font-extrabold text-[#5E7357]">
+            <h2 className="text-lg font-extrabold text-[#F5F0E6]">
               {titulo}
             </h2>
 
@@ -143,12 +143,12 @@ export default function AnamneseDetalhePage() {
               {campos.map(([chave, label]) => (
                 <div
                   key={chave}
-                  className="rounded-2xl border border-[#E1D6C5] bg-white/70 p-4"
+                  className="rounded-2xl border border-[#D7C18C]/40 bg-[#263825] p-4"
                 >
-                  <p className="text-xs font-bold uppercase tracking-wide text-[#7A8D73]">
+                  <p className="text-xs font-bold uppercase tracking-wide text-[#D8DFD1]">
                     {label}
                   </p>
-                  <p className="mt-2 whitespace-pre-wrap text-sm leading-6 text-[#4F5E4A]">
+                  <p className="mt-2 whitespace-pre-wrap text-sm leading-6 text-[#F5F0E6]">
                     {mostrar(respostas[chave])}
                   </p>
                 </div>
