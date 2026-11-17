@@ -89,10 +89,6 @@ export async function GET(
 
     const ids = [...new Set(clientes.map((c) => c.id))];
     /* Cada vínculo paciente-profissional continua independente. */
-    const idsOriginais = clientes.map(
-      (c) => c.id
-    );
-
     let anamneses: any[] = [];
     let proximos: any[] = [];
 
