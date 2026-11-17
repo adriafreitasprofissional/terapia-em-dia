@@ -65,6 +65,8 @@ export default function AgendaTerapiaPage() {
     setSalvando,
   ] = useState(false);
 
+  const [editandoId, setEditandoId] = useState<string | null>(null);
+
   async function carregar() {
     const [
       agendaResponse,
@@ -164,6 +166,39 @@ export default function AgendaTerapiaPage() {
     });
   }
 
+  function iniciarEdicao(item: any) {
+    const data = new Date(item.scheduled_at);
+    if (Number.isNaN(data.getTime())) {
+      setMensagem("Data inválida neste atendimento.");
+      return;
+    }
+    const partes = new Intl.DateTimeFormat("en-CA", {
+      timeZone: "America/Sao_Paulo", year: "numeric", month: "2-digit", day: "2-digit",
+      hour: "2-digit", minute: "2-digit", hourCycle: "h23",
+    }).formatToParts(data);
+    const parte = (tipo: string) => partes.find((p) => p.type === tipo)?.value || "";
+    setForm({
+      client_id: item.client_id || "",
+      service_type: item.service_type || "Terapia TRG",
+      date: `${parte("year")}-${parte("month")}-${parte("day")}`,
+      time: `${parte("hour")}:${parte("minute")}`,
+      duration_minutes: String(item.duration_minutes || 60),
+      meet_url: item.meet_url || "",
+      charge_type: item.charge_type || "incluido_pacote",
+      amount: item.amount == null ? "" : String(item.amount),
+    });
+    setEditandoId(item.id);
+    setFormAberto(true);
+    setMensagem(null);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function fecharFormulario() {
+    setForm(FORM_INICIAL);
+    setEditandoId(null);
+    setFormAberto(false);
+  }
+
   async function salvar() {
     setSalvando(true);
     setMensagem(null);
@@ -174,14 +209,14 @@ export default function AgendaTerapiaPage() {
           "/api/terapia/admin/agenda",
           {
             method:
-              "POST",
+              editandoId ? "PATCH" : "POST",
             headers: {
               "Content-Type":
                 "application/json",
             },
             body:
               JSON.stringify(
-                form
+                editandoId ? { ...form, id: editandoId, client_id: undefined } : form
               ),
           }
         );
@@ -196,16 +231,11 @@ export default function AgendaTerapiaPage() {
         );
       }
 
-      setForm(
-        FORM_INICIAL
-      );
-
-      setFormAberto(
-        false
-      );
+      const foiEdicao = Boolean(editandoId);
+      fecharFormulario();
 
       setMensagem(
-        "Atendimento agendado."
+        foiEdicao ? "Atendimento atualizado com sucesso." : "Atendimento agendado."
       );
 
       await carregar();
@@ -298,9 +328,7 @@ export default function AgendaTerapiaPage() {
           <button
             type="button"
             onClick={() =>
-              setFormAberto(
-                !formAberto
-              )
+              formAberto && !editandoId ? fecharFormulario() : (fecharFormulario(), setFormAberto(true))
             }
             className="rounded-xl bg-[#5E7357] px-4 py-3 text-sm font-bold text-white shadow"
           >
@@ -318,14 +346,16 @@ export default function AgendaTerapiaPage() {
       {formAberto && (
         <section className="mt-6 rounded-3xl border border-[#DCCFB8] bg-[#F7F1E4] p-6">
           <h2 className="text-xl font-extrabold text-[#5E7357]">
-            Novo atendimento
+            {editandoId ? "Editar atendimento" : "Novo atendimento"}
           </h2>
+          {editandoId && <p className="mt-2 text-sm text-[#D4DCCE]">Altere a data, o horário ou outros dados e clique em Salvar alterações. A paciente permanece vinculada ao atendimento original.</p>}
 
           <div className="mt-5 grid gap-4 md:grid-cols-2">
             <select
               value={
                 form.client_id
               }
+              disabled={Boolean(editandoId)}
               onChange={(e) =>
                 alterar(
                   "client_id",
@@ -509,19 +539,15 @@ export default function AgendaTerapiaPage() {
             >
               {salvando
                 ? "Salvando..."
-                : "Agendar"}
+                : editandoId ? "Salvar alterações" : "Agendar"}
             </button>
 
             <button
               type="button"
-              onClick={() =>
-                setFormAberto(
-                  false
-                )
-              }
+              onClick={fecharFormulario}
               className="rounded-xl border border-[#C8B8A8] px-5 py-3 text-sm font-bold text-[#5E7357]"
             >
-              Fechar
+              Descartar alterações
             </button>
           </div>
         </section>
@@ -574,6 +600,10 @@ export default function AgendaTerapiaPage() {
                                       <a href={item.meet_url} target="_blank" rel="noreferrer"
                                         className="rounded-xl bg-[#506A48] px-3 py-2 text-xs font-bold text-white">Meet</a>
                                     )}
+                                    <button type="button" onClick={() => iniciarEdicao(item)}
+                                      className="rounded-xl border border-[#D7C18C]/40 px-3 py-2 text-xs font-bold text-[#F5F0E6]">
+                                      Editar
+                                    </button>
                                     <button type="button" onClick={() => cancelar(item.id)}
                                       className="rounded-xl border border-[#D7C18C]/40 px-3 py-2 text-xs font-bold text-[#F5F0E6]">
                                       Cancelar
