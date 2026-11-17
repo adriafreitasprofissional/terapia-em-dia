@@ -137,7 +137,7 @@ export async function GET(
           .order("scheduled_at", {
             ascending: true,
           })
-          .limit(admin.central_access ? 500 : 12);
+          .limit(admin.central_access ? 1000 : 12);
 
       if (!admin.central_access) {
         proximosQuery =
