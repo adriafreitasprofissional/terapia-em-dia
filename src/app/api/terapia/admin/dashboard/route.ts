@@ -74,6 +74,7 @@ export async function GET(
 
         return {
           id: item.client_id,
+          professional: item.professional,
           nome:
             c.nome_referencia ||
             c.nome ||
@@ -86,10 +87,8 @@ export async function GET(
       })
       .filter(Boolean) as any[];
 
-    const ids = clientes.map(
-      (c) => c.id
-    );
-
+    const ids = [...new Set(clientes.map((c) => c.id))];
+    /* Cada vínculo paciente-profissional continua independente. */
     let anamneses: any[] = [];
     let proximos: any[] = [];
 
@@ -115,6 +114,7 @@ export async function GET(
           .select(`
             id,
             client_id,
+            professional,
             service_type,
             scheduled_at,
             duration_minutes,
@@ -137,7 +137,7 @@ export async function GET(
           .order("scheduled_at", {
             ascending: true,
           })
-          .limit(12);
+          .limit(admin.central_access ? 1000 : 12);
 
       if (!admin.central_access) {
         proximosQuery =
@@ -161,6 +161,7 @@ export async function GET(
           id: item.id,
           client_id:
             item.client_id,
+          professional: item.professional,
           client_name:
             c?.nome_referencia ||
             c?.nome ||
@@ -246,8 +247,19 @@ export async function GET(
         }
       ).length;
 
+    let profissionais: { id: string; name: string; slug: string; active: boolean }[] = [];
+    if (admin.central_access) {
+      const { data: catalogo, error: erroProfissionais } = await supabaseAdmin
+        .from("therapy_professionals")
+        .select("id, name, slug, active")
+        .order("name", { ascending: true });
+      if (erroProfissionais) throw erroProfissionais;
+      profissionais = catalogo || [];
+    }
+
     return NextResponse.json({
       admin,
+      profissionais,
       resumo: {
         clientes_ativas:
           lista.length,
